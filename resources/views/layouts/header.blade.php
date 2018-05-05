@@ -15,7 +15,9 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" href="vendors/styles/style.css">
+   {{-- <link rel="stylesheet" href="vendors/styles/style.css">--}}
+
+    <link rel="stylesheet" href="{{ asset('vendors/styles/style.css') }}">
 
 
     {{--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>--}}

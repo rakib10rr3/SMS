@@ -1,7 +1,8 @@
 <div class="left-side-bar">
     <div class="brand-logo">
         <a href="index.php">
-            <img src="vendors/images/deskapp-logo.png" alt="">
+            {{--<img src="vendors/images/deskapp-logo.png" alt="">--}}
+            <img src="{{asset('vendors/images/deskapp-logo.png')}}" alt="">
         </a>
     </div>
     <div class="menu-block customscroll">
@@ -100,6 +101,7 @@
                         <li><a href="#">jvectormap</a></li>
                     </ul>
                 </li>
+
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="fa fa-clone"></span><span class="mtext">Extra Pages</span>
@@ -117,6 +119,7 @@
                         <li><a href="pricing-table.php">Pricing Tables</a></li>
                     </ul>
                 </li>
+
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="fa fa-list"></span><span class="mtext">Multi Level Menu</span>
@@ -139,12 +142,29 @@
                         <li><a href="javascript:;">Level 1</a></li>
                     </ul>
                 </li>
+
                 <li>
                     <a href="sitemap.php" class="dropdown-toggle no-arrow">
                         <span class="fa fa-sitemap"></span><span class="mtext">Sitemap</span>
                     </a>
                 </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Group</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/groups/create">Create Group</a></li>
+                        <li><a href="/groups">View Group</a></li>
+
+                    </ul>
+                </li>
+
+
             </ul>
+
+
         </div>
     </div>
 </div>

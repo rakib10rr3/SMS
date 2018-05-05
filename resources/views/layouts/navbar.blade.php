@@ -3,7 +3,8 @@
     <div class="header-right">
         <div class="brand-logo">
             <a href="index.php">
-                <img src="vendors/images/logo.png" alt="" class="mobile-logo">
+                {{--<img src="vendors/images/logo.png" alt="" class="mobile-logo">--}}
+                <img src="{{ asset('vendors/images/logo.png') }}" alt="" class="mobile-logo">
             </a>
         </div>
         <div class="menu-icon">
@@ -22,7 +23,7 @@
                     <a class="dropdown-item" href="profile.php"><i class="fa fa-user-md" aria-hidden="true"></i> Profile</a>
                     <a class="dropdown-item" href="profile.php"><i class="fa fa-cog" aria-hidden="true"></i> Setting</a>
                     <a class="dropdown-item" href="faq.php"><i class="fa fa-question" aria-hidden="true"></i> Help</a>
-                    <a  class="dropdown-item" href="{{ route('logout') }}"
+                    <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         Logout
