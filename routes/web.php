@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -19,3 +21,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('groups', 'GroupController');
+
+Route::resource('/genders','GenderController');
+
+
+Route::get('/blood-groups/setup','BloodGroupController@setup')->name('blood-groups.setup');
+
+Route::resource('/blood-groups','BloodGroupController');
+
+Route::get('/setup', function (){
+   return view('setup.setup');
+});
+
+Route::resource('/exam-terms','ExamTermController');

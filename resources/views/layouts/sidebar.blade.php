@@ -162,6 +162,15 @@
                 </li>
 
 
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Exam Terms</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{route('exam-terms.create')}}">Create Exam Terms</a></li>
+                        <li><a href="{{route('exam-terms.index')}}">View Exam Terms</a></li>
+                    </ul>
+                </li>
             </ul>
 
 
