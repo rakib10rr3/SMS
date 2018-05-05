@@ -14,7 +14,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
+        $sections = Section::all();
+        return view('Section.index', compact('sections'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /**
@@ -24,7 +25,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('Section.create');
     }
 
     /**
@@ -35,7 +36,8 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Section::query()->create($request->all());
+        return redirect('/sections');
     }
 
     /**
@@ -57,7 +59,7 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
-        //
+        return view('Section.edit', compact('section'));
     }
 
     /**
@@ -69,7 +71,8 @@ class SectionController extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        //
+        $section->update($request->all());
+        return redirect('/sections');
     }
 
     /**
@@ -80,6 +83,7 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        //
+        $section->delete();
+        return redirect('/sections');
     }
 }

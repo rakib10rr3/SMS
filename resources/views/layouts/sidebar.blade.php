@@ -161,6 +161,54 @@
                     </ul>
                 </li>
 
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Shift</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/shifts/create">Create Shift</a></li>
+                        <li><a href="/shifts">View Shift</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Section</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/sections/create">Create Section</a></li>
+                        <li><a href="/sections">View Section</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Grade Points</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/grades/create">Create Grade point</a></li>
+                        <li><a href="/grades">View Grade point</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Notice</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/notices/create">Add Notice</a></li>
+                        <li><a href="/notices">View Notices</a></li>
+
+                    </ul>
+                </li>
+
 
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">

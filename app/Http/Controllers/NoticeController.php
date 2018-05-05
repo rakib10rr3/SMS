@@ -14,7 +14,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        //
+        $notices = Notice::all();
+        return view('Notice.index', compact('notices'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /**
@@ -24,7 +25,7 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        //
+        return view('Notice.create');
     }
 
     /**
@@ -35,7 +36,8 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Notice::query()->create($request->all());
+        return redirect('/notices');
     }
 
     /**
@@ -57,7 +59,7 @@ class NoticeController extends Controller
      */
     public function edit(Notice $notice)
     {
-        //
+        return view('Notice.edit', compact('notice'));
     }
 
     /**
@@ -69,7 +71,8 @@ class NoticeController extends Controller
      */
     public function update(Request $request, Notice $notice)
     {
-        //
+        $notice->update($request->all());
+        return redirect('/notices');
     }
 
     /**
@@ -80,6 +83,7 @@ class NoticeController extends Controller
      */
     public function destroy(Notice $notice)
     {
-        //
+        $notice->delete();
+        return redirect('/notices');
     }
 }

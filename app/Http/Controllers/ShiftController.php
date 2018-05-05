@@ -15,6 +15,8 @@ class ShiftController extends Controller
     public function index()
     {
         //
+        $shifts = Shift::all();
+        return view('Shift.index', compact('shifts'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /**
@@ -24,7 +26,7 @@ class ShiftController extends Controller
      */
     public function create()
     {
-        //
+        return view('Shift.create');
     }
 
     /**
@@ -35,7 +37,8 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Shift::query()->create($request->all());
+        return redirect('/shifts');
     }
 
     /**
@@ -57,7 +60,7 @@ class ShiftController extends Controller
      */
     public function edit(Shift $shift)
     {
-        //
+        return view('Shift.edit', compact('shift'));
     }
 
     /**
@@ -69,7 +72,8 @@ class ShiftController extends Controller
      */
     public function update(Request $request, Shift $shift)
     {
-        //
+        $shift->update($request->all());
+        return redirect('/shifts');
     }
 
     /**
@@ -80,6 +84,7 @@ class ShiftController extends Controller
      */
     public function destroy(Shift $shift)
     {
-        //
+        $shift->delete();
+        return redirect('/shifts');
     }
 }

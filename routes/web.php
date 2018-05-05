@@ -21,6 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('groups', 'GroupController');
+Route::resource('shifts', 'ShiftController');
+Route::resource('sections', 'SectionController');
+Route::resource('grades', 'GradeController');
+Route::resource('notices', 'NoticeController');
 
 Route::resource('/genders','GenderController');
 
