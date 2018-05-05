@@ -14,7 +14,8 @@ class GenderController extends Controller
      */
     public function index()
     {
-        //
+        $genders = Gender::query()->get();
+        return view('gender.index',compact('genders'));
     }
 
     /**
@@ -24,7 +25,7 @@ class GenderController extends Controller
      */
     public function create()
     {
-        //
+        return view('gender.create');
     }
 
     /**
@@ -35,7 +36,11 @@ class GenderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+        Gender::query()->create($request->all());
+        //return $request->all();
     }
 
     /**

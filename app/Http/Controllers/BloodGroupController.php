@@ -30,10 +30,10 @@ class BloodGroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         //
     }
@@ -41,7 +41,7 @@ class BloodGroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\BloodGroup  $bloodGroup
+     * @param  \App\Model\BloodGroup $bloodGroup
      * @return \Illuminate\Http\Response
      */
     public function show(BloodGroup $bloodGroup)
@@ -52,7 +52,7 @@ class BloodGroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\BloodGroup  $bloodGroup
+     * @param  \App\Model\BloodGroup $bloodGroup
      * @return \Illuminate\Http\Response
      */
     public function edit(BloodGroup $bloodGroup)
@@ -63,8 +63,8 @@ class BloodGroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\BloodGroup  $bloodGroup
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Model\BloodGroup $bloodGroup
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, BloodGroup $bloodGroup)
@@ -75,11 +75,47 @@ class BloodGroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\BloodGroup  $bloodGroup
+     * @param  \App\Model\BloodGroup $bloodGroup
      * @return \Illuminate\Http\Response
      */
     public function destroy(BloodGroup $bloodGroup)
     {
         //
+    }
+
+    public  function setup()
+    {
+        $bloodGroups = BloodGroup::query()->get();
+        if (count($bloodGroups) == 0) {
+            BloodGroup::insert([
+                [
+                    'name' => 'A+',
+                ],
+                [
+                    'name' => 'A-',
+                ],
+                [
+                    'name' => 'B+',
+                ],
+                [
+                    'name' => 'B-',
+                ],
+                [
+                    'name' => 'O+',
+                ],
+                [
+                    'name' => 'O-',
+                ],
+                [
+                    'name' => 'AB+',
+                ],
+                [
+                    'name' => 'AB-',
+                ],
+            ]);
+        } else {
+            return "Data already exists";
+        }
+        return true;
     }
 }
