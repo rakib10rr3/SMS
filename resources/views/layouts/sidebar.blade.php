@@ -219,6 +219,42 @@
                         <li><a href="{{route('exam-terms.index')}}">View Exam Terms</a></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Group</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/groups/create">Create Group</a></li>
+                        <li><a href="/groups">View Group</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Class</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/class/create">Create Class</a></li>
+                        <li><a href="/class">View Class</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Role</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/roles/create">Create Role</a></li>
+                        <li><a href="/roles">View Role</a></li>
+
+                    </ul>
+                </li>
+
+
             </ul>
 
 

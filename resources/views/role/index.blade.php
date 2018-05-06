@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Group Dashboard</div>
+                    <div class="card-header"> Role Dashboard</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -23,23 +23,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($groups as $group)
+                            @foreach($roles as $role)
                                 <tr>
                                     <th scope="row">{{$loop->iteration}}</th>
-                                    <td>{{$group->name}}</td>
+                                    <td>{{$role->name}}</td>
                                     <td>
 
                                         <button type="button" class="btn btn-sm btn-info"><a
                                                     style="color:inherit;text-decoration: none;"
-                                                    href="/groups/{{$group->id}}/edit">Edit</a></button>
+                                                    href="/roles/{{$role->id}}/edit">Edit</a></button>
 
-                                        <form class="btn btn-sm btn-danger" action="/groups/{{$group->id}}" method="post">
+                                        <form class="btn btn-sm btn-danger" action="/roles/{{$role->id}}" method="post">
                                             {{csrf_field()}}
                                             {{method_field('DELETE')}}
                                             <button class="btn btn-sm btn-danger" type="submit">Delete</button>
                                         </form>
                                     </td>
-
                                 </tr>
                             @endforeach
                             </tbody>

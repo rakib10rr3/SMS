@@ -27,10 +27,7 @@ Route::resource('grades', 'GradeController');
 Route::resource('notices', 'NoticeController');
 
 Route::resource('/genders','GenderController');
-
-
 Route::get('/blood-groups/setup','BloodGroupController@setup')->name('blood-groups.setup');
-
 Route::resource('/blood-groups','BloodGroupController');
 
 Route::get('/setup', function (){
@@ -38,3 +35,6 @@ Route::get('/setup', function (){
 });
 
 Route::resource('/exam-terms','ExamTermController');
+Route::resource('groups', 'GroupController');
+Route::resource('class', 'TheClassController');
+Route::resource('roles', 'RoleController');

@@ -5,8 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    @foreach($group as $group)
-                    <div class="card-header">Edit Waiter : <b>{{$group->name}}</b></div>
+                    @foreach($role as $role)
+                    <div class="card-header">Edit Waiter : <b>{{$role->name}}</b></div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -14,13 +14,13 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form method="post" action="/groups/{{$group->id}}">
+                        <form method="post" action="/roles/{{$role->id}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-2 col-form-label">Name</label>
                                     <div class="col-10">
-                                        <input class="form-control" type="text" placeholder="Rakibul Huda" value="{{$group->name}}" id="name"
+                                        <input class="form-control" type="text" placeholder="Role" value="{{$role->name}}" id="name"
                                                name="name">
                                     </div>
                                 </div>

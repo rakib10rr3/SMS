@@ -14,7 +14,8 @@ class TheClassController extends Controller
      */
     public function index()
     {
-        //
+        $classes = TheClass::all();
+        return view('class.index', compact('classes'));
     }
 
     /**
@@ -24,24 +25,25 @@ class TheClassController extends Controller
      */
     public function create()
     {
-        //
+        return view('class.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        TheClass::query()->create($request->all());
+        return redirect('/class');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\TheClass  $theClass
+     * @param  \App\Model\TheClass $theClass
      * @return \Illuminate\Http\Response
      */
     public function show(TheClass $theClass)
@@ -52,34 +54,46 @@ class TheClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\TheClass  $theClass
+     * @param  \App\Model\TheClass $theClass
      * @return \Illuminate\Http\Response
      */
-    public function edit(TheClass $theClass)
+    public function edit(TheClass $class)
     {
-        //
+        $class = TheClass::query()->find($class);
+        return view('class.edit', compact('class'));
     }
+
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\TheClass  $theClass
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Model\TheClass $theClass
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TheClass $theClass)
+    public function update(Request $request, TheClass $class)
     {
-        //
+        $class->update($request->all());
+        return redirect('/class');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\TheClass  $theClass
+     * @param  \App\Model\TheClass $theClass
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TheClass $theClass)
+//    public function destroy(TheClass $theClass)
+//    {
+//        return $theClass;
+//    }
+
+    public function destroy( $id)
     {
-        //
+        $theclasses=TheClass::where("id",$id)->first();
+        $theclasses->delete();
+        return redirect('/class');
     }
+
+
 }
