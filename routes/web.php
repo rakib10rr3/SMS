@@ -38,3 +38,4 @@ Route::resource('/exam-terms','ExamTermController');
 Route::resource('groups', 'GroupController');
 Route::resource('class', 'TheClassController');
 Route::resource('roles', 'RoleController');
+Route::resource('teachers', 'TeacherController');

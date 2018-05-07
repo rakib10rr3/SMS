@@ -254,6 +254,18 @@
                     </ul>
                 </li>
 
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Teachers</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/teachers/create">Create Teacher</a></li>
+                        <li><a href="/teachers">View Teacher</a></li>
+
+                    </ul>
+                </li>
+
 
             </ul>
 

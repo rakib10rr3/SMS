@@ -18,7 +18,7 @@ class CreateTeachersTable extends Migration
             $table->string('name',100);
             $table->string('current_address',256);
             $table->string('permanent_address',256);
-            $table->dateTime('dob');
+            $table->date('dob');
             $table->string('national_id',100);
             $table->boolean('marital_status');
             $table->bigInteger('user_id')->unsigned()->index()->nullable(false);

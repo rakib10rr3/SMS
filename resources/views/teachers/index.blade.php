@@ -11,7 +11,7 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Class Information</h5>
+                <h5 class="text-blue">Exam Terms Information</h5>
 
             </div>
         </div>
@@ -20,18 +20,27 @@
                 <thead>
                 <tr>
                     <th>Serial</th>
-                    <th>Exam Term Name</th>
+                    <th>Name</th>
+                    <th>Religion</th>
+                    <th>Blood Group</th>
+                    <th>Gender</th>
+                    <th>Photo</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @if(empty($classes))
+                @if(empty($teachers))
                     <p>Data does not exist</p>
                 @else
-                    @foreach($classes as $class)
+                    @foreach($teachers as $teacher)
                         <tr>
                             <td class="table-plus">{{$loop->iteration}}</td>
-                            <td>{{$class->name}}</td>
+                            <td>{{$teacher->name}}</td>
+                            <td>{{$teacher->religion->name}}</td>
+                            <td>{{$teacher->bloodGroup->name}}</td>
+                            <td>{{$teacher->gender->name}}</td>
+                            <td><img src="images/teachers/{{$teacher->name}}/{{$teacher->photo}}" class="img-rounded"
+                                     alt="Teacher Photo"></td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
@@ -39,14 +48,14 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/class/{{$class->id}}/edit"><i
+                                        <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
                                                     class="fa fa-pencil"></i> Edit</a>
                                         {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
                                         {{--{{csrf_field()}}--}}
                                         {{--@method('DELETE')--}}
                                         {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
                                         {{--</form>--}}
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$class->id}}"><i
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
                                 </div>
@@ -81,7 +90,6 @@
 
     <script>
         $('document').ready(function () {
-
             $('.data-table').DataTable({
                 scrollCollapse: true,
                 autoWidth: false,
@@ -147,7 +155,7 @@
                     if (willDelete) {
                         $.ajax({
                             type: "POST",
-                            url: "/class/"+id,
+                            url: "/teachers/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
                                 _method: "DELETE"

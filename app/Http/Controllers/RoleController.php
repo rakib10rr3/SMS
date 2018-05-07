@@ -38,6 +38,13 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+
+        ]);
+
+
+
         Role::query()->create($request->all());
         return redirect('/roles');
     }
