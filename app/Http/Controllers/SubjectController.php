@@ -73,7 +73,7 @@ class SubjectController extends Controller
         $practical_pass_marks = request('practical_pass_marks');
 
 
-        $class_id = request('class_id');
+        $class_id = request('the_class_id');
         $is_optional = request('is_optional');
         if($request->get('is_optional') == null){
             $is_optional=0;
@@ -95,7 +95,7 @@ class SubjectController extends Controller
             'has_practical' => $has_practical,
             'practical_marks' => $practical_marks,
             'practical_pass_marks' => $practical_pass_marks,
-            'class_id' => $class_id,
+            'the_class_id' => $class_id,
             'is_optional' => $is_optional,
             'group_id' => $group_id,
         ]);

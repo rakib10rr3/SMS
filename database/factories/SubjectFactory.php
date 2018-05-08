@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Model\Subject::class, function (Faker $faker) {
     return [
 
-        'class_id' => function () {
+        'the_class_id' => function () {
             return \App\Model\TheClass::all()->random();
         },
 

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Teacher;
+use App\Model\Teacher;
 use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
@@ -10,7 +10,7 @@ class Subject extends Model
     protected $guarded=[];
 
 
-    public function class(){
+    public function theClass(){
         return $this->belongsTo(TheClass::class);
     }
 

@@ -1,17 +1,77 @@
 @extends('layouts.app')
 @section('styles')
+
+    <link rel="stylesheet" type="text/css" href="src/plugins/switchery/dist/switchery.css">
+    <!-- bootstrap-tagsinput css -->
+    <link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <!-- bootstrap-touchspin css -->
+    <link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css">
+
+
+
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
 @endsection
 @section('content')
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+        <div class="clearfix">
+            <div class="pull-left">
+                <h4 class="text-blue">Subject Assign</h4>
+                <p class="mb-30 font-14"></p>
+            </div>
+        </div>
+        <form method="post" action="/groups">
+            <div class="form-group">
+                <label>Subject</label>
+                <select class="custom-select2 form-control" name="state" style="width: 100%; height: 38px;">
+
+
+                    @foreach ($subjects as $subject)
+                        <option value="{{ $subject->id }}">
+                            {{ $subject->name }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Teacher</label>
+                <select class="custom-select2 form-control" name="state" style="width: 100%; height: 38px;">
+
+
+                    @foreach ($teachers as $teacher)
+                        <option value="{{ $teacher->id }}">
+                            {{ $teacher->name }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="example-color-input" class=" col-form-label"></label>
+                <div class="col-10">
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
+
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Exam Terms Information</h5>
+                <h5 class="text-blue">Subject Assign Information</h5>
 
             </div>
         </div>
@@ -19,47 +79,66 @@
             <table class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-                    <th>Serial</th>
-                    <th>Name</th>
-                    <th>Religion</th>
-                    <th>Blood Group</th>
-                    <th>Gender</th>
-                    <th>Photo</th>
+
+                    <th>Class</th>
+                    <th>Subject</th>
+                    <th>Teacher</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @if(empty($teachers))
+                @if(empty($subjects))
                     <p>Data does not exist</p>
                 @else
-                    @foreach($teachers as $teacher)
+                    @foreach($classes as $class)
                         <tr>
-                            <td class="table-plus">{{$loop->iteration}}</td>
-                            <td>{{$teacher->name}}</td>
-                            <td>{{$teacher->religion->name}}</td>
-                            <td>{{$teacher->bloodGroup->name}}</td>
-                            <td>{{$teacher->gender->name}}</td>
-                            <td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"
-                                     alt="Teacher Photo"></td>
+
+                            <td>{{$class->name}}</td>
                             <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
-                                       data-toggle="dropdown">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i
-                                                    class="fa fa-pencil"></i> Delete</a>
-                                    </div>
-                                </div>
+                                @foreach($class->subjects as $subject)
+                                    <p>{{$subject->name}},</p>
+                                @endforeach
                             </td>
+                            <td>
+                                @foreach($class->subjects as $subject)
+                                    <p>{{$subject->name}},</p>
+                                    {{dd($subject->teachers)}}
+                                    {{--@foreach($subject->all_teachers as $teacher_bhai)--}}
+                                        {{--<p>{{$teacher_bhai->name}}-{{$subject->name}},</p>--}}
+                                    {{--@endforeach--}}
+                                @endforeach
+                            </td>
+                            {{--<td>--}}
+                                {{--@foreach($class->subjects->teachers as $teacher)--}}
+                                    {{--{{$teacher->name}}--}}
+
+                                {{--@endforeach--}}
+                            {{--</td>--}}
+
+
+                            {{--<td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"--}}
+                            {{--alt="Teacher Photo"></td>--}}
+
+                            {{--<td>--}}
+                            {{--<div class="dropdown">--}}
+                            {{--<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"--}}
+                            {{--data-toggle="dropdown">--}}
+                            {{--<i class="fa fa-ellipsis-h"></i>--}}
+                            {{--</a>--}}
+                            {{--<div class="dropdown-menu dropdown-menu-right">--}}
+                            {{--<a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i--}}
+                            {{--class="fa fa-pencil"></i> Edit</a>--}}
+                            {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
+                            {{--{{csrf_field()}}--}}
+                            {{--@method('DELETE')--}}
+                            {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
+                            {{--</form>--}}
+                            {{--<a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i--}}
+                            {{--class="fa fa-pencil"></i> Delete</a>--}}
+                            {{--</div>--}}
+                            {{--</div>--}}
+                            {{--</td>--}}
+                            {{----}}
                         </tr>
                     @endforeach
                 @endif
@@ -84,6 +163,7 @@
     <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
+    <!-------------------------------------------------------------->
 
 
 
@@ -174,6 +254,53 @@
                 });
         });
     </script>
+
+
+    <script src="src/plugins/switchery/dist/switchery.js"></script>
+    <!-- bootstrap-tagsinput js -->
+    <script src="src/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
+    <!-- bootstrap-touchspin js -->
+    <script src="src/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>
+    <script>
+        // Switchery
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-btn'));
+        $('.switch-btn').each(function () {
+            new Switchery($(this)[0], $(this).data());
+        });
+
+        // Bootstrap Touchspin
+        $("input[name='demo_vertical2']").TouchSpin({
+            verticalbuttons: true,
+            verticalupclass: 'fa fa-plus',
+            verticaldownclass: 'fa fa-minus'
+        });
+        $("input[name='demo3']").TouchSpin();
+        $("input[name='demo1']").TouchSpin({
+            min: 0,
+            max: 100,
+            step: 0.1,
+            decimals: 2,
+            boostat: 5,
+            maxboostedstep: 10,
+            postfix: '%'
+        });
+        $("input[name='demo2']").TouchSpin({
+            min: -1000000000,
+            max: 1000000000,
+            stepinterval: 50,
+            maxboostedstep: 10000000,
+            prefix: '$'
+        });
+        $("input[name='demo3_22']").TouchSpin({
+            initval: 40
+        });
+        $("input[name='demo5']").TouchSpin({
+            prefix: "pre",
+            postfix: "post"
+        });
+    </script>
+
+
 
 
 @endsection

@@ -14,6 +14,9 @@ class TheClass extends Model
 
     public function subjects(){
         return $this->hasMany(Subject::class);
+
+//       return $this->belongsTo( Subject::class );
+
     }
 
     public function classAssigns(){

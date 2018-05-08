@@ -41,3 +41,4 @@ Route::resource('teachers', 'TeacherController');
 
 Route::resource('/students','StudentController');
 Route::resource('/subjects','SubjectController');
+Route::resource('/subjectAssigns','SubjectAssignController');

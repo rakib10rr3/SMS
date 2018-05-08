@@ -25,7 +25,7 @@ class CreateSubjectsTable extends Migration
             $table->float('mcq_pass_marks',5,2)->nullable();
             $table->float('practical_marks',5,2)->nullable();
             $table->float('practical_pass_marks',5,2)->nullable();
-            $table->integer('class_id')->unsigned()->index();
+            $table->integer('the_class_id')->unsigned()->index();
             $table->boolean('has_written');
             $table->boolean('has_mcq');
             $table->boolean('has_practical');
