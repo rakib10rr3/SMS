@@ -25,12 +25,11 @@
                 <p class="mb-30 font-14"></p>
             </div>
         </div>
-        <form method="post" action="/groups">
+        <form method="post" action="/subjectAssigns">
+            {{csrf_field()}}
             <div class="form-group">
                 <label>Subject</label>
-                <select class="custom-select2 form-control" name="state" style="width: 100%; height: 38px;">
-
-
+                <select class="custom-select2 form-control" name="subject_id" style="width: 100%; height: 38px;">
                     @foreach ($subjects as $subject)
                         <option value="{{ $subject->id }}">
                             {{ $subject->name }}
@@ -39,28 +38,26 @@
 
                 </select>
             </div>
+
             <div class="form-group">
                 <label>Teacher</label>
-                <select class="custom-select2 form-control" name="state" style="width: 100%; height: 38px;">
-
-
+                <select class="custom-select2 form-control" name="teacher_id" style="width: 100%; height: 38px;">
                     @foreach ($teachers as $teacher)
                         <option value="{{ $teacher->id }}">
                             {{ $teacher->name }}
                         </option>
                     @endforeach
-
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="example-color-input" class=" col-form-label"></label>
-                <div class="col-10">
-                    <button type="submit" class="btn btn-outline-success">Submit</button>
-                </div>
+
+            <div class="col-10">
+                <button type="submit" class="btn btn-outline-success">Submit</button>
             </div>
+
         </form>
     </div>
+
 
 
 
@@ -76,14 +73,15 @@
             </div>
         </div>
         <div class="row">
-            <table class="data-table stripe hover nowrap">
+
+            <table class="table table-bordered">
                 <thead>
                 <tr>
 
                     <th>Class</th>
                     <th>Subject</th>
                     <th>Teacher</th>
-                    <th class="datatable-nosort">Action</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -101,49 +99,21 @@
                             </td>
                             <td>
                                 @foreach($class->subjects as $subject)
-                                    <p>{{$subject->name}},</p>
-                                    {{dd($subject->teachers)}}
-                                    {{--@foreach($subject->all_teachers as $teacher_bhai)--}}
-                                        {{--<p>{{$teacher_bhai->name}}-{{$subject->name}},</p>--}}
-                                    {{--@endforeach--}}
+                                    @foreach($subject->teachers as $teacher_bhai)
+                                        <p>{{$teacher_bhai->name}}</p>
+                                    @endforeach
                                 @endforeach
+
                             </td>
-                            {{--<td>--}}
-                                {{--@foreach($class->subjects->teachers as $teacher)--}}
-                                    {{--{{$teacher->name}}--}}
-
-                                {{--@endforeach--}}
-                            {{--</td>--}}
 
 
-                            {{--<td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"--}}
-                            {{--alt="Teacher Photo"></td>--}}
-
-                            {{--<td>--}}
-                            {{--<div class="dropdown">--}}
-                            {{--<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"--}}
-                            {{--data-toggle="dropdown">--}}
-                            {{--<i class="fa fa-ellipsis-h"></i>--}}
-                            {{--</a>--}}
-                            {{--<div class="dropdown-menu dropdown-menu-right">--}}
-                            {{--<a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i--}}
-                            {{--class="fa fa-pencil"></i> Edit</a>--}}
-                            {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                            {{--{{csrf_field()}}--}}
-                            {{--@method('DELETE')--}}
-                            {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                            {{--</form>--}}
-                            {{--<a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i--}}
-                            {{--class="fa fa-pencil"></i> Delete</a>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--</td>--}}
-                            {{----}}
                         </tr>
                     @endforeach
                 @endif
                 </tbody>
             </table>
+
+
         </div>
     </div>
 @endsection
@@ -231,27 +201,31 @@
                 buttons: true,
                 dangerMode: true,
             })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/teachers/" + id,
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                _method: "DELETE"
-                            },
-                            success: function (data) {
-                                swal("Poof! Your imaginary file has been deleted!", {
-                                    icon: "success",
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            }
-                        });
-                    } else {
-                        swal("Your imaginary file is safe!");
-                    }
-                });
+                .then((willDelete) = > {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/teachers/" + id,
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            _method: "DELETE"
+                        },
+                        success: function (data) {
+                            swal("Poof! Your imaginary file has been deleted!", {
+                                icon: "success",
+                            }).then(() = > {
+                                location.reload();
+                        })
+                            ;
+                        }
+                    });
+                } else {
+                    swal("Your imaginary file is safe!"
+            )
+            ;
+        }
+        })
+            ;
         });
     </script>
 
