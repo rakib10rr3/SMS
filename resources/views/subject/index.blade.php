@@ -13,19 +13,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-    <form action="../getSubjects" method="POST">
-        @csrf
-        <strong>Select Class to show:</strong>
-        <select name="class_id" id="class_id">
-            <option value="">Select Class</option>
-            @foreach($classes as $class)
-                <option value="{{ $class->id }}">{{ $class->name }}</option>
-            @endforeach
-        </select>
-        <div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
@@ -55,7 +43,7 @@
                             <td class="table-plus">{{$loop->iteration}}</td>
                             <td>{{ $subject->name }}</td>
                             <td>{{ $subject->code }}</td>
-                            <td>{{ $subject->class->name }}</td>
+                            <td>{{ $subject->theClass->name}}</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"

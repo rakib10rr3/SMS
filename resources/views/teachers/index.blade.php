@@ -8,6 +8,54 @@
 @endsection
 @section('content')
 
+    <form method="post" action="/groups">
+        {{csrf_field()}}
+
+        <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Group Name</label>
+            <div class="col-10">
+                <label>Subject:</label>
+                <select name="subject_id" class="custom-select form-control">
+                    @foreach ($subjects as $subject)
+                        <option value="{{ $subject->id }}">
+                            {{ $subject->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Group Name</label>
+            <div class="col-10">
+                <label>Teacher:</label>
+                <select name="teacher_id" class="custom-select form-control">
+                    @foreach ($teachers as $teacher)
+                        <option value="{{ $teacher->id }}">
+                            {{ $teacher->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group row">
+            <label for="example-color-input" class="col-2 col-form-label"></label>
+            <div class="col-10">
+                <button type="submit" class="btn btn-outline-success">Submit</button>
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
@@ -19,12 +67,11 @@
             <table class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-                    <th>Serial</th>
-                    <th>Name</th>
-                    <th>Religion</th>
-                    <th>Blood Group</th>
-                    <th>Gender</th>
-                    <th>Photo</th>
+
+                    <th>Class</th>
+                    <th>Subject</th>
+                    <th>Teacher</th>
+
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
@@ -34,7 +81,7 @@
                 @else
                     @foreach($teachers as $teacher)
                         <tr>
-                            <td class="table-plus">{{$loop->iteration}}</td>
+
                             <td>{{$teacher->name}}</td>
                             <td>{{$teacher->religion->name}}</td>
                             <td>{{$teacher->bloodGroup->name}}</td>

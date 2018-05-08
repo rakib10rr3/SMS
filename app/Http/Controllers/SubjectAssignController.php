@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Subject;
+use App\Model\TheClass;
 use App\SubjectAssign;
+use App\Teacher;
 use Illuminate\Http\Request;
 
 class SubjectAssignController extends Controller
@@ -15,7 +18,9 @@ class SubjectAssignController extends Controller
     public function index()
     {
         $classes = TheClass::all();
-        return view('class.index', compact('classes'));
+        $subjects=Subject::all();
+        $teachers=Teacher::all();
+        return view('subject_assign.index', compact('classes','subjects','teachers'));
     }
 
     /**

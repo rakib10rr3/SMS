@@ -47,7 +47,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Class :</label>
-                                    <select name="class_id" class="form-control">
+                                    <select name="the_class_id" class="form-control">
                                         @foreach($classes as $class)
                                             <option value="{{$class->id}}">{{$class->name}}</option>
                                         @endforeach
