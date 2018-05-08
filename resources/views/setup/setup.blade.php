@@ -7,6 +7,7 @@
  */
 
 use App\Model\BloodGroup;
+use \App\Model\Division;
 
 $bloodGroups = BloodGroup::query()->get();
 if (count($bloodGroups) == 0) {
@@ -80,4 +81,68 @@ if (count($genders) == 0) {
     echo "Gender data already exist<br>";
 }
 
+$divisions = Division::query()->get();
+if (count($divisions) == 0) {
+    Division::insert([
+        [
+            'name' => 'Dhaka',
+        ],
+        [
+            'name' => 'Chattogram',
+        ],
+        [
+            'name' => 'Rajshahi',
+        ],
+        [
+            'name' => 'Khulna',
+        ],
+        [
+            'name' => 'Barishal',
+        ],
+        [
+            'name' => 'Sylhet',
+        ],
+        [
+            'name' => 'Mymensingh',
+        ],
+        [
+            'name' => 'Rangpur',
+        ],
+    ]);
+} else {
+    echo "Division data already exist<br>";
+}
 
+$shifts = \App\Model\Shift::query()->get();
+if (count($shifts) == 0) {
+    \App\Model\Shift::insert([
+        [
+            'name' => 'Morning',
+        ],
+        [
+            'name' => 'Day',
+        ],
+    ]);
+} else {
+    echo "Shift data already exist<br>";
+}
+
+$groups = \App\Model\Group::query()->get();
+if (count($groups) == 0) {
+\App\Model\Group::insert([
+    [
+        'name' => 'Science',
+    ],
+    [
+        'name' => 'Commerce',
+    ],
+    [
+        'name' => 'Arts',
+    ],
+]);
+} else {
+    echo "Group data already exist<br>";
+}
+
+
+//TODO district kora lagbe

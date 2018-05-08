@@ -5,8 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    @foreach($waiter as $waiter)
-                    <div class="card-header">Edit Waiter : <b>{{$waiter->name}}</b></div>
+                    @foreach($group as $group)
+                    <div class="card-header">Edit Waiter : <b>{{$group->name}}</b></div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -14,35 +14,14 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form method="post" action="/waiter/{{$waiter->id}}">
+                        <form method="post" action="/groups/{{$group->id}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-2 col-form-label">Name</label>
                                     <div class="col-10">
-                                        <input class="form-control" type="text" placeholder="Rakibul Huda" value="{{$waiter->name}}" id="name"
+                                        <input class="form-control" type="text" placeholder="Rakibul Huda" value="{{$group->name}}" id="name"
                                                name="name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-search-input" class="col-2 col-form-label">Phone Number</label>
-                                    <div class="col-10">
-                                        <input class="form-control" type="tel" placeholder="0123456789" id="mobile" value="{{$waiter->mobile}}"
-                                               name="mobile">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-email-input" class="col-2 col-form-label">Address</label>
-                                    <div class="col-10">
-                                        <input class="form-control" type="text"
-                                               placeholder="Elmah,Enayet Bazar,Chittagong" id="address" name="address" value="{{$waiter->address}}">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="example-url-input" class="col-2 col-form-label">NID</label>
-                                    <div class="col-10">
-                                        <input class="form-control" type="text" placeholder="BD0123456789" id="nid"
-                                               name="nid" value="{{$waiter->nid}}">
                                     </div>
                                 </div>
 

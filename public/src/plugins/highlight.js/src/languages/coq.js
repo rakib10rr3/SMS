@@ -28,7 +28,7 @@ function(hljs) {
         'Proof Proposition Pwd Qed Quit Rec Record Recursive Redirect Relation Remark ' +
         'Remove Require Reserved Reset Resolve Restart Rewrite Right Ring Rings Save ' +
         'Scheme Scope Scopes Script Search SearchAbout SearchHead SearchPattern ' +
-        'SearchRewrite Section Separate Set Setoid Show Solve Sorted Step Strategies ' +
+        'SearchRewrite section Separate Set Setoid Show Solve Sorted Step Strategies ' +
         'Strategy Structure SubClass Table Tables Tactic Term Test Theorem Time ' +
         'Timeout Transparent Type Typeclasses Types Undelimit Undo Unfocus Unfocused ' +
         'Unfold Universe Universes Unset Unshelve using Variable Variables Variant ' +

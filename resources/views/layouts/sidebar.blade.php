@@ -161,6 +161,99 @@
                     </ul>
                 </li>
 
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Shift</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/shifts/create">Create Shift</a></li>
+                        <li><a href="/shifts">View Shift</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Section</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/sections/create">Create Section</a></li>
+                        <li><a href="/sections">View Section</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Grade Points</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/grades/create">Create Grade point</a></li>
+                        <li><a href="/grades">View Grade point</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Notice</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/notices/create">Add Notice</a></li>
+                        <li><a href="/notices">View Notices</a></li>
+
+                    </ul>
+                </li>
+
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Exam Terms</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{route('exam-terms.create')}}">Create Exam Terms</a></li>
+                        <li><a href="{{route('exam-terms.index')}}">View Exam Terms</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Group</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/groups/create">Create Group</a></li>
+                        <li><a href="/groups">View Group</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Class</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/class/create">Create Class</a></li>
+                        <li><a href="/class">View Class</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Role</span>
+                    </a>
+                    <ul class="submenu">
+
+                        <li><a href="/roles/create">Create Role</a></li>
+                        <li><a href="/roles">View Role</a></li>
+
+                    </ul>
+                </li>
+
 
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">

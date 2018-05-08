@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             $table->integer('blood_group_id')->unsigned()->index();
             $table->integer('gender_id')->unsigned()->index();
             $table->string('nationality',20);
-            $table->dateTime('dob');
+            $table->date('dob');
             $table->string('extra_activity',256);
             $table->string('photo');
             $table->string('father_name');
@@ -34,7 +34,7 @@ class CreateStudentsTable extends Migration
             $table->integer('roll')->unsigned();
             $table->bigInteger('user_id')->unsigned()->index()->nullable(false);
             $table->integer('shift_id')->unsigned()->index();
-            $table->dateTime('admission_year');
+            $table->date('admission_year');
             $table->integer('the_class_id')->unsigned()->index();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('group_id')->unsigned()->index();

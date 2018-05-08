@@ -14,7 +14,8 @@ class GradeController extends Controller
      */
     public function index()
     {
-        //
+        $grades = Grade::all();
+        return view('Grade.index', compact('grades'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /**
@@ -24,7 +25,7 @@ class GradeController extends Controller
      */
     public function create()
     {
-        //
+        return view('Grade.create');
     }
 
     /**
@@ -35,7 +36,8 @@ class GradeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Grade::query()->create($request->all());
+        return redirect('/grades');
     }
 
     /**
@@ -57,7 +59,7 @@ class GradeController extends Controller
      */
     public function edit(Grade $grade)
     {
-        //
+        return view('Grade.edit', compact('grade'));
     }
 
     /**
@@ -69,7 +71,8 @@ class GradeController extends Controller
      */
     public function update(Request $request, Grade $grade)
     {
-        //
+        $grade->update($request->all());
+        return redirect('/grades');
     }
 
     /**
@@ -80,6 +83,7 @@ class GradeController extends Controller
      */
     public function destroy(Grade $grade)
     {
-        //
+        $grade->delete();
+        return redirect('/grades');
     }
 }

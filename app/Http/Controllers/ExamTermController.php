@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\ExamTerm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class ExamTermController extends Controller
 {
@@ -40,6 +41,7 @@ class ExamTermController extends Controller
         $request->validate([
             'name' => 'required|',
         ]);
+        
         ExamTerm::query()->create($request->all());
         return redirect('/exam-terms');
     }
