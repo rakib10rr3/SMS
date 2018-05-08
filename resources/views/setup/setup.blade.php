@@ -8,6 +8,8 @@
 
 use App\Model\BloodGroup;
 use \App\Model\Division;
+use App\Model\TheClass;
+use App\Model\Section;
 
 $bloodGroups = BloodGroup::query()->get();
 if (count($bloodGroups) == 0) {
@@ -144,5 +146,59 @@ if (count($groups) == 0) {
     echo "Group data already exist<br>";
 }
 
+$classes = TheClass::query()->get();
+if (count($classes) == 0) {
+    TheClass::insert([
+        [
+            'name' => 'One',
+        ],
+        [
+            'name' => 'Two',
+        ],
+        [
+            'name' => 'Three',
+        ],
+        [
+            'name' => 'Four',
+        ],
+        [
+            'name' => 'Five',
+        ],
+        [
+            'name' => 'Six',
+        ],
+        [
+            'name' => 'Seven',
+        ],
+        [
+            'name' => 'Eight',
+        ],
+        [
+            'name' => 'Nine',
+        ],
+        [
+            'name' => 'Ten',
+        ],
+    ]);
+} else {
+    echo "Class data already exist<br>";
+}
+
+$sections = Section::query()->get();
+if (count($sections) == 0) {
+    Section::insert([
+        [
+            'name' => 'A',
+        ],
+        [
+            'name' => 'B',
+        ],
+        [
+            'name' => 'C',
+        ],
+    ]);
+} else {
+    echo "Section data already exist<br>";
+}
 
 //TODO district kora lagbe

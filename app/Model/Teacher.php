@@ -34,14 +34,16 @@ class Teacher extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function subjects()
-    {
-        return $this->hasMany(Subject::class);
-    }
 
     public function classAssigns()
     {
         return $this->hasMany(ClassAssign::class);
     }
+
+    public function subjects()
+    {
+        return $this->belongsToMany('App\Model\Subject', 'subject_assigns', 'teacher_id', 'subject_id');
+    }
+
 
 }

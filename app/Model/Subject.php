@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     protected $guarded=[];
-    public function teachers(){
-        return $this->belongsToMany(Teacher::class);
-    }
 
-    public function class(){
+
+    public function theClasses(){
         return $this->belongsTo(TheClass::class);
     }
 
@@ -31,4 +29,11 @@ class Subject extends Model
     public function group(){
         return $this->belongsTo(Group::class);
     }
+
+    public function teachers() {
+
+        return $this->belongsToMany('App\Model\Teacher', 'subject_assigns','subject_id','teacher_id');
+
+    }
+
 }
