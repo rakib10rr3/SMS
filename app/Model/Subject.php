@@ -10,7 +10,7 @@ class Subject extends Model
     protected $guarded=[];
 
 
-    public function theClasses(){
+    public function class(){
         return $this->belongsTo(TheClass::class);
     }
 

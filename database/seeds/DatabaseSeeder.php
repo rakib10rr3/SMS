@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         //
         DB::table('teachers')->delete();
         factory(\App\Teacher::class,50)->create();
+        //
+        DB::table('subjects')->delete();
+        factory(\App\Model\Subject::class,50)->create();
 
 
     }

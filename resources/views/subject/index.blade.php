@@ -48,8 +48,10 @@
                 @if(empty($subjects))
                     <p>Data does not exist</p>
                 @else
+
                     @foreach($subjects as $subject)
                         <tr>
+
                             <td class="table-plus">{{$loop->iteration}}</td>
                             <td>{{ $subject->name }}</td>
                             <td>{{ $subject->code }}</td>

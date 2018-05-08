@@ -58,7 +58,7 @@ class SubjectController extends Controller
         $written_marks = request('written_marks');
         $written_pass_marks = request('written_pass_marks');
 
-       $has_mcq = request('has_mcq');
+        $has_mcq = request('has_mcq');
         if($request->get('has_mcq') == null) {
             $has_mcq=0;
         }
