@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\OptionalAssign;
 use App\Teacher;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,4 +37,7 @@ class Subject extends Model
 
     }
 
+    public function optionalAssigns(){
+        return $this->hasMany(OptionalAssign::class);
+    }
 }

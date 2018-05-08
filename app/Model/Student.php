@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\OptionalAssign;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -54,6 +55,10 @@ class Student extends Model
 
     public function attendances(){
         return$this->hasMany(Attendance::class);
+    }
+
+    public function optionalAssigns(){
+        return $this->hasOne(OptionalAssign::class);
     }
 
 }

@@ -18,7 +18,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/students/optional-subjects','OptionalAssignController@index');
 Route::post('/getSubjects', 'SubjectController@getSubject');
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('shifts', 'ShiftController');
 Route::resource('sections', 'SectionController');
@@ -41,3 +44,4 @@ Route::resource('teachers', 'TeacherController');
 
 Route::resource('/students','StudentController');
 Route::resource('/subjects','SubjectController');
+

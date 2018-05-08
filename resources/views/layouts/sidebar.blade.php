@@ -143,6 +143,7 @@
                             <ul class="submenu">
                         <li><a href="/subjects/create">Add Subject</a></li>
                         <li><a href="/subjects">View Subjects</a></li>
+                        <li><a href="/subjects">Assign Optional Subject</a></li>
 
                     </ul>
                 </li>
