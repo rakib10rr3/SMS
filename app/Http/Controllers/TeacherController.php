@@ -93,8 +93,8 @@ class TeacherController extends Controller
         $cell = request('cell');
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $picture_name = $file->getClientOriginalName();
-            $file->move('images/teachers/' . $user_name, $picture_name);
+            $picture_name = $user_obj->id."-".$user_obj->name."-".$file->getClientOriginalName();
+            $file->move('images/teachers', $picture_name);
         } else {
             $picture_name = "No Image Found ";
         }
@@ -179,8 +179,8 @@ class TeacherController extends Controller
         $cell = request('cell');
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $picture_name = $file->getClientOriginalName();
-            $file->move('images/teachers' . $user_name, $picture_name);
+            $picture_name = $teacher->user->id."-".$teacher->user->name."-".$file->getClientOriginalName();
+            $file->move('images/teachers', $picture_name);
         } else {
             $picture_name = "No Image Found ";
         }

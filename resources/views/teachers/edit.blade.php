@@ -88,7 +88,7 @@
                                 <div class="form-group">
                                     <label>Date of Birth :</label>
                                     <input type="text" name="dob" class="form-control date-picker"
-                                           value="{{$teacher->dob}}"
+                                           value="{{Carbon\Carbon::parse($teacher->dob)->format('d F Y')}}"
                                            placeholder="Select Date">
                                 </div>
                             </div>
@@ -108,11 +108,13 @@
                                             value="{{$teacher->religion_id}}">
                                         @foreach ($religions as $religion)
                                             {{--<option value="{{ $religion->id }}">--}}
-                                                {{--{{ $religion->name }}--}}
+                                            {{--{{ $religion->name }}--}}
                                             {{--</option>--}}
 
                                             <option value="{{$religion->id}}" {{ $religion->id === $teacher->religion_id? 'selected' : '' }}>{{$religion->name}}
+
                                             </option>
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -125,9 +127,9 @@
                                     <select name="blood_group_id" class="custom-select form-control"
                                             value="{{$teacher->blood_group_id}}">
                                         @foreach ($bloodGroups as $bloodGroup)
-                                            <option value="{{ $bloodGroup->id }}">
-                                                {{ $bloodGroup->name }}
-                                            </option>
+
+                                            <option value="{{$bloodGroup->id}}" {{ $bloodGroup->id === $teacher->blood_group_id? 'selected' : '' }}>{{$bloodGroup->name}}
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -140,9 +142,7 @@
                                     <select name="gender_id" class="custom-select form-control"
                                             value="{{$teacher->gender_id}}">
                                         @foreach ($genders as $gender)
-                                            <option value="{{ $gender->id }}">
-                                                {{ $gender->name }}
-                                            </option>
+                                            <option value="{{$gender->id}}" {{ $gender->id === $teacher->gender_id? 'selected' : '' }}>{{$gender->name}}
                                         @endforeach
                                     </select>
                                 </div>
@@ -155,7 +155,7 @@
                         <div class="row">
                             <div class="col">
                                 <input type="file" name="photo" id="photo"
-                                       value="images/teachers/{{$teacher->name}}/{{$teacher->photo}}">
+                                       value="images/teachers/{{$teacher->photo}}">
                             </div>
                         </div>
                     </section>
