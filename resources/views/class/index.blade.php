@@ -1,106 +1,178 @@
 @extends('layouts.app')
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+@endsection
 @section('content')
 
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Class Dashboard</div>
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h5 class="text-blue">Class Information</h5>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    <table class="table table-condensed">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Action</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($classes as $class)
-                            <tr>
-                                <th scope="row">{{$loop->iteration}}</th>
-                                <td>{{$class->name}}</td>
-                                <td>
-
-                                    <button type="button" class="btn btn-sm btn-info"><a
-                                                style="color:inherit;text-decoration: none;"
-                                                href="/class/{{$class->id}}/edit">Edit</a></button>
-
-                                    {{--<form class="btn btn-sm btn-danger" action="/groups/{{$group->id}}" method="post">--}}
-                                    {{--{{csrf_field()}}--}}
-                                    {{--{{method_field('DELETE')}}--}}
-                                    {{--<button class="btn btn-sm btn-danger" type="submit">Delete</button>--}}
-                                    {{--</form>--}}
-
-
-                                    <button data-toggle="modal" data-target="#confirmation-modal-{{$class->id}}"
-                                            class="btn btn-sm btn-danger" type="submit">Delete
-                                    </button>
-
-
-                                    <div class="modal fade" id="confirmation-modal-{{$class->id}}" tabindex="-1"
-                                         role="dialog"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-body text-center font-18">
-                                                    <h4 class="padding-top-30 mb-30 weight-500"> Are you sure you want
-                                                        to
-                                                        continue?</h4>
-                                                    <div class="padding-bottom-30 row"
-                                                         style="max-width: 170px; margin: 0 auto;">
-                                                        <div class="col-6">
-                                                            <button type="button"
-                                                                    class="btn btn-secondary border-radius-100 btn-block confirmation-btn"
-                                                                    data-dismiss="modal"><i class="fa fa-times"></i>
-                                                            </button>
-                                                            NO
-                                                        </div>
-
-                                                        <div class="col-6">
-
-                                                            {{--<form action="/class/{{ $class->id }}" method="post">--}}
-                                                            {{--{{csrf_field()}}--}}
-                                                            {{--{{ method_field('DELETE') }}--}}
-                                                            {{--<button type="submit"--}}
-                                                            {{--class="btn btn-primary border-radius-100 btn-block confirmation-btn"--}}
-                                                            {{--data-dismiss="modal"><i class="fa fa-check"></i>--}}
-                                                            {{--</button>--}}
-                                                            {{--YES--}}
-                                                            {{--</form>--}}
-
-                                                            {{----}}
-                                                            <button class="deleteProduct" data-id="{{ $class->id }}"
-                                                                    data-token="{{ csrf_token() }}">Delete
-                                                            </button>
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </td>
-
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
+        <div class="row">
+            <table class="data-table stripe hover nowrap">
+                <thead>
+                <tr>
+                    <th>Serial</th>
+                    <th>Exam Term Name</th>
+                    <th class="datatable-nosort">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(empty($classes))
+                    <p>Data does not exist</p>
+                @else
+                    @foreach($classes as $class)
+                        <tr>
+                            <td class="table-plus">{{$loop->iteration}}</td>
+                            <td>{{$class->name}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+                                       data-toggle="dropdown">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="/class/{{$class->id}}/edit"><i
+                                                    class="fa fa-pencil"></i> Edit</a>
+                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
+                                        {{--{{csrf_field()}}--}}
+                                        {{--@method('DELETE')--}}
+                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
+                                        {{--</form>--}}
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$class->id}}"><i
+                                                    class="fa fa-pencil"></i> Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+                </tbody>
+            </table>
+        </div>
     </div>
+@endsection
 
+
+@section('scripts')
+
+    <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/responsive.bootstrap4.js')}}"></script>
+    <!-- buttons for Export datatable -->
+    <script src="src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.print.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.html5.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
+    <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
+    <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
+
+
+
+
+    <script>
+        $('document').ready(function () {
+
+            $('.data-table').DataTable({
+                scrollCollapse: true,
+                autoWidth: false,
+                responsive: true,
+                columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                }],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "info": "_START_-_END_ of _TOTAL_ entries",
+                    searchPlaceholder: "Search"
+                },
+            });
+            $('.data-table-export').DataTable({
+                scrollCollapse: true,
+                autoWidth: false,
+                responsive: true,
+                columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                }],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "info": "_START_-_END_ of _TOTAL_ entries",
+                    searchPlaceholder: "Search"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'pdf', 'print'
+                ]
+            });
+            var table = $('.select-row').DataTable();
+            $('.select-row tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+            var multipletable = $('.multiple-select-row').DataTable();
+            $('.multiple-select-row tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).on('click', '.ts-delete', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            swal({
+                title: "Are you sure!",
+                type: "error",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/class/"+id,
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                _method: "DELETE"
+                            },
+                            success: function (data) {
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        });
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
+        });
+    </script>
 
 
 @endsection
+
+
+{{--@include('layouts.header')--}}
+
+
+
+

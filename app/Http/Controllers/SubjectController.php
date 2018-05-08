@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Group;
 use App\Model\Subject;
+use App\Model\TheClass;
+
+use App\Teacher;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -14,7 +18,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        $classes = TheClass::all();
+        $subjects = Subject::all();
+        return view('subject.index', compact('subjects','classes'));
     }
 
     /**
@@ -24,7 +30,9 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        $groups = Group::all();
+        $classes = TheClass::all();
+        return view('subject.create',compact('classes','groups'));
     }
 
     /**
@@ -35,7 +43,8 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Subject::query()->create($request->all());
+        return redirect('/subjects');
     }
 
     /**
@@ -46,7 +55,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        //
+        return view('subject.show', compact('subject'));
     }
 
     /**
@@ -57,7 +66,8 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        //
+        $classes = TheClass::all();
+        return view('subject.edit', compact('subject','classes'));
     }
 
     /**
@@ -69,7 +79,8 @@ class SubjectController extends Controller
      */
     public function update(Request $request, Subject $subject)
     {
-        //
+        $subject->update($request->all());
+        return redirect('/subjects');
     }
 
     /**
@@ -80,6 +91,14 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        //
+        $subject->delete();
+        return redirect('/subjects');
+    }
+
+    public function getSubject(Request $request)
+    {
+        $classes = TheClass::all();
+        $subjects = Subject::where('class_id', $request->class_id)->get();
+        return view('subject.index', compact('subjects', 'classes'));
     }
 }

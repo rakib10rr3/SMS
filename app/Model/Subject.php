@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
+    protected $guarded=[];
     public function teachers(){
         return $this->belongsToMany(Teacher::class);
     }
@@ -25,5 +26,9 @@ class Subject extends Model
 
     public function attendances(){
         return$this->hasMany(Attendance::class);
+    }
+
+    public function group(){
+        return $this->belongsTo(Group::class);
     }
 }

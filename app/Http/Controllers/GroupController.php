@@ -38,6 +38,15 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+
+        ]);
+
+
+
+
         Group::query()->create($request->all());
         return redirect('/groups');
 

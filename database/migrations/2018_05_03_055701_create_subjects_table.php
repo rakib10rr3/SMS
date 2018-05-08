@@ -19,11 +19,18 @@ class CreateSubjectsTable extends Migration
             $table->string('name');
             $table->float('full_marks',5,2);
             $table->float('pass_marks',5,2);
+            $table->float('written_marks',5,2);
             $table->float('written_pass_marks',5,2);
+            $table->float('mcq_marks',5,2);
             $table->float('mcq_pass_marks',5,2);
+            $table->float('practical_marks',5,2);
             $table->float('practical_pass_marks',5,2);
             $table->integer('class_id')->unsigned()->index();
-            $table->bigInteger('teacher_id')->unsigned()->index();
+            $table->boolean('has_written');
+            $table->boolean('has_mcq');
+            $table->boolean('has_practical');
+            $table->boolean('is_optional');
+            $table->integer('group_id')->unsigned()->index();
             $table->timestamps();
         });
     }

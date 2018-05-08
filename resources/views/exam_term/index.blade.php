@@ -75,6 +75,10 @@
     <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
+
+
+
+
     <script>
         $('document').ready(function () {
             $('.data-table').DataTable({
@@ -90,6 +94,75 @@
                     "info": "_START_-_END_ of _TOTAL_ entries",
                     searchPlaceholder: "Search"
                 },
+            });
+            $('.data-table-export').DataTable({
+                scrollCollapse: true,
+                autoWidth: false,
+                responsive: true,
+                columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                }],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "info": "_START_-_END_ of _TOTAL_ entries",
+                    searchPlaceholder: "Search"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'pdf', 'print'
+                ]
+            });
+            var table = $('.select-row').DataTable();
+            $('.select-row tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+            var multipletable = $('.multiple-select-row').DataTable();
+            $('.multiple-select-row tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
+        });
+    </script>
+
+
+        <script>
+            $(document).on('click', '.ts-delete', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                swal({
+                    title: "Are you sure!",
+                    type: "error",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/exam-terms/"+id,
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    _method: "DELETE"
+                                },
+                                success: function (data) {
+                                    swal("Poof! Your imaginary file has been deleted!", {
+                                        icon: "success",
+                                    }).then(() => {
+                                        location.reload();
+                                    });
+                                }
+                            });
+                        } else {
+                            swal("Your imaginary file is safe!");
+                        }
+                    });
             });
             $('.data-table-export').DataTable({
                 scrollCollapse: true,

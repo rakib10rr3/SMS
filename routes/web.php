@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::post('/getSubjects', 'SubjectController@getSubject');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('shifts', 'ShiftController');
 Route::resource('sections', 'SectionController');
@@ -37,5 +37,7 @@ Route::resource('/exam-terms','ExamTermController');
 Route::resource('groups', 'GroupController');
 Route::resource('class', 'TheClassController');
 Route::resource('roles', 'RoleController');
+Route::resource('teachers', 'TeacherController');
 
 Route::resource('/students','StudentController');
+Route::resource('/subjects','SubjectController');

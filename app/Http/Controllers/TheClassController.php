@@ -36,6 +36,11 @@ class TheClassController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+
+        ]);
+
         TheClass::query()->create($request->all());
         return redirect('/class');
     }
@@ -59,6 +64,8 @@ class TheClassController extends Controller
      */
     public function edit(TheClass $class)
     {
+
+
         $class = TheClass::query()->find($class);
         return view('class.edit', compact('class'));
     }
@@ -88,9 +95,9 @@ class TheClassController extends Controller
 //        return $theClass;
 //    }
 
-    public function destroy( $id)
+    public function destroy($id)
     {
-        $theclasses=TheClass::where("id",$id)->first();
+        $theclasses = TheClass::where("id", $id)->first();
         $theclasses->delete();
         return redirect('/class');
     }

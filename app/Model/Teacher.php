@@ -11,29 +11,37 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    public function religion(){
+    protected $guarded = [];
+
+
+    public function religion()
+    {
         return $this->belongsTo(Religion::class);
     }
 
-    public function bloodGroup(){
+    public function bloodGroup()
+    {
         return $this->belongsTo(BloodGroup::class);
     }
 
-    public function gender(){
+    public function gender()
+    {
         return $this->belongsTo(Gender::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
     public function subjects()
     {
-        return$this->hasMany(Subject::class);
+        return $this->hasMany(Subject::class);
     }
 
-    public function classAssigns(){
-        return$this->hasMany(ClassAssign::class);
+    public function classAssigns()
+    {
+        return $this->hasMany(ClassAssign::class);
     }
 
 }
