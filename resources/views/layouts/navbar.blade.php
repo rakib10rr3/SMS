@@ -4,7 +4,7 @@
         <div class="brand-logo">
             <a href="index.php">
                 {{--<img src="vendors/images/logo.png" alt="" class="mobile-logo">--}}
-                <img src="{{ asset('vendors/images/logo.png') }}" alt="" class="mobile-logo">
+                <img src="{{ asset('vendors/images/logo.svg') }}" alt="" class="mobile-logo">
             </a>
         </div>
         <div class="menu-icon">
@@ -17,15 +17,14 @@
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     <span class="user-icon"><i class="fa fa-user-o"></i></span>
-                    <span class="user-name"> {{ Auth::user()->name }}</span>
+                    <span class="user-name"> {{ Auth::User()->name }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="profile.php"><i class="fa fa-user-md" aria-hidden="true"></i> Profile</a>
                     <a class="dropdown-item" href="profile.php"><i class="fa fa-cog" aria-hidden="true"></i> Setting</a>
                     <a class="dropdown-item" href="faq.php"><i class="fa fa-question" aria-hidden="true"></i> Help</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
                     </a>
 

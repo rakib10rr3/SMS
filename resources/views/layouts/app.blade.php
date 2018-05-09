@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     @include('layouts.header')
 </head>
+
 <body>
 
-@include('layouts.navbar')
+    @include('layouts.navbar') @include('layouts.sidebar')
 
-@include('layouts.sidebar')
+    <div class="main-container">
 
-<div class="main-container">
-    <div class="pd-ltr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
+        <div class="pd-ltr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
 
+            @yield('content')
 
+            @include('layouts.footer') 
 
-        @yield('content')
-
-
-
+        </div>
 
     </div>
 
-</div>
 
+    @include('layouts.script')
 
-
-
-
-
-@include('layouts.footer')
-
-@include('layouts.script')
-
-@yield('scripts')
+    @yield('scripts')
 
 </body>
+
 </html>

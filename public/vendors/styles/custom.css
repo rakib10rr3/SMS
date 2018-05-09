@@ -1,0 +1,15 @@
+.header-right .brand-logo a {
+    padding: 8px 6px 5px;
+}
+
+.brand-logo {
+    background: #eeeeee;
+}
+
+.brand-logo a {
+    padding: 12px 20px 5px;
+}
+
+.footer-wrap {
+    margin-top: 20px;
+}
