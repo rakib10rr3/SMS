@@ -13,16 +13,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
 Route::get('/students/optional-subjects', 'OptionalAssignController@index');
 Route::post('/getSubjects', 'SubjectController@getSubject');
-
-Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('shifts', 'ShiftController');
 Route::resource('sections', 'SectionController');
 Route::resource('grades', 'GradeController');
@@ -42,6 +41,8 @@ Route::resource('class', 'TheClassController');
 Route::resource('roles', 'RoleController');
 Route::resource('teachers', 'TeacherController');
 
+Route::get('preference', 'PreferenceController@index')->name('preference.index')->middleware('auth');
+Route::put('preference', 'PreferenceController@update')->name('preference.update')->middleware('auth');
 Route::resource('/students', 'StudentController');
 Route::resource('/subjects', 'SubjectController');
 Route::resource('/subjectAssigns', 'SubjectAssignController');

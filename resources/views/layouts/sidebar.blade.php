@@ -2,7 +2,7 @@
     <div class="brand-logo">
         <a href="index.php">
             {{--<img src="vendors/images/deskapp-logo.png" alt="">--}}
-            <img src="{{asset('vendors/images/deskapp-logo.png')}}" alt="">
+            <img src="{{asset('vendors/images/logo-full-color.png')}}" alt="">
         </a>
     </div>
     <div class="menu-block customscroll">
@@ -168,6 +168,16 @@
                         <li><a href="{{route('subjectAssigns.index')}}">Assign</a></li>
 
                     </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="{{route('preference.index')}}" class="dropdown-toggle no-arrow">
+                        <span class="fa fa-clone"></span><span class="mtext">Preferences</span>
+                    </a>
+                    {{-- <ul class="submenu">
+                        <li><a href="{{route('subjectAssigns.index')}}">Assign</a></li>
+
+                    </ul> --}}
                 </li>
 
                 <li class="dropdown">

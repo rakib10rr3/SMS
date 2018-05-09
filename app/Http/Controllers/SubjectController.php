@@ -122,7 +122,8 @@ class SubjectController extends Controller
     public function edit(Subject $subject)
     {
         $classes = TheClass::all();
-        return view('subject.edit', compact('subject', 'classes'));
+        $groups = Group::all();
+        return view('subject.edit', compact('subject', 'classes', 'groups'));
     }
 
     /**
@@ -134,7 +135,64 @@ class SubjectController extends Controller
      */
     public function update(Request $request, Subject $subject)
     {
-        $subject->update($request->all());
+        //$subject->update($request->all());
+        $code = request('code');
+        $name = request('name');
+        $full_marks = request('full_marks');
+        $pass_marks = request('pass_marks');
+
+        $has_written = request('has_written');
+        $written_marks = request('written_marks');
+        $written_pass_marks = request('written_pass_marks');
+        if($request->get('has_written') == null){
+            $has_written=0;
+            $written_marks=null;
+            $written_pass_marks=null;
+        }
+
+        $has_mcq = request('has_mcq');
+        $mcq_marks = request('mcq_marks');
+        $mcq_pass_marks = request('mcq_pass_marks');
+        if($request->get('has_mcq') == null) {
+            $has_mcq=0;
+            $mcq_marks=null;
+            $mcq_pass_marks=null;
+        }
+
+        $has_practical = request('has_practical');
+        $practical_marks = request('practical_marks');
+        $practical_pass_marks = request('practical_pass_marks');
+        if($request->get('has_practical') == null){
+            $has_practical=0;
+            $practical_marks=null;
+            $practical_pass_marks=null;
+        }
+
+        $class_id = request('the_class_id');
+        $is_optional = request('is_optional');
+        if($request->get('is_optional') == null){
+            $is_optional=0;
+        }
+        $group_id = request('group_id');
+        //return $request->all();
+        Subject::where('id', $subject->id)->update(array(
+            'code' => $code,
+            'name' => $name,
+            'full_marks' => $full_marks,
+            'pass_marks' => $pass_marks,
+            'has_written' => $has_written,
+            'written_marks' => $written_marks,
+            'written_pass_marks' => $written_pass_marks,
+            'has_mcq' => $has_mcq,
+            'mcq_marks' => $mcq_marks,
+            'mcq_pass_marks' => $mcq_pass_marks,
+            'has_practical' => $has_practical,
+            'practical_marks' => $practical_marks,
+            'practical_pass_marks' => $practical_pass_marks,
+            'the_class_id' => $class_id,
+            'is_optional' => $is_optional,
+            'group_id' => $group_id,
+        ));
         return redirect('/subjects');
     }
 
@@ -153,7 +211,7 @@ class SubjectController extends Controller
     public function getSubject(Request $request)
     {
         $classes = TheClass::all();
-        $subjects = Subject::where('class_id', $request->class_id)->get();
+        $subjects = Subject::where('the_class_id', $request->class_id)->get();
         return view('subject.index', compact('subjects', 'classes'));
     }
 }

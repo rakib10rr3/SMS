@@ -43,4 +43,8 @@ class Section extends Model
     {
         return $this->belongsToMany('App\Teacher', 'subject_assigns', 'subject_id', 'teacher_id');
     }
+
+    public function classAssigns(){
+        return$this->hasMany(ClassAssign::class);
+    }
 }
