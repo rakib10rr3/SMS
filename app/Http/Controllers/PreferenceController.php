@@ -14,7 +14,7 @@ class PreferenceController extends Controller
      */
     public function index()
     {
-        //
+        return view('preference.index');
     }
 
     /**
@@ -67,9 +67,9 @@ class PreferenceController extends Controller
      * @param  \App\Model\Preference  $preference
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Preference $preference)
+    public function update(Request $request)
     {
-        //
+        return $request;
     }
 
     /**

@@ -8526,9 +8526,11 @@ and dependencies (minified).
 			scrollbarPosition:"inside",
 			/*
 			scrolling inertia
-			values: integer (milliseconds)
+            values: integer (milliseconds)
+            edit:shohag
+            default: 950
 			*/
-			scrollInertia:950,
+			scrollInertia:100,
 			/* 
 			auto-adjust scrollbar dragger length
 			values: boolean

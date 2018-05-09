@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="written_hidden">
+                        <div id="written_hidden" style="display: none">
                             <div>
                                 <label>Written Full Marks:</label>
                                 <input type="text" name="written_marks" class="form-control"
@@ -134,7 +134,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="mcq_hidden">
+                        <div id="mcq_hidden" style="display: none">
                             <div>
                                 <label>MCQ Full Marks:</label>
                                 <input type="text" name="mcq_marks" class="form-control" placeholder="MCQ Marks">
@@ -153,7 +153,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="practical_hidden">
+                        <div id="practical_hidden" style="display: none">
                             <div>
                                 <label>Practical Full Marks:</label>
                                 <input type="text" name="practical_marks" class="form-control"
@@ -195,59 +195,10 @@
 
 
 
-
-
-
     <!-- Form wizard Js  -->
 @section('scripts')
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    {{--<script src="src/plugins/switchery/dist/switchery.js"></script>--}}
-    {{--<script src="{{asset('src/plugins/switchery/dist/switchery.js')}}"></script>--}}
-    {{--<!-- bootstrap-tagsinput js -->--}}
-    {{--<script src="src/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>--}}
-    {{--<script src="{{asset('src/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.js')}}"></script>--}}
-    {{--<!-- bootstrap-touchspin js -->--}}
-    {{--<script src="src/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js"></script>--}}
-    {{--<script src="{{asset('src/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js')}}"></script>--}}
-    {{--<script>--}}
-    {{--// Switchery--}}
-    {{--var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-btn'));--}}
-    {{--$('.switch-btn').each(function() {--}}
-    {{--new Switchery($(this)[0], $(this).data());--}}
-    {{--});--}}
-
-    {{--// Bootstrap Touchspin--}}
-    {{--$("input[name='demo_vertical2']").TouchSpin({--}}
-    {{--verticalbuttons: true,--}}
-    {{--verticalupclass: 'fa fa-plus',--}}
-    {{--verticaldownclass: 'fa fa-minus'--}}
-    {{--});--}}
-    {{--$("input[name='demo3']").TouchSpin();--}}
-    {{--$("input[name='demo1']").TouchSpin({--}}
-    {{--min: 0,--}}
-    {{--max: 100,--}}
-    {{--step: 0.1,--}}
-    {{--decimals: 2,--}}
-    {{--boostat: 5,--}}
-    {{--maxboostedstep: 10,--}}
-    {{--postfix: '%'--}}
-    {{--});--}}
-    {{--$("input[name='demo2']").TouchSpin({--}}
-    {{--min: -1000000000,--}}
-    {{--max: 1000000000,--}}
-    {{--stepinterval: 50,--}}
-    {{--maxboostedstep: 10000000,--}}
-    {{--prefix: '$'--}}
-    {{--});--}}
-    {{--$("input[name='demo3_22']").TouchSpin({--}}
-    {{--initval: 40--}}
-    {{--});--}}
-    {{--$("input[name='demo5']").TouchSpin({--}}
-    {{--prefix: "pre",--}}
-    {{--postfix: "post"--}}
-    {{--});--}}
-    {{--</script>--}}
     <script src="{{asset('src/plugins/jquery-steps/build/jquery.steps.js')}}"></script>
     <script>
         $(".tab-wizard").steps({
@@ -267,7 +218,7 @@
 
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script>
-        $("#written_hidden").hide();
+        //$("#written_hidden").hide();
         $(document).ready(function () {
             $("#written").click(function () {
                 if ($("#written").prop("checked")) {
@@ -291,7 +242,7 @@
     </script>
 
     <script>
-        $("#mcq_hidden").hide();
+        // $("#mcq_hidden").hide();
         $(document).ready(function () {
             $("#mcq").click(function () {
                 if ($("#mcq").prop("checked")) {
@@ -315,7 +266,7 @@
     </script>
 
     <script>
-        $("#practical_hidden").hide();
+        // $("#practical_hidden").hide();
         $(document).ready(function () {
             $("#practical").click(function () {
                 if ($("#practical").prop("checked")) {
@@ -353,7 +304,6 @@
 
 
 @endsection
-
 
 {{--@extends('layouts.app')--}}
 

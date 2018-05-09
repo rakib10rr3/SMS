@@ -2,7 +2,7 @@
     <div class="brand-logo">
         <a href="index.php">
             {{--<img src="vendors/images/deskapp-logo.png" alt="">--}}
-            <img src="{{asset('vendors/images/deskapp-logo.png')}}" alt="">
+            <img src="{{asset('vendors/images/logo-full-color.png')}}" alt="">
         </a>
     </div>
     <div class="menu-block customscroll">
