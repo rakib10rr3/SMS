@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/students/optional-subjects','OptionalAssignController@index');
+Route::post('/students/optional-subjects/get','OptionalAssignController@getData');
 Route::post('/getSubjects', 'SubjectController@getSubject');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -175,7 +175,29 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $request->validate([
+            'name' => 'required|',
+            'gender_id' => 'required',
+            'nationality' => 'required',
+            'dob' => 'required',
+            'extra_activity' => 'required',
+            'photo' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+            'local_guardian_name' => 'required',
+            'father_cell' => 'required',
+            'mother_cell' => 'required',
+            'local_guardian_cell' => 'required',
+            'current_address' => 'required',
+            'permanent_address' => 'required',
+            'roll' => 'required',
+            //'user_id' => 'required',
+            'shift_id' => 'required',
+            'admission_year' => 'required',
+            'the_class_id' => 'required',
+            'section_id' => 'required',
+            'group_id' => 'required',
+        ]);
     }
 
     /**

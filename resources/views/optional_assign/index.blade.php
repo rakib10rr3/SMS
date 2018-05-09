@@ -16,37 +16,32 @@
 
             </div>
         </div>
-        <div>
-            <select required="required" class="form-control" id="div_years" name="div_years">
-                <option value="">Select</option>
-                <option value="0">All Years</option>
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-                <option value="1">1</option>
-            </select>
-            <select required="required" class="form-control" id="div_sections" name="div_sections">
-                <option value="">Select</option>
-                <option value="20" data-val="1">1 Section - A</option>
-                <option value="21" data-val="1">1 Section - B</option>
-                <option value="22" data-val="1">1 Section - C</option>
-                <option value="24" data-val="2">2 Section - A</option>
-                <option value="25" data-val="2">2 Section - B</option>
-                <option value="28" data-val="3">3 Section - A</option>
-                <option value="32" data-val="4">4 Section - A</option>
-                <option value="33" data-val="4">4 Section - B</option>
-            </select>
-            <select required="required" class="form-control" id="div_cities" name="div_cities">
-                <option value="">Select</option>
-                <option value="11" data-val="20">ctg</option>
-                <option value="12" data-val="20">cox</option>
-                <option value="13" data-val="20">feni</option>
-                <option value="14" data-val="22">bbb</option>
-                <option value="15" data-val="22">bb</option>
-                <option value="16" data-val="25">t</option>
-                <option value="17" data-val="24">jjj</option>
-                <option value="18" data-val="24">jj</option>
-            </select>
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>multiple Select</label>
+                <form id="multi" action="/students/optional-subjects/get" method="post">
+                    @csrf
+                    <select required="required" class="form-control" id="div_class" name="class">
+                        <option value="">Select Class</option>
+                        @foreach($classes as $class)
+                            <option value="{{$class->id}}">{{$class->name}}</option>
+                        @endforeach
+                    </select>
+                    <select required="required" class="form-control" id="div_group" name="group">
+                        <option value="">Select Group</option>
+                        @foreach($groups as $group)
+                            <option value="{{$group->id}}">{{$group->name}}</option>
+                        @endforeach
+                    </select>
+                    <select required="required" class="form-control" id="div_section" name="section">
+                        <option value="">Select Section</option>
+                        @foreach($sections as $section)
+                            <option value="{{$section->id}}">{{$section->name}}</option>
+                        @endforeach
+                    </select>
+                    <input type="submit" id="submit" class="btn btn-success" value="Submit">
+                </form>
+            </div>
         </div>
         <div class="row">
             <table class="data-table stripe hover nowrap">
@@ -85,11 +80,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="/students/{{$student->id}}/edit"><i
                                                     class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
+
                                         <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
@@ -121,54 +112,64 @@
     <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
     <script>
         // get first dropdown and bind change event handler
-        $('#div_years').change(function () {
-            // get optios of second dropdown and cache it
-            var $options = $('#div_sections')
-            // update the dropdown value if necessary
-                .val('')
-                // get options
-                .find('option')
-                // show all of the initially
-                .show();
-            // check current value is not 0
-            if (this.value != '0')
-                $options
-                // filter out options which is not corresponds to the first option
-                    .not('[data-val="' + this.value + '"],[data-val=""]')
-                    // hide them
-                    .hide();
-
-        });
-
-        $('#div_sections').change(function () {
-            // get optios of second dropdown and cache it
-            var $options = $('#div_cities')
-            // update the dropdown value if necessary
-                .val('')
-                // get options
-                .find('option')
-                // show all of the initially
-                .show();
-            // check current value is not 0
-            if (this.value != '0')
-                $options
-                // filter out options which is not corresponds to the first option
-                    .not('[data-val="' + this.value + '"],[data-val=""]')
-                    // hide them
-                    .hide();
-
-        });
-
-        /*
-        var $secondOptions = $('#div_cities').val('').find('option').show();
-            if ($options.equals('0'))
-                $secondOptions
-                // filter out options which is not corresponds to the first option
-                    .not('[data-val="' + this.value + '"],[data-val=""]')
-                    // hide them
-                    .hide();
-         */
-
+        // $('#div_class').change(function () {
+        //     // get optios of second dropdown and cache it
+        //     var $options = $('#div_group')
+        //     // update the dropdown value if necessary
+        //         .val('')
+        //         // get options
+        //         .find('option')
+        //         // show all of the initially
+        //         .show();
+        //     // check current value is not 0
+        //     if (this.value != '0')
+        //         $options
+        //         // filter out options which is not corresponds to the first option
+        //             .not('[data-val="' + this.value + '"],[data-val=""]')
+        //             // hide them
+        //             .hide();
+        //
+        // });
+        //
+        // $('#div_group').change(function () {
+        //     // get optios of second dropdown and cache it
+        //     var $options = $('#div_section')
+        //     // update the dropdown value if necessary
+        //         .val('')
+        //         // get options
+        //         .find('option')
+        //         // show all of the initially
+        //         .show();
+        //     // check current value is not 0
+        //     if (this.value != '0')
+        //         $options
+        //         // filter out options which is not corresponds to the first option
+        //             .not('[data-val="' + this.value + '"],[data-val=""]')
+        //             // hide them
+        //             .hide();
+        //
+        // });
+        // $("$body").hide();
+        // $('#multi').submit(function(e){
+        //     $.ajaxSetup({
+        //         header:$('meta[name="_token"]').attr('content')
+        //     });
+        //     e.preventDefault(e);
+        //
+        //     $.ajax({
+        //
+        //         type:"POST",
+        //         url:'/students/optional-subjects/get',
+        //         data:$(this).serialize(),
+        //         dataType: 'json',
+        //         success: function(data){
+        //             console.log(data);
+        //         },
+        //         error: function(data){
+        //
+        //         }
+        //     })
+        // });
 
     </script>
     <script>
