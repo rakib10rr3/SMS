@@ -14,7 +14,15 @@ class PreferenceController extends Controller
      */
     public function index()
     {
-        return view('preference.index');
+        $preferences = Preference::all();
+
+        $assoc_preferences = Array();
+
+        foreach ($preferences as $value) {
+            $assoc_preferences[$value['key']] = $value['value'];
+        }
+
+        return view('preference.index', compact('assoc_preferences'));
     }
 
     /**
@@ -69,7 +77,25 @@ class PreferenceController extends Controller
      */
     public function update(Request $request)
     {
-        return $request;
+        // $val = Array();
+
+        foreach ($request->request as $key => $value) {
+            
+            if(substr( $key, 0, 1 ) === "_")
+            {
+                continue;
+            }
+
+            Preference::where('key', $key)
+                ->update(['value' => $value]);
+        }
+
+        $assoc_preferences = $request->all();
+
+        $success = true;
+
+        return view('preference.index', compact('assoc_preferences', 'success'));
+
     }
 
     /**

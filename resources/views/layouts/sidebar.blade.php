@@ -169,6 +169,16 @@
 
                     </ul>
                 </li>
+
+                <li class="dropdown">
+                    <a href="{{route('preference.index')}}" class="dropdown-toggle no-arrow">
+                        <span class="fa fa-clone"></span><span class="mtext">Preferences</span>
+                    </a>
+                    {{-- <ul class="submenu">
+                        <li><a href="{{route('subjectAssigns.index')}}">Assign</a></li>
+
+                    </ul> --}}
+                </li>
             </ul>
 
 
