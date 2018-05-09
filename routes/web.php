@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -47,3 +49,11 @@ Route::resource('/students', 'StudentController');
 Route::resource('/subjects', 'SubjectController');
 Route::resource('/subjectAssigns', 'SubjectAssignController');
 Route::resource('/classAssigns', 'ClassAssignController');
+
+Route::get('api/dropdown', function(){
+    $input = Input::get('option');
+    $TheClass = \App\Model\TheClass::find($input);
+    $subjects = $TheClass->subjects();
+    return Response::eloquent($subjects->get(['id','name']));
+});
+

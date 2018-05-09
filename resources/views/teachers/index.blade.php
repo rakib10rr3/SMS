@@ -8,48 +8,6 @@
 @endsection
 @section('content')
 
-    <form method="post" action="/groups">
-        {{csrf_field()}}
-
-        <div class="form-group row">
-            <label for="example-text-input" class="col-2 col-form-label">Group Name</label>
-            <div class="col-10">
-                <label>Subject:</label>
-                <select name="subject_id" class="custom-select form-control">
-                    @foreach ($subjects as $subject)
-                        <option value="{{ $subject->id }}">
-                            {{ $subject->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="example-text-input" class="col-2 col-form-label">Group Name</label>
-            <div class="col-10">
-                <label>Teacher:</label>
-                <select name="teacher_id" class="custom-select form-control">
-                    @foreach ($teachers as $teacher)
-                        <option value="{{ $teacher->id }}">
-                            {{ $teacher->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-
-
-
-
-        <div class="form-group row">
-            <label for="example-color-input" class="col-2 col-form-label"></label>
-            <div class="col-10">
-                <button type="submit" class="btn btn-outline-success">Submit</button>
-            </div>
-        </div>
-    </form>
 
 
 
@@ -68,10 +26,11 @@
                 <thead>
                 <tr>
 
-                    <th>Class</th>
-                    <th>Subject</th>
                     <th>Teacher</th>
-
+                    <th>Religion</th>
+                    <th>Bloog Group</th>
+                    <th>Gender</th>
+                    <th>photo</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>

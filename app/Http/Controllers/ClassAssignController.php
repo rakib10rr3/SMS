@@ -104,6 +104,7 @@ class ClassAssignController extends Controller
      */
     public function destroy(ClassAssign $classAssign)
     {
-        //
+        $classAssign->delete();
+        return redirect('/classAssigns');
     }
 }
