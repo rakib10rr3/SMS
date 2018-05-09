@@ -15,6 +15,7 @@ class Subject extends Model
         return $this->belongsTo(TheClass::class);
     }
 
+
     public function classAssigns(){
         return$this->hasMany(ClassAssign::class);
     }
@@ -36,6 +37,13 @@ class Subject extends Model
         return $this->belongsToMany('App\Teacher', 'subject_assigns','subject_id','teacher_id');
 
     }
+
+    //todo : 1 fix this - (subject to section)
+    public function sections() {
+
+        return $this->belongsToMany('App\Teacher', 'subject_assigns','subject_id','teacher_id');
+    }
+
 
     public function optionalAssigns(){
         return $this->hasMany(OptionalAssign::class);

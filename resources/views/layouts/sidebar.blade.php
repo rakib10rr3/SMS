@@ -169,6 +169,17 @@
 
                     </ul>
                 </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Class Assign</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{route('classAssigns.create')}}">Create</a></li>
+                        <li><a href="{{route('classAssigns.index')}}">View</a></li>
+
+                    </ul>
+                </li>
             </ul>
 
 

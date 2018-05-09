@@ -18,6 +18,7 @@ class CreateClassAssignsTable extends Migration
             $table->integer('class_id')->unsigned()->index();
             $table->integer('subject_id')->unsigned()->index();
             $table->bigInteger('teacher_id')->unsigned()->index();
+            $table->bigInteger('section_id')->unsigned()->index();
             $table->timestamps();
         });
     }

@@ -45,5 +45,16 @@ class Teacher extends Model
         return $this->belongsToMany('App\Model\Subject', 'subject_assigns', 'teacher_id', 'subject_id');
     }
 
+    //todo : teacher belongs to many class
+    public function classes()
+    {
+        return $this->belongsToMany('App\Model\Subject', 'subject_assigns', 'teacher_id', 'subject_id');
+    }
+    //todo : teacher belongs to many sections
+    public function sections()
+    {
+        return $this->belongsToMany('App\Model\Subject', 'subject_assigns', 'teacher_id', 'subject_id');
+    }
+
 
 }

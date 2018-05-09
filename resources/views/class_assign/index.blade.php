@@ -18,45 +18,7 @@
 @endsection
 @section('content')
 
-    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-        <div class="clearfix">
-            <div class="pull-left">
-                <h4 class="text-blue">Subject Assign</h4>
-                <p class="mb-30 font-14"></p>
-            </div>
-        </div>
-        <form method="post" action="/subjectAssigns">
-            {{csrf_field()}}
-            <div class="form-group">
-                <label>Subject</label>
-                <select class="custom-select2 form-control" name="subject_id" style="width: 100%; height: 38px;">
-                    @foreach ($subjects as $subject)
-                        <option value="{{ $subject->id }}">
-                            {{ $subject->name }}
-                        </option>
-                    @endforeach
 
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Teacher</label>
-                <select class="custom-select2 form-control" name="teacher_id" style="width: 100%; height: 38px;">
-                    @foreach ($teachers as $teacher)
-                        <option value="{{ $teacher->id }}">
-                            {{ $teacher->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-
-            <div class="col-10">
-                <button type="submit" class="btn btn-outline-success">Submit</button>
-            </div>
-
-        </form>
-    </div>
 
 
 
@@ -68,55 +30,62 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Subject Assign Information</h5>
+                <h5 class="text-blue">Exam Terms Information</h5>
 
             </div>
         </div>
         <div class="row">
-
-            <table class="table table-bordered">
+            <table class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-
+                    <th>Serial</th>
                     <th>Class</th>
                     <th>Subject</th>
                     <th>Teacher</th>
-
+                    <th>Section</th>
+                    <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
-                <tbody>
-                @if(empty($subjects))
+                <tbody id="body">
+                @if(empty($classAssigns))
                     <p>Data does not exist</p>
                 @else
-                    @foreach($classes as $class)
+                    @foreach($classAssigns as $classAssign)
                         <tr>
+                            <td class="table-plus">{{$loop->iteration}}</td>
+                            <td>{{$classAssign->subject->name}}</td>
+                            <td>{{$classAssign->class->name}}</td>
+                            <td>{{$classAssign->teacher->name}}</td>
+                            <td>{{$classAssign->section->name}}</td>
 
-                            <td>{{$class->name}}</td>
-
-                            <td rowspan="">
-                                @foreach($class->subjects as $subject)
-                                    <p>{{$subject->name}},</p>
-                                @endforeach
-                            </td>
                             <td>
-                                @foreach($class->subjects as $subject)
-                                    @foreach($subject->teachers as $teacher_bhai)
-                                        <p>{{$teacher_bhai->name}}</p>
-                                    @endforeach
-                                @endforeach
-
+                                <div class="dropdown">
+                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
+                                       data-toggle="dropdown">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="/classAssigns/{{$classAssign->id}}/edit"><i
+                                                    class="fa fa-pencil"></i> Edit</a>
+                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
+                                        {{--{{csrf_field()}}--}}
+                                        {{--@method('DELETE')--}}
+                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
+                                        {{--</form>--}}
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$classAssign->id}}"><i
+                                                    class="fa fa-pencil"></i> Delete</a>
+                                    </div>
+                                </div>
                             </td>
-
-
                         </tr>
                     @endforeach
                 @endif
                 </tbody>
             </table>
-
-
         </div>
     </div>
+
+
 @endsection
 
 
@@ -203,10 +172,10 @@
                 dangerMode: true,
             })
                 .then((willDelete) = > {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         type: "POST",
-                        url: "/teachers/" + id,
+                        url: "/classAssigns/" + id,
                         data: {
                             _token: '{{ csrf_token() }}',
                             _method: "DELETE"
@@ -222,7 +191,7 @@
                     });
                 } else {
                     swal("Your imaginary file is safe!"
-            )
+        )
             ;
         }
         })
