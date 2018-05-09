@@ -2,14 +2,17 @@
 
 namespace App\Model;
 
+use Illuminate\Auth\Events\Attempting;
 use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
-    protected $guarded = [];
-
-    public function students()
+    protected $guarded=[];
+    public function Attendances()
     {
+        return $this->hasMany(Attendance::class);
+    }
+    public function students(){
         return $this->hasMany(Student::class);
     }
 

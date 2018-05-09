@@ -57,3 +57,8 @@ Route::get('api/dropdown', function(){
     return $models;
 });
 
+
+//Route::resource('/attendances','AttendanceController');
+Route::get('/attendances/select','AttendanceController@select')->name('attendance.select');
+Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
+Route::post('/attendances/show','AttendanceController@store')->name('attendance.store');

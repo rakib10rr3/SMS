@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
 {
-    public function theClasses()
+    protected $guarded=[];
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
+
+    public function theClass()
     {
         return $this->belongsTo(TheClass::class);
     }

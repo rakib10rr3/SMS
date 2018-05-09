@@ -171,11 +171,14 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="{{route('preference.index')}}" class="dropdown-toggle no-arrow">
-                        <span class="fa fa-clone"></span><span class="mtext">Preferences</span>
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Attendance</span>
                     </a>
-                    {{-- <ul class="submenu">
-                        <li><a href="{{route('subjectAssigns.index')}}">Assign</a></li>
+                    <ul class="submenu">
+                        <li><a href="{{ route('attendance.select') }}">Add Attendance</a></li>
+                        {{--<li><a href="{{ route('attendances.show') }}">View Attendance</a> </li>--}}
+                    </ul>
+                </li>
 
                     </ul> --}}
                 </li>
