@@ -18,4 +18,8 @@ class ClassAssign extends Model
     public function teachers(){
         return $this->belongsTo(Teacher::class);
     }
+
+    public function section(){
+        return $this->belongsTo(Section::class);
+    }
 }

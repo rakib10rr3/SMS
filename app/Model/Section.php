@@ -18,4 +18,8 @@ class Section extends Model
     public function meritLists(){
         return$this->hasMany(MeritList::class);
     }
+
+    public function classAssigns(){
+        return$this->hasMany(ClassAssign::class);
+    }
 }

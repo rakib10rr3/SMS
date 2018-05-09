@@ -16,6 +16,7 @@ class CreateClassAssignsTable extends Migration
         Schema::create('class_assigns', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->integer('class_id')->unsigned()->index();
+            $table->integer('section_id')->unsigned()->index();
             $table->integer('subject_id')->unsigned()->index();
             $table->bigInteger('teacher_id')->unsigned()->index();
             $table->timestamps();

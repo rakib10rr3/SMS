@@ -15,9 +15,22 @@
     @endif
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+        <form action="../getSubjects" method="POST">
+            @csrf
+            <strong>Select Class to show:</strong>
+            <select name="class_id" id="class_id">
+                <option value="">Select Class</option>
+                @foreach($classes as $class)
+                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                @endforeach
+            </select>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Exam Terms Information</h5>
+                <h5 class="text-blue">Subject Information</h5>
 
             </div>
         </div>
@@ -29,6 +42,7 @@
                     <th>Subject Name</th>
                     <th>Subject Code</th>
                     <th>Class</th>
+                    <th>Group</th>
                     <th>Action</th>
                 </tr>
                 </thead>
