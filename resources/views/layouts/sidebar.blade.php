@@ -191,6 +191,17 @@
 
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Send Sms </span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{route('sendSms.create')}}">Create</a></li>
+                        <li><a href="{{route('sendSms.index')}}">View</a></li>
+                    </ul>
+                </li>
+
+
             </ul>
 
 

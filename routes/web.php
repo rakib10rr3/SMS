@@ -51,14 +51,18 @@ Route::resource('/subjects', 'SubjectController');
 Route::resource('/subjectAssigns', 'SubjectAssignController');
 Route::resource('/classAssigns', 'ClassAssignController');
 
+//Route::resource('/attendances','AttendanceController');
+Route::get('/attendances/select','AttendanceController@select')->name('attendance.select');
+Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
+Route::post('/attendances/show','AttendanceController@store')->name('attendance.store');
+
+Route::resource('/sendSms','SendSmsController');
+
+
+
 Route::get('api/dropdown', function(){
     $id = Input::get('option');
     $models = TheClass::find($id)->subjects;
     return $models;
 });
 
-
-//Route::resource('/attendances','AttendanceController');
-Route::get('/attendances/select','AttendanceController@select')->name('attendance.select');
-Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
-Route::post('/attendances/show','AttendanceController@store')->name('attendance.store');
