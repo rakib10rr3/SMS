@@ -31,6 +31,56 @@
 
                                     {{csrf_field()}}
                                     <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Class:</label>
+                                                <select name="the_class_id" class="custom-select form-control">
+                                                    @foreach ($classes as $class)
+                                                        <option value="{{ $class->id }}">
+                                                            {{ $class->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Section:</label>
+                                                <select name="section_id" class="custom-select form-control">
+                                                    @foreach ($sections as $section)
+                                                        <option value="{{ $section->id }}">
+                                                            {{ $section->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label>Group:</label>
+                                                <select name="group_id" class="custom-select form-control">
+                                                    @foreach ($groups as $group)
+                                                        <option value="{{ $group->id }}">
+                                                            {{ $group->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Numbers :</label>

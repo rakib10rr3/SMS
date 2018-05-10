@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Group;
+use App\Model\Section;
+use App\Model\TheClass;
 use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -25,7 +28,12 @@ class SendSmsController extends Controller
      */
     public function create()
     {
-        return view('send_sms.create');
+        $classes = TheClass::all();
+        $sections = Section::all();
+        $groups = Group::all();
+
+        return view('send_sms.create', compact('classes', 'sections', 'groups'));
+
     }
 
     /**
