@@ -20,8 +20,10 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/students/optional-subjects','OptionalAssignController@index');
-Route::post('/students/optional-subjects/get','OptionalAssignController@getData');
+Route::get('/subjects/optional','OptionalAssignController@index');
+Route::post('/subjects/optional/list','OptionalAssignController@getData');
+Route::post('/subjects/optional/store','OptionalAssignController@store');
+
 Route::post('/getSubjects', 'SubjectController@getSubject');
 Route::resource('shifts', 'ShiftController');
 Route::resource('sections', 'SectionController');

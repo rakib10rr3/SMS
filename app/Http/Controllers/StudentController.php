@@ -198,6 +198,7 @@ class StudentController extends Controller
             'section_id' => 'required',
             'group_id' => 'required',
         ]);
+        return $request->all();
     }
 
     /**

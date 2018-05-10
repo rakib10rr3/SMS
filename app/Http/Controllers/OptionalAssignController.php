@@ -6,6 +6,7 @@ use App\Model\Group;
 use App\Model\Section;
 use App\Model\Student;
 use App\Model\TheClass;
+use App\Model\OptionalAssign;
 use Illuminate\Http\Request;
 
 class OptionalAssignController extends Controller
@@ -16,16 +17,38 @@ class OptionalAssignController extends Controller
         $classes = TheClass::query()->get();
         $groups = Group::query()->get();
         $sections = Section::query()->get();
-        return view('optional_assign.index',compact('classes','groups','sections'));
+        return view('optional_assign.index', compact('classes', 'groups', 'sections'));
     }
 
-    public function getData(Request $request){
+    public function getData(Request $request)
+    {
+        $optionalSubjects = array();
+
         //return $request->all();
-        $students = Student::query()->where('the_class_id', '=' ,$request->class)->where('group_id', '=' ,$request->group)->where('section_id', '=' ,$request->section)->get();
+        $students = Student::query()->where('the_class_id', '=', $request->class)->where('group_id', '=', $request->group)->where('section_id', '=', $request->section)->get();
         //return $students;
         $classes = TheClass::query()->get();
         $groups = Group::query()->get();
         $sections = Section::query()->get();
-        return view('optional_assign.index',compact('students','classes','groups','sections'));
+        foreach ($groups as $group) {
+            foreach ($group->subjects as $subject) {
+                if ($subject->is_optional == true)
+                    array_push($optionalSubjects, $subject);
+            }
+        }
+        //$optionalSubjects = $groups->subjects->name;
+        //return $optionalSubjects;
+        return view('optional_assign.index', compact('students', 'classes', 'groups', 'sections', 'optionalSubjects'));
+    }
+
+    public function store(Request $request)
+    {
+        foreach ($request->request as $key => $value) {
+            if (is_numeric($key)) {
+                OptionalAssign::query()->create([
+                    'subject_id' => $value,
+                    'student_id' => $key,]);
+            }
+        }
     }
 }

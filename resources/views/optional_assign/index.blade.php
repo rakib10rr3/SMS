@@ -19,7 +19,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="form-group">
                 <label>multiple Select</label>
-                <form id="multi" action="/students/optional-subjects/get" method="post">
+                <form id="multi" action="/subjects/optional/list" method="post">
                     @csrf
                     <select required="required" class="form-control" id="div_class" name="class">
                         <option value="">Select Class</option>
@@ -43,135 +43,77 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <table class="data-table stripe hover nowrap">
-                <thead>
-                <tr>
-                    <th>Serial</th>
-                    <th>Name</th>
-                    <th>Class</th>
-                    <th>Section</th>
-                    <th>Roll</th>
-                    <th>Group</th>
-                    <th>Photo</th>
-                    <th class="datatable-nosort">Action</th>
-                </tr>
-                </thead>
-                <tbody id="body">
-                @if(empty($students))
-                    <p>Data does not exist</p>
-                @else
-                    @foreach($students as $student)
-                        <tr>
-                            <td class="table-plus">{{$loop->iteration}}</td>
-                            <td>{{$student->name}}</td>
-                            <td>{{$student->theClass->name}}</td>
-                            <td>{{$student->section->name}}</td>
-                            <td>{{$student->roll}}</td>
-                            <td>{{$student->group->name}}</td>
-                            <td><img src="/images/{{$student->user_id}}/{{$student->photo}}" class="img-responsive"
-                                     alt="Student Photo"></td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
-                                       data-toggle="dropdown">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/students/{{$student->id}}/edit"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
+        <form method="post" action="/subjects/optional/store">
+            @csrf
+            <div class="row">
+                <table class="data-table stripe hover nowrap">
+                    <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Section</th>
+                        <th>Roll</th>
+                        <th>Group</th>
+                        <th>Photo</th>
+                        <th class="datatable-nosort">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body">
+                    @if(empty($students))
+                    @else
+                        @foreach($students as $student)
 
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}"><i
-                                                    class="fa fa-pencil"></i> Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-                </tbody>
-            </table>
-        </div>
+                            <tr>
+                                <td class="table-plus">{{$loop->iteration}}</td>
+                                <td>{{$student->name}}</td>
+                                <td>{{$student->theClass->name}}</td>
+                                <td>{{$student->section->name}}</td>
+                                <td>{{$student->roll}}</td>
+                                <td>{{$student->group->name}}</td>
+                                <td>{{$student->id}}</td>
+                                <td>
+                                    <select class="custom-select form-control" id="optional_id" name="{{$student->id}}">
+                                        <option value="">Select Optional Subject</option>
+                                        @foreach($optionalSubjects as $optionalSubject)
+                                            <option  value="{{$optionalSubject->id}}">{{$optionalSubject->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+
+            </div>
+            {{--@if(count($optionalSubjects) != 0)--}}
+            <input type="submit" value="Submit" class="btn btn-outline-success"/>
+            {{--@endif--}}
+        </form>
     </div>
 @endsection
 
 
 @section('scripts')
 
-    <script src="{{asset('/src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('/src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
-    <script src="{{asset('/src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
-    <script src="{{asset('/src/plugins/datatables/media/js/responsive.bootstrap4.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/responsive.bootstrap4.js')}}"></script>
     <!-- buttons for Export datatable -->
-    <script src="/src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
-    <script src="/src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
-    <script src="/src/plugins/datatables/media/js/button/buttons.print.js"></script>
-    <script src="/src/plugins/datatables/media/js/button/buttons.html5.js"></script>
-    <script src="/src/plugins/datatables/media/js/button/buttons.flash.js"></script>
-    <script src="/src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
-    <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
-    <script>
-        // get first dropdown and bind change event handler
-        // $('#div_class').change(function () {
-        //     // get optios of second dropdown and cache it
-        //     var $options = $('#div_group')
-        //     // update the dropdown value if necessary
-        //         .val('')
-        //         // get options
-        //         .find('option')
-        //         // show all of the initially
-        //         .show();
-        //     // check current value is not 0
-        //     if (this.value != '0')
-        //         $options
-        //         // filter out options which is not corresponds to the first option
-        //             .not('[data-val="' + this.value + '"],[data-val=""]')
-        //             // hide them
-        //             .hide();
-        //
-        // });
-        //
-        // $('#div_group').change(function () {
-        //     // get optios of second dropdown and cache it
-        //     var $options = $('#div_section')
-        //     // update the dropdown value if necessary
-        //         .val('')
-        //         // get options
-        //         .find('option')
-        //         // show all of the initially
-        //         .show();
-        //     // check current value is not 0
-        //     if (this.value != '0')
-        //         $options
-        //         // filter out options which is not corresponds to the first option
-        //             .not('[data-val="' + this.value + '"],[data-val=""]')
-        //             // hide them
-        //             .hide();
-        //
-        // });
-        // $("$body").hide();
-        // $('#multi').submit(function(e){
-        //     $.ajaxSetup({
-        //         header:$('meta[name="_token"]').attr('content')
-        //     });
-        //     e.preventDefault(e);
-        //
-        //     $.ajax({
-        //
-        //         type:"POST",
-        //         url:'/students/optional-subjects/get',
-        //         data:$(this).serialize(),
-        //         dataType: 'json',
-        //         success: function(data){
-        //             console.log(data);
-        //         },
-        //         error: function(data){
-        //
-        //         }
-        //     })
-        // });
+    <script src="src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.print.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.html5.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
+    <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
+    <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
 
-    </script>
+
+
+
     <script>
         $('document').ready(function () {
             $('.data-table').DataTable({
@@ -223,6 +165,7 @@
         });
     </script>
 
+
     <script>
         $(document).on('click', '.ts-delete', function (e) {
             e.preventDefault();
@@ -238,7 +181,7 @@
                     if (willDelete) {
                         $.ajax({
                             type: "POST",
-                            url: "/students/" + id,
+                            url: "/teachers/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
                                 _method: "DELETE"
@@ -257,8 +200,6 @@
                 });
         });
     </script>
-
-
 @endsection
 
 

@@ -98,26 +98,6 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            {{--<div class="form-group">--}}
-                            {{--<label>Select Division :</label>--}}
-                            {{--<select class="custom-select form-control" id="division_id" name="division_id">--}}
-                            {{--<option value="">Select Division</option>--}}
-                            {{--@foreach($divisions as $division)--}}
-                            {{--<option value="{{$division->id}}">{{$division->name}}</option>--}}
-                            {{--@endforeach--}}
-                            {{--</select>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-6">--}}
-                            {{--<div class="form-group">--}}
-                            {{--<label>Select District :</label>--}}
-                            {{--<select class="custom-select form-control" name="district_id" id="district_id">--}}
-                            {{--<option value="">Select District</option>--}}
-                            {{--@foreach($districts as $district)--}}
-                            {{--<option value="{{$district->id}}">{{$district->name}}</option>--}}
-                            {{--@endforeach--}}
-                            {{--</select>--}}
-                            {{--</div>--}}
                             <div class="form-group">
                                 <label>Student's Phone Number (Optional) :</label>
                                 <input type="text" class="form-control" id="cell"
@@ -283,7 +263,7 @@
             transitionEffect: "fade",
             titleTemplate: '<span class="step">#index#</span> #title#',
             labels: {
-                finish: "Submit"
+                finish: "Update"
             },
             onFinished: function (event, currentIndex) {
                 $("#form").submit();
