@@ -176,10 +176,9 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="{{ route('attendance.select') }}">Add Attendance</a></li>
-                        {{--<li><a href="{{ route('attendances.show') }}">View Attendance</a> </li>--}}
+                        <li><a href="{{ route('attendance.edit') }}">Edit Attendance</a> </li>
                     </ul>
                 </li>
-
 
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
