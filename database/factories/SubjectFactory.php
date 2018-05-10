@@ -15,7 +15,7 @@ $factory->define(App\Model\Subject::class, function (Faker $faker) {
 
 
         'code' => '0123456789',
-        'name' =>  $faker->name,
+        'name' =>  $faker->randomElement(['Bangla 1st Paper', 'Bangla 2nd Paper','English 1st Paper', 'English 2nd Paper','Math 1st Paper', 'Math 2nd Paper','Chemistry 1st Paper', 'Chemistry 2nd Paper','Physics 1st Paper', 'Physics 2nd Paper']),
         'full_marks' => '100',
         'pass_marks' => '50',
         'has_written' => '1',
