@@ -66,3 +66,7 @@ Route::get('api/dropdown', function(){
     return $models;
 });
 
+
+Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
+Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');
+Route::post('/attendances/update','AttendanceController@update')->name('attendance.update');
