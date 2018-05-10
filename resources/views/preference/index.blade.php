@@ -18,8 +18,9 @@
 			<kdb>Save</kdb>
 		</h6>
 		<form action="{{ route('preference.update') }}" method="POST">
-			@csrf @method('PUT') {{-- TODO: all data should come here dynamically. Will do later. (Shohag) --}} {{-- NOTE: Note completed.
-			Will Do Late (Shohag) --}}
+			@csrf 
+			@method('PUT')
+			
 
 			<div class="form-group row">
 				<label class="col-sm-12 col-md-2 col-form-label">Institute Name</label>

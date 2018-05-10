@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 use App\Model\TheClass;
 use Illuminate\Http\Response;
@@ -44,6 +44,8 @@ Route::resource('class', 'TheClassController');
 Route::resource('roles', 'RoleController');
 Route::resource('teachers', 'TeacherController');
 
+Route::resource('/students','StudentController');
+Route::resource('/subjects','SubjectController');
 Route::get('preference', 'PreferenceController@index')->name('preference.index')->middleware('auth');
 Route::put('preference', 'PreferenceController@update')->name('preference.update')->middleware('auth');
 Route::resource('/students', 'StudentController');
@@ -66,6 +68,19 @@ Route::get('api/dropdown', function(){
     return $models;
 });
 
+Route::get('api/subjects/{id}', function($id){
+    $subjects = TheClass::find($id)->subjects;
+    return $subjects;
+});
+
+
+//Route::resource('/attendances','AttendanceController');
+Route::get('/attendances/select','AttendanceController@select')->name('attendance.select');
+Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
+Route::post('/attendances/show','AttendanceController@store')->name('attendance.store');
+
+Route::get('/marks/add', 'MarkController@add')->name('marks.add.select')->middleware('auth');
+Route::post('/marks/add', 'MarkController@store')->name('marks.add.store')->middleware('auth');
 
 Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
 Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');

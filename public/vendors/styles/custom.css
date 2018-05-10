@@ -1,3 +1,7 @@
+body {
+    background: #ecf0f1;
+}
+
 .header-right .brand-logo a {
     padding: 8px 6px 5px;
 }
