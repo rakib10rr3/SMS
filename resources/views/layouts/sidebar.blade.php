@@ -173,8 +173,6 @@
 
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="fa fa-clone"></span><span class="mtext">Attendance</span>
-                    <a href="javascript:;" class="dropdown-toggle">
                         <span class="fa fa-clone"></span><span class="mtext">Marks</span>
                     </a>
                     <ul class="submenu">
@@ -184,12 +182,13 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="{{route('preference.index')}}" class="dropdown-toggle no-arrow">
-                        <span class="fa fa-clone"></span><span class="mtext">Preferences</span>
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Attendance</span>
                     </a>
                     <ul class="submenu">
                         <li><a href="{{ route('attendance.select') }}">Add Attendance</a></li>
                         <li><a href="{{ route('attendance.edit') }}">Edit Attendance</a> </li>
+                        <li><a href="{{ route('attendance.selectForView') }}">View Attendance</a> </li>
                     </ul>
                 </li>
 
