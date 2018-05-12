@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Model\Mark;
+use App\Model\Shift;
+use App\Model\Section;
+use App\Model\Subject;
+use App\Model\ExamTerm;
+use App\Model\TheClass;
 use Illuminate\Http\Request;
 
 class MarkController extends Controller
@@ -15,6 +20,20 @@ class MarkController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * Add Marks
+     */
+    public function add()
+    {
+        $classes = TheClass::all();
+        $sections = Section::all();
+        $shifts = Shift::all();
+        $exam_terms = ExamTerm::all();
+        $subjects = Subject::where('the_class_id', 1)->get();
+
+        return view('mark.index', compact('classes', 'sections', 'shifts', 'exam_terms', 'subjects'));
     }
 
     /**
@@ -35,7 +54,28 @@ class MarkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $query = $request->except(['_token', 'DataTables_Table_0_length']);
+
+        // dd($query);
+
+/*
+    "_token" => "eqbC62WzmrdZBowWmahZd8qPjyvaFqYSdqtfmPGC"
+    "theclass" => "1"
+    "section" => "10"
+    "shift" => "1"
+    "session" => "2018"
+    "subject" => "5"
+    "exam_term" => "1"
+    */
+        $the_class = $query['theclass'];    
+
+        $classes = TheClass::all();
+        $sections = Section::all();
+        $shifts = Shift::all();
+        $exam_terms = ExamTerm::all();
+        $subjects = Subject::where('the_class_id', $the_class)->get();
+
+        return view('mark.index', compact('classes', 'sections', 'shifts', 'exam_terms', 'subjects', 'query'));
     }
 
     /**

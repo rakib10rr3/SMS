@@ -7,10 +7,11 @@
 
 @endsection
 @section('content')
+
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix">
             <div align="center">
-                <h4 class="text-danger">Add Attendance</h4>
+                <h4 class="text-danger">Edit Attendance</h4>
             </div>
         </div>
     </div>
@@ -20,7 +21,7 @@
                 <h4 class="text-blue">Select class</h4>
             </div>
         </div>
-        <form method="post" action="{{ route('attendance.create') }}">
+        <form method="post" action="{{ route('attendance.showForEdit') }}">
             @csrf
             <div class="row">
                 <div class="col-md-3">
@@ -73,6 +74,15 @@
                             @endforeach
 
                         </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Date :</label>
+                        <input type="text" class="form-control date-picker" placeholder="Select Date"
+                               id="attendance_date" name="date">
                     </div>
                 </div>
             </div>

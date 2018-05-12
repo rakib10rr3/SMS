@@ -18,7 +18,7 @@ class CreateMarksTable extends Migration
             $table->integer('class_id')->unsigned()->index();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('shift_id')->unsigned()->index();
-            $table->dateTime('session');
+            $table->year('session');
             $table->bigInteger('student_id')->unsigned()->index()->nullable(false);
             $table->integer('exam_term_id')->unsigned()->index();
             $table->integer('subject_id')->unsigned()->index();

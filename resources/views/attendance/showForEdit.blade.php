@@ -3,100 +3,88 @@
     <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    {{--<link rel="stylesheet" href="{{asset('src/plugins/jquery-steps/build/jquery.steps.css')}}">--}}
 @endsection
 @section('content')
-
-
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
-            <div class="pull-left">
-                <h5 class="text-blue">Students Information</h5>
+            <h5 class="text-blue">Attendance</h5>
 
-            </div>
         </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="form-group">
-                <label>multiple Select</label>
-                <form id="multi" action="/subjects/optional/edit/list" method="post">
-                    @csrf
-                    <select required="required" class="form-control" id="div_class" name="class">
-                        <option value="">Select Class</option>
-                        @foreach($classes as $class)
-                            <option value="{{$class->id}}">{{$class->name}}</option>
-                        @endforeach
-                    </select>
-                    <select required="required" class="form-control" id="div_group" name="group">
-                        <option value="">Select Group</option>
-                        @foreach($groups as $group)
-                            <option value="{{$group->id}}">{{$group->name}}</option>
-                        @endforeach
-                    </select>
-                    <select required="required" class="form-control" id="div_section" name="section">
-                        <option value="">Select Section</option>
-                        @foreach($sections as $section)
-                            <option value="{{$section->id}}">{{$section->name}}</option>
-                        @endforeach
-                    </select>
-                    <input type="submit" id="submit" class="btn btn-success" value="Submit">
-                </form>
-            </div>
-        </div>
-        <form method="post" action="/subjects/optional/update">
+        <form method="post" action="{{ route('attendance.update') }}">
             @csrf
+            <div class="row">
+                <div class="col-md-2">
+                    <strong>Class:</strong>
+                    @foreach($class_name as $class_name)
+                        <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}</p>
+                    @endforeach
+                </div>
+                <div class="col-md-2">
+                    <strong>Shift:</strong>
+                    @foreach($shift_name as $shift_name)
+                        <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
+                    @endforeach
+                </div>
+                <div class="col-md-2">
+                    <strong>Section:</strong>
+                    @foreach($section_name as $section_name)
+                        <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
+                    @endforeach
+                </div>
+                <div class="col-md-2">
+                    <strong>Subject:</strong>
+                    @foreach($subject_name as $subject_name)
+                        <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
+                    @endforeach
+                </div>
+            </div>
+            {{--@foreach($attended_students as $attended_student )--}}
+                {{--{{ $attended_student->student_id }}--}}
+            {{--@endforeach--}}
+            <div class="row" hidden>
+                <div class="form-group">
+                    <label>Date :</label>
+                    <input type="text" value="{{$date}}" name="date">
+                </div>
+            </div>
             <div class="row">
                 <table class="data-table stripe hover nowrap">
                     <thead>
                     <tr>
-                        <th>Serial</th>
-                        <th>Name</th>
-                        <th>Class</th>
-                        <th>Section</th>
                         <th>Roll</th>
-                        <th>Group</th>
-                        <th>Photo</th>
-                        <th class="datatable-nosort">Action</th>
+                        <th>Student Name</th>
+                        <th>Is present?</th>
                     </tr>
                     </thead>
                     <tbody id="body">
+
                     @if(empty($students))
+                        <p>Data does not exist</p>
                     @else
-                        @foreach($students as $student)
-
+                        @foreach($students as $student )
                             <tr>
-                                <td class="table-plus">{{$loop->iteration}}</td>
-                                <td>{{$student->name}}</td>
-                                <td>{{$student->theClass->name}}</td>
-                                <td>{{$student->section->name}}</td>
                                 <td>{{$student->roll}}</td>
-                                <td>{{$student->group->name}}</td>
-                                <td>{{$student->id}}</td>
+                                <td>{{$student->name}}</td>
                                 <td>
-                                    <select class="custom-select form-control" id="optional_id" name="{{$student->id}}">
-                                        @foreach($subjects as $subject)
-                                            <option  value="{{$subject->id}}" {{$optionals[$student->id] === $subject->id? 'selected':''}}>{{$subject->name}} </option>
-                                        @endforeach
-                                    </select>
+                                    <input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}" {{ (in_array($student->id,$attended_array))?'checked':''}}>
                                 </td>
-
                             </tr>
                         @endforeach
                     @endif
                     </tbody>
                 </table>
-
             </div>
-            {{--@if(count($optionalSubjects) != 0)--}}
-            <input type="submit" value="Update" class="btn btn-outline-success"/>
-            {{--@endif--}}
+            <div class="row">
+                <label class="col-sm-12 col-md-2 col-form-label"></label>
+                <div class="col-sm-12 col-md-10">
+                    <button class="btn btn-success" type="submit" value="Add">Save</button>
+                </div>
+            </div>
         </form>
     </div>
 @endsection
-
-
 @section('scripts')
-
     <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
@@ -199,11 +187,5 @@
                 });
         });
     </script>
+
 @endsection
-
-
-{{--@include('layouts.header')--}}
-
-
-
-

@@ -6,10 +6,11 @@
  * Time: 11:13 AM
  */
 
-use App\Model\BloodGroup;
-use \App\Model\Division;
-use App\Model\TheClass;
 use App\Model\Section;
+use App\Model\ExamTerm;
+use App\Model\TheClass;
+use \App\Model\Division;
+use App\Model\BloodGroup;
 use App\Model\Preference;
 
 $bloodGroups = BloodGroup::query()->get();
@@ -200,6 +201,23 @@ if (count($sections) == 0) {
     ]);
 } else {
     echo "Section data already exist<br>";
+}
+
+$exam_terms = ExamTerm::query()->get();
+if (count($exam_terms) == 0) {
+    ExamTerm::insert([
+        [
+            'name' => 'First Term',
+        ],
+        [
+            'name' => 'Second Term',
+        ],
+        [
+            'name' => 'Final Term',
+        ],
+    ]);
+} else {
+    echo "Exam Term data already exist<br>";
 }
 
 

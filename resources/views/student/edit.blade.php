@@ -222,6 +222,8 @@
 }}">
                             </div>
                         </div>
+                        <input type="hidden" name="id" value="{{$student->id}}">
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Extra Curricular Activities</label>

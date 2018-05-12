@@ -11,6 +11,7 @@ class RollController extends Controller
     }
 
     public function autoGenerate(){
+
         return view('roll_generate.auto');
     }
 

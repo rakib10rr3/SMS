@@ -33,6 +33,7 @@
                     @csrf
                     <h5> Identity </h5>
                     <section>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
