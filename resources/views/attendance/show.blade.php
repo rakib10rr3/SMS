@@ -1,103 +1,102 @@
 @extends('layouts.app')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
+    {{--<link rel="stylesheet" href="{{asset('src/plugins/jquery-steps/build/jquery.steps.css')}}">--}}
 @endsection
 @section('content')
-
-
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
-            <div class="pull-left">
-                <h5 class="text-blue">Students Information</h5>
+            <h5 class="text-blue">Attendance</h5>
 
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <strong>Class:</strong>
+                @foreach($class_name as $class_name)
+                    <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}</p>
+                @endforeach
+            </div>
+            <div class="col-md-2">
+                <strong>Shift:</strong>
+                @foreach($shift_name as $shift_name)
+                    <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
+                @endforeach
+            </div>
+            <div class="col-md-2">
+                <strong>Section:</strong>
+                @foreach($section_name as $section_name)
+                    <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
+                @endforeach
+            </div>
+            <div class="col-md-2">
+                <strong>Subject:</strong>
+                @foreach($subject_name as $subject_name)
+                    <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
+                @endforeach
             </div>
         </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="form-group">
-                <label>multiple Select</label>
-                <form id="multi" action="/subjects/optional/list" method="post">
-                    @csrf
-                    <select required="required" class="form-control" id="div_class" name="class">
-                        <option value="">Select Class</option>
-                        @foreach($classes as $class)
-                            <option value="{{$class->id}}">{{$class->name}}</option>
-                        @endforeach
-                    </select>
-                    <select required="required" class="form-control" id="div_group" name="group">
-                        <option value="">Select Group</option>
-                        @foreach($groups as $group)
-                            <option value="{{$group->id}}">{{$group->name}}</option>
-                        @endforeach
-                    </select>
-                    <select required="required" class="form-control" id="div_section" name="section">
-                        <option value="">Select Section</option>
-                        @foreach($sections as $section)
-                            <option value="{{$section->id}}">{{$section->name}}</option>
-                        @endforeach
-                    </select>
-                    <input type="submit" id="submit" class="btn btn-success" value="Submit">
-                </form>
+        {{--@foreach($attended_students as $attended_student )--}}
+        {{--{{ $attended_student->student_id }}--}}
+        {{--@endforeach--}}
+        <div class="row">
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Date:</strong>
+                <p>{{$date}}</p>
+            </div>
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Total Students:</strong>
+                <p>{{count($students)}}</p>
+            </div>
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Present Students:</strong>
+                <p>{{count($attended_array)}}</p>
+            </div>
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Absent Students:</strong>
+                <p>{{count($students)-count($attended_array)}}</p>
             </div>
         </div>
-        <form method="post" action="/subjects/optional/store">
-            @csrf
-            <div class="row">
-                <table class="data-table stripe hover nowrap">
-                    <thead>
-                    <tr>
-                        <th>Serial</th>
-                        <th>Name</th>
-                        <th>Class</th>
-                        <th>Section</th>
-                        <th>Roll</th>
-                        <th>Group</th>
-                        <th>Photo</th>
-                        <th class="datatable-nosort">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody id="body">
-                    @if(empty($students))
-                    @else
-                        @foreach($students as $student)
+        <div class="row">
+            <table class="data-table stripe hover nowrap">
+                <thead>
+                <tr>
+                    <th>Roll</th>
+                    <th>Student Name</th>
+                    <th>Present/Absent</th>
+                </tr>
+                </thead>
+                <tbody id="body">
 
-                            <tr>
-                                <td class="table-plus">{{$loop->iteration}}</td>
-                                <td>{{$student->name}}</td>
-                                <td>{{$student->theClass->name}}</td>
-                                <td>{{$student->section->name}}</td>
-                                <td>{{$student->roll}}</td>
-                                <td>{{$student->group->name}}</td>
-                                <td>{{$student->id}}</td>
-                                <td>
-                                    <select class="custom-select form-control" id="optional_id" name="{{$student->id}}">
-                                        <option value="">Select Optional Subject</option>
-                                        @foreach($optionalSubjects as $optionalSubject)
-                                            <option  value="{{$optionalSubject->id}}">{{$optionalSubject->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-
-                            </tr>
-                        @endforeach
-                    @endif
-                    </tbody>
-                </table>
-
-            </div>
-            {{--@if(count($optionalSubjects) != 0)--}}
-            <input type="submit" value="Submit" class="btn btn-outline-success"/>
-            {{--@endif--}}
-        </form>
+                @if(empty($students))
+                    <p>Data does not exist</p>
+                @else
+                    @foreach($students as $student )
+                        <tr>
+                            <td>{{$student->roll}}</td>
+                            <td>{{$student->name}}</td>
+                            <td>
+                                @if(in_array($student->id,$attended_array))
+                                    {{--<input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}" {{ (in_array($student->id,$attended_array))?'checked':''}}>--}}
+                                    <p class="badge badge-success">Present</p>
+                                @else
+                                    <p class="badge badge-danger">Absent</p>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
-
-
 @section('scripts')
-
     <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
@@ -200,11 +199,5 @@
                 });
         });
     </script>
+
 @endsection
-
-
-{{--@include('layouts.header')--}}
-
-
-
-

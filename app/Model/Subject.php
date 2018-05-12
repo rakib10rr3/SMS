@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\OptionalAssign;
+use App\Model\OptionalAssign;
 use App\Teacher;
 use Illuminate\Database\Eloquent\Model;
 
