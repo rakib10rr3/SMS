@@ -144,6 +144,7 @@
                         <li><a href="/subjects/create">Add Subject</a></li>
                         <li><a href="/subjects">View Subjects</a></li>
                         <li><a href="/subjects/optional">Assign Optional Subject</a></li>
+                        <li><a href="/subjects/optional/edit">Edit Optional Subject</a></li>
 
                     </ul>
                 </li>
@@ -166,6 +167,26 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="{{route('subjectAssigns.index')}}">Assign</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Attendance</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{ route('attendance.select') }}">Add Attendance</a></li>
+                        {{--<li><a href="{{ route('attendances.show') }}">View Attendance</a> </li>--}}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Class Assign</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{route('classAssigns.create')}}">Create</a></li>
+                        <li><a href="{{route('classAssigns.index')}}">View</a></li>
 
                     </ul>
                 </li>

@@ -9,69 +9,88 @@
 @section('content')
 
 
-
-
-
-
-
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Exam Terms Information</h5>
+                <h5 class="text-blue">Students Information</h5>
 
             </div>
         </div>
-        <div class="row">
-            <table class="data-table stripe hover nowrap">
-                <thead>
-                <tr>
-
-                    <th>Teacher</th>
-                    <th>Religion</th>
-                    <th>Bloog Group</th>
-                    <th>Gender</th>
-                    <th>photo</th>
-                    <th class="datatable-nosort">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                @if(empty($teachers))
-                    <p>Data does not exist</p>
-                @else
-                    @foreach($teachers as $teacher)
-                        <tr>
-
-                            <td>{{$teacher->name}}</td>
-                            <td>{{$teacher->religion->name}}</td>
-                            <td>{{$teacher->bloodGroup->name}}</td>
-                            <td>{{$teacher->gender->name}}</td>
-                            <td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"
-                                     alt="Teacher Photo"></td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
-                                       data-toggle="dropdown">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i
-                                                    class="fa fa-pencil"></i> Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-                </tbody>
-            </table>
+        <div class="col-md-4 col-sm-12">
+            <div class="form-group">
+                <label>multiple Select</label>
+                <form id="multi" action="/subjects/optional/edit/list" method="post">
+                    @csrf
+                    <select required="required" class="form-control" id="div_class" name="class">
+                        <option value="">Select Class</option>
+                        @foreach($classes as $class)
+                            <option value="{{$class->id}}">{{$class->name}}</option>
+                        @endforeach
+                    </select>
+                    <select required="required" class="form-control" id="div_group" name="group">
+                        <option value="">Select Group</option>
+                        @foreach($groups as $group)
+                            <option value="{{$group->id}}">{{$group->name}}</option>
+                        @endforeach
+                    </select>
+                    <select required="required" class="form-control" id="div_section" name="section">
+                        <option value="">Select Section</option>
+                        @foreach($sections as $section)
+                            <option value="{{$section->id}}">{{$section->name}}</option>
+                        @endforeach
+                    </select>
+                    <input type="submit" id="submit" class="btn btn-success" value="Submit">
+                </form>
+            </div>
         </div>
+        <form method="post" action="/subjects/optional/update">
+            @csrf
+            <div class="row">
+                <table class="data-table stripe hover nowrap">
+                    <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Section</th>
+                        <th>Roll</th>
+                        <th>Group</th>
+                        <th>Photo</th>
+                        <th class="datatable-nosort">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body">
+                    @if(empty($students))
+                    @else
+                        @foreach($students as $student)
+
+                            <tr>
+                                <td class="table-plus">{{$loop->iteration}}</td>
+                                <td>{{$student->name}}</td>
+                                <td>{{$student->theClass->name}}</td>
+                                <td>{{$student->section->name}}</td>
+                                <td>{{$student->roll}}</td>
+                                <td>{{$student->group->name}}</td>
+                                <td>{{$student->id}}</td>
+                                <td>
+                                    <select class="custom-select form-control" id="optional_id" name="{{$student->id}}">
+                                        @foreach($optionalSubjects as $optionalSubject)
+                                            <option  value="{{$optionalSubject->subject_id}}" {{$student->id === $optionalSubject->student_id? 'selected':''}}>{{$optionalSubject->subject->name}} </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+
+            </div>
+            {{--@if(count($optionalSubjects) != 0)--}}
+            <input type="submit" value="Update" class="btn btn-outline-success"/>
+            {{--@endif--}}
+        </form>
     </div>
 @endsection
 
@@ -180,8 +199,6 @@
                 });
         });
     </script>
-
-
 @endsection
 
 

@@ -8,12 +8,6 @@
 @endsection
 @section('content')
 
-
-
-
-
-
-
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
@@ -25,28 +19,19 @@
             <table class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-
-                    <th>Teacher</th>
-                    <th>Religion</th>
-                    <th>Bloog Group</th>
-                    <th>Gender</th>
-                    <th>photo</th>
+                    <th>Serial</th>
+                    <th>Exam Term Name</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
-                <tbody>
-                @if(empty($teachers))
+                <tbody id="body">
+                @if(empty($examTerms))
                     <p>Data does not exist</p>
                 @else
-                    @foreach($teachers as $teacher)
+                    @foreach($examTerms as $examTerm)
                         <tr>
-
-                            <td>{{$teacher->name}}</td>
-                            <td>{{$teacher->religion->name}}</td>
-                            <td>{{$teacher->bloodGroup->name}}</td>
-                            <td>{{$teacher->gender->name}}</td>
-                            <td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"
-                                     alt="Teacher Photo"></td>
+                            <td class="table-plus">{{$loop->iteration}}</td>
+                            <td>{{$examTerm->name}}</td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
@@ -54,14 +39,14 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
+                                        <a class="dropdown-item" href="/exam-terms/{{$examTerm->id}}/edit"><i
                                                     class="fa fa-pencil"></i> Edit</a>
                                         {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
                                         {{--{{csrf_field()}}--}}
                                         {{--@method('DELETE')--}}
                                         {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
                                         {{--</form>--}}
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$examTerm->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
                                 </div>
@@ -161,7 +146,75 @@
                     if (willDelete) {
                         $.ajax({
                             type: "POST",
-                            url: "/teachers/" + id,
+                            url: "/exam-terms/"+id,
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                _method: "DELETE"
+                            },
+                            success: function (data) {
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        });
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
+        });
+        $('.data-table-export').DataTable({
+            scrollCollapse: true,
+            autoWidth: false,
+            responsive: true,
+            columnDefs: [{
+                targets: "datatable-nosort",
+                orderable: false,
+            }],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "language": {
+                "info": "_START_-_END_ of _TOTAL_ entries",
+                searchPlaceholder: "Search"
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'pdf', 'print'
+            ]
+        });
+        var table = $('.select-row').DataTable();
+        $('.select-row tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+        var multipletable = $('.multiple-select-row').DataTable();
+        $('.multiple-select-row tbody').on('click', 'tr', function () {
+            $(this).toggleClass('selected');
+        });
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.ts-delete', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            swal({
+                title: "Are you sure!",
+                type: "error",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/exam-terms/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
                                 _method: "DELETE"

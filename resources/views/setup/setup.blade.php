@@ -10,6 +10,7 @@ use App\Model\BloodGroup;
 use \App\Model\Division;
 use App\Model\TheClass;
 use App\Model\Section;
+use App\Model\Preference;
 
 $bloodGroups = BloodGroup::query()->get();
 if (count($bloodGroups) == 0) {
@@ -199,6 +200,39 @@ if (count($sections) == 0) {
     ]);
 } else {
     echo "Section data already exist<br>";
+}
+
+
+$preferences = Preference::query()->get();
+if(count($preferences) == 0) {
+    Preference::insert([
+        [
+            'key' => 'institute_name',
+            'value' => 'Institute Name'
+        ],
+        [
+            'key' => 'founded_year',
+            'value' => 'Founded Year'
+        ],
+        [
+            'key' => 'phone_number_1',
+            'value' => '0123456789'
+        ],
+        [
+            'key' => 'phone_number_2',
+            'value' => '0123456789'
+        ],
+        [
+            'key' => 'phone_number_3',
+            'value' => '0123456789'
+        ],
+        [
+            'key' => 'address',
+            'value' => 'Your Address'
+        ],
+    ]);
+}else {
+    echo "Preference data already exist<br>";
 }
 
 //TODO district kora lagbe

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\OptionalAssign;
+use App\Model\OptionalAssign;
 use App\Teacher;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +14,7 @@ class Subject extends Model
     public function theClass(){
         return $this->belongsTo(TheClass::class);
     }
+
 
     public function classAssigns(){
         return$this->hasMany(ClassAssign::class);
@@ -36,6 +37,13 @@ class Subject extends Model
         return $this->belongsToMany('App\Teacher', 'subject_assigns','subject_id','teacher_id');
 
     }
+
+    //todo : 1 fix this - (subject to section)
+    public function sections() {
+
+        return $this->belongsToMany('App\Teacher', 'subject_assigns','subject_id','teacher_id');
+    }
+
 
     public function optionalAssigns(){
         return $this->hasMany(OptionalAssign::class);

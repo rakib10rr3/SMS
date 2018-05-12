@@ -7,19 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClassAssign extends Model
 {
-    public function theClasses(){
+
+    protected $guarded=[];
+
+    public function class()
+    {
         return $this->belongsTo(TheClass::class);
     }
 
-    public function subjects(){
+    public function subject()
+    {
         return $this->belongsTo(Subject::class);
     }
 
-    public function teachers(){
+    public function teacher()
+    {
         return $this->belongsTo(Teacher::class);
     }
 
-    public function section(){
+    public function section()
+    {
         return $this->belongsTo(Section::class);
     }
 }

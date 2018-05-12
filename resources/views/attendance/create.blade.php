@@ -1,83 +1,85 @@
 @extends('layouts.app')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
+    {{--<link rel="stylesheet" href="{{asset('src/plugins/jquery-steps/build/jquery.steps.css')}}">--}}
 @endsection
 @section('content')
-
-
-
-
-
-
-
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
-            <div class="pull-left">
-                <h5 class="text-blue">Exam Terms Information</h5>
+            <h5 class="text-blue">Attendance</h5>
 
-            </div>
         </div>
-        <div class="row">
-            <table class="data-table stripe hover nowrap">
-                <thead>
-                <tr>
-
-                    <th>Teacher</th>
-                    <th>Religion</th>
-                    <th>Bloog Group</th>
-                    <th>Gender</th>
-                    <th>photo</th>
-                    <th class="datatable-nosort">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                @if(empty($teachers))
-                    <p>Data does not exist</p>
-                @else
-                    @foreach($teachers as $teacher)
-                        <tr>
-
-                            <td>{{$teacher->name}}</td>
-                            <td>{{$teacher->religion->name}}</td>
-                            <td>{{$teacher->bloodGroup->name}}</td>
-                            <td>{{$teacher->gender->name}}</td>
-                            <td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"
-                                     alt="Teacher Photo"></td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
-                                       data-toggle="dropdown">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i
-                                                    class="fa fa-pencil"></i> Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+        <form method="post" action="{{ route('attendance.store') }}">
+            @csrf
+            <div class="row">
+                <div class="col-md-2">
+                    <strong>Class:</strong>
+                    @foreach($class_name as $class_name)
+                        <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}</p>
                     @endforeach
-                @endif
-                </tbody>
-            </table>
-        </div>
+                </div>
+                <div class="col-md-2">
+                    <strong>Shift:</strong>
+                    @foreach($shift_name as $shift_name)
+                        <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
+                    @endforeach
+                </div>
+                <div class="col-md-2">
+                    <strong>Section:</strong>
+                    @foreach($section_name as $section_name)
+                        <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
+                    @endforeach
+                </div>
+                <div class="col-md-2">
+                    <strong>Subject:</strong>
+                    @foreach($subject_name as $subject_name)
+                        <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
+                    @endforeach
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Date :</label>
+                    <input type="text" class="form-control date-picker" placeholder="Select Date" id="attendance_date" name="date">
+                </div>
+            </div>
+            <div class="row">
+                <table class="data-table stripe hover nowrap">
+                    <thead>
+                    <tr>
+                        <th>Roll</th>
+                        <th>Student Name</th>
+                        <th>Is present?</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body">
+                    @if(empty($students))
+                        <p>Data does not exist</p>
+                    @else
+                        @foreach($students as $student)
+                            <tr>
+                                <td>{{$student->roll}}</td>
+                                <td>{{$student->name}}</td>
+                                <td><input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}">
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <label class="col-sm-12 col-md-2 col-form-label"></label>
+                <div class="col-sm-12 col-md-10">
+                    <button class="btn btn-success" type="submit" value="Add">Save</button>
+                </div>
+            </div>
+        </form>
     </div>
 @endsection
-
-
 @section('scripts')
-
     <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
@@ -181,12 +183,4 @@
         });
     </script>
 
-
 @endsection
-
-
-{{--@include('layouts.header')--}}
-
-
-
-

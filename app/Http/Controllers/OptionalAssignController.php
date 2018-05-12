@@ -23,13 +23,13 @@ class OptionalAssignController extends Controller
     public function getData(Request $request)
     {
         $optionalSubjects = array();
-
         //return $request->all();
         $students = Student::query()->where('the_class_id', '=', $request->class)->where('group_id', '=', $request->group)->where('section_id', '=', $request->section)->get();
         //return $students;
         $classes = TheClass::query()->get();
         $groups = Group::query()->get();
         $sections = Section::query()->get();
+
         foreach ($groups as $group) {
             foreach ($group->subjects as $subject) {
                 if ($subject->is_optional == true)
@@ -37,7 +37,8 @@ class OptionalAssignController extends Controller
             }
         }
         //$optionalSubjects = $groups->subjects->name;
-        //return $optionalSubjects;
+        //return $optionalSubjects
+        //return true;
         return view('optional_assign.index', compact('students', 'classes', 'groups', 'sections', 'optionalSubjects'));
     }
 
@@ -51,4 +52,36 @@ class OptionalAssignController extends Controller
             }
         }
     }
+
+    public function edit()
+    {
+        $classes = TheClass::query()->get();
+        $groups = Group::query()->get();
+        $sections = Section::query()->get();
+        return view('optional_assign.edit', compact('classes', 'groups', 'sections'));
+    }
+
+    public function getStudentDataWithOptionalSubject(Request $request)
+    {
+        $students = Student::query()->where('the_class_id', '=', $request->class)->where('group_id', '=', $request->group)->where('section_id', '=', $request->section)->get();
+        //return $students;
+        $classes = TheClass::query()->get();
+        $groups = Group::query()->get();
+        $sections = Section::query()->get();
+        $optionalSubjects = OptionalAssign::query()->get();
+        //return $optionalSubjects;
+        return view('optional_assign.edit', compact('students', 'classes', 'groups', 'sections', 'optionalSubjects'));
+    }
+
+    public function update(Request $request)
+    {
+        //return $request->all();
+        foreach ($request->request as $key => $value) {
+            if (is_numeric($key)) {
+                OptionalAssign::query()->where('student_id', $key)->update(['subject_id'=> $value]);
+            }
+        }
+        return redirect('/subjects/optional/edit');
+    }
+
 }
