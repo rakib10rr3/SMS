@@ -41,6 +41,7 @@ class AttendanceController extends Controller
         $subject_name = Subject::where('id','=', $subject_id)->get();
         $students = Student::where('the_class_id', $class_id )->where('shift_id',$shift_id)->where('section_id',$section_id)->get();
         return view('attendance.create',compact('students','subject_name','section_name','shift_name','class_name'));
+
     }
 
     /**
@@ -60,6 +61,7 @@ class AttendanceController extends Controller
 //        $date = date_create_from_format('Y-m-d', $date_string);
         $carbon = new Carbon($date_string);
         $date=$carbon->format('Y-m-d');
+
         foreach ($request->request as $key=>$value)
         {
             if(is_numeric($key))

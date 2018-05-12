@@ -3,211 +3,209 @@
 
 @section('styles')
 
-    <link rel="stylesheet" type="text/css" href="{{asset('src/plugins/jquery-steps/build/jquery.steps.css')}}">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
 @endsection
 
 @section('content')
 
-    <div class="min-height-200px">
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+        <div class="clearfix mb-20">
+            <h5 class="text-blue">Attendance</h5>
 
+        </div>
+        <form method="post" action="{{ route('sendSms.store') }}">
+            @csrf
+            <div class="row">
+                <div class="col">
+                    <strong>Class:</strong>
+                    @foreach($class_name as $class_name)
+                        <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}</p>
+                    @endforeach
+                </div>
+                <div class="col">
+                    <strong>Shift:</strong>
+                    @foreach($shift_name as $shift_name)
+                        <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
+                    @endforeach
+                </div>
+                <div class="col">
+                    <strong>Section:</strong>
+                    @foreach($section_name as $section_name)
+                        <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
+                    @endforeach
+                </div>
 
-        <div class="col">
-            <div class="pd-20 bg-white border-radius-4 box-shadow">
-                <h5 class="weight-500 mb-20">Send Sms</h5>
-                <div class="tab">
-                    <ul class="nav nav-tabs customtab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home2" role="tab" aria-selected="true">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#profile2" role="tab" aria-selected="false">Teacher</a>
-                        </li>
+            </div>
 
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="home2" role="tabpanel">
-                            <div class="pd-20">
-                                <form action="/sendSms" method="post">
-
-                                    {{csrf_field()}}
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label>Class:</label>
-                                                <select name="the_class_id" class="custom-select form-control">
-                                                    @foreach ($classes as $class)
-                                                        <option value="{{ $class->id }}">
-                                                            {{ $class->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label>Section:</label>
-                                                <select name="section_id" class="custom-select form-control">
-                                                    @foreach ($sections as $section)
-                                                        <option value="{{ $section->id }}">
-                                                            {{ $section->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label>Group:</label>
-                                                <select name="group_id" class="custom-select form-control">
-                                                    @foreach ($groups as $group)
-                                                        <option value="{{ $group->id }}">
-                                                            {{ $group->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
+            <div class="row">
+                <table class="data-table stripe hover nowrap">
+                    <thead>
+                    <tr>
+                        <th>Roll</th>
+                        <th>Student Name</th>
+                        <th>Local Guardian Cell</th>
+                        <th>Send Sms</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body">
+                    @if(empty($students))
+                        <p>Data does not exist</p>
+                    @else
+                        @foreach($students as $student)
+                            <tr>
+                                <td>{{$student->roll}}</td>
+                                <td>{{$student->name}}</td>
+                                <td>{{$student->local_guardian_cell}}</td>
+                                <td>
+                                    <div class="custom-control custom-checkbox mb-5">
+                                        <input type="checkbox"  name="checkbox[]" value="{{$student->local_guardian_cell}}" class="custom-control-input"
+                                               id="{{$student->id}}">
+                                        <label class="custom-control-label" for="{{$student->id}}">Send</label>
                                     </div>
 
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+            </div>
 
+            <div class="row">
 
+                <div class="col">
+                    <div class="form-group">
+                        <label>Message :</label>
 
-
-
-
-
-
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Numbers :</label>
-                                                <input name="to" type="text" class="form-control"
-                                                       placeholder=" 01xxxxxxxxx,01xxxxxxxxx....">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Message :</label>
-                                                <input name="message" id="message" type="text" class="form-control"
-                                                       placeholder="Message">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <input value="4d4419ddc0bc3324187600e2d19911cd" type="hidden" name="token"/>
-
-                                    {{--<input value="4d4419ddc0bc3324187600e2d19911cd" type="text" name="token" placeholder="token"--}}
-                                    {{--class="form-control"/>--}}
-
-                                    {{--<input type="text" name="to" placeholder="01xxxxxxxxx,01xxxxxxxxx"/>--}}
-
-                                    {{--<textarea class="span11" name="message" id="message"--}}
-                                    {{--style="position: relative; left: 4%;"></textarea>--}}
-
-
-                                    <button type="submit" name="submit" class="btn btn-outline-success">Send Message</button>
-
-
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="profile2" role="tabpanel">
-                            <div class="pd-20">
-                                <form action="/sendSms" method="post">
-
-                                    {{csrf_field()}}
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Numbers :</label>
-                                                <input name="to" type="text" class="form-control"
-                                                       placeholder=" 01xxxxxxxxx,01xxxxxxxxx....">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Message :</label>
-                                                <input name="message" id="message" type="text" class="form-control"
-                                                       placeholder="Message">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <input value="4d4419ddc0bc3324187600e2d19911cd" type="hidden" name="token"/>
-
-                                    {{--<input value="4d4419ddc0bc3324187600e2d19911cd" type="text" name="token" placeholder="token"--}}
-                                    {{--class="form-control"/>--}}
-
-                                    {{--<input type="text" name="to" placeholder="01xxxxxxxxx,01xxxxxxxxx"/>--}}
-
-                                    {{--<textarea class="span11" name="message" id="message"--}}
-                                    {{--style="position: relative; left: 4%;"></textarea>--}}
-
-
-                                    <button type="submit" name="submit" class="btn btn-outline-success">Send Message</button>
-
-
-                                </form>
-                            </div>
-                        </div>
-
-
+                        <textarea name="message" id="message" class="form-control" tabindex="2"
+                                  placeholder="Write message" required></textarea>
                     </div>
                 </div>
+
+
             </div>
-        </div>
 
+            <input value="4d4419ddc0bc3324187600e2d19911cd" type="hidden" name="token"/>
 
+            <button type="submit" name="submit" class="btn btn-outline-success">Send Message
+            </button>
 
-
-        <!-- success Popup html Start -->
-        <div class="modal fade" id="success-modal" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body text-center font-18">
-                        <h3 class="mb-20">Form Submitted!</h3>
-                        <div class="mb-30 text-center"><img src="{{asset('vendors/images/success.png')}}"></div>
-                        Successfully Saved Data
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- success Popup html End -->
+        </form>
     </div>
 
+@endsection
 
 
 
 
 
-    <!-- Form wizard Js  -->
+<!-- Form wizard Js  -->
 @section('scripts')
+    <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
+    <script src="{{asset('src/plugins/datatables/media/js/responsive.bootstrap4.js')}}"></script>
+    <!-- buttons for Export datatable -->
+    <script src="src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.print.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.html5.js"></script>
+    <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
+    <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
+    <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
 
-    <script src="{{asset('src/plugins/jquery-steps/build/jquery.steps.js')}}"></script>
+
+
+
     <script>
-        $(".tab-wizard").steps({
-            headerTag: "h5",
-            bodyTag: "section",
-            transitionEffect: "fade",
-            titleTemplate: '<span class="step">#index#</span> #title#',
-            labels: {
-                finish: "Submit"
-            },
-            onFinished: function (event, currentIndex) {
-                // $('#success-modal').modal('show');
-                $("#form").submit();
-            }
+        $('document').ready(function () {
+            $('.data-table').DataTable({
+                scrollCollapse: true,
+                autoWidth: false,
+                responsive: true,
+                columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                }],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "info": "_START_-_END_ of _TOTAL_ entries",
+                    searchPlaceholder: "Search"
+                },
+            });
+            $('.data-table-export').DataTable({
+                scrollCollapse: true,
+                autoWidth: false,
+                responsive: true,
+                columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                }],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "info": "_START_-_END_ of _TOTAL_ entries",
+                    searchPlaceholder: "Search"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'pdf', 'print'
+                ]
+            });
+            var table = $('.select-row').DataTable();
+            $('.select-row tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+            var multipletable = $('.multiple-select-row').DataTable();
+            $('.multiple-select-row tbody').on('click', 'tr', function () {
+                $(this).toggleClass('selected');
+            });
         });
     </script>
 
-@endsection
+
+    <script>
+        $(document).on('click', '.ts-delete', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            swal({
+                title: "Are you sure!",
+                type: "error",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/teachers/" + id,
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                _method: "DELETE"
+                            },
+                            success: function (data) {
+                                swal("Poof! Your imaginary file has been deleted!", {
+                                    icon: "success",
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        });
+                    } else {
+                        swal("Your imaginary file is safe!");
+                    }
+                });
+        });
+    </script>
 
 
 @endsection
+

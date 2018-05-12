@@ -80,6 +80,8 @@
     </div>
 @endsection
 @section('scripts')
+
+
     <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>

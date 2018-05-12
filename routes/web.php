@@ -53,12 +53,12 @@ Route::resource('/subjects', 'SubjectController');
 Route::resource('/subjectAssigns', 'SubjectAssignController');
 Route::resource('/classAssigns', 'ClassAssignController');
 
-//Route::resource('/attendances','AttendanceController');
-Route::get('/attendances/select','AttendanceController@select')->name('attendance.select');
-Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
-Route::post('/attendances/show','AttendanceController@store')->name('attendance.store');
 
-Route::resource('/sendSms','SendSmsController');
+
+Route::get('/sendSms/select','SendSmsController@select')->name('sendSms.select');
+Route::post('/sendSms/create','SendSmsController@create')->name('sendSms.create');
+Route::post('/sendSms/show','SendSmsController@store')->name('sendSms.store');
+Route::get('/sendSms/dropdown','SendSmsController@dropdown')->name('sendSms.dropdown');
 
 
 
