@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 @endsection
@@ -19,7 +19,7 @@
         <div class="col-md-4 col-sm-12">
             <div class="form-group">
                 <label>multiple Select</label>
-                <form id="multi" action="/subjects/optional/list" method="post">
+                <form id="multi" action="/subjects/optional/edit/list" method="post">
                     @csrf
                     <select required="required" class="form-control" id="div_class" name="class">
                         <option value="">Select Class</option>
@@ -43,7 +43,7 @@
                 </form>
             </div>
         </div>
-        <form method="post" action="/subjects/optional/store">
+        <form method="post" action="/subjects/optional/update">
             @csrf
             <div class="row">
                 <table class="data-table stripe hover nowrap">
@@ -74,9 +74,8 @@
                                 <td>{{$student->id}}</td>
                                 <td>
                                     <select class="custom-select form-control" id="optional_id" name="{{$student->id}}">
-                                        <option value="">Select Optional Subject</option>
-                                        @foreach($optionalSubjects as $optionalSubject)
-                                            <option  value="{{$optionalSubject->id}}">{{$optionalSubject->name}}</option>
+                                        @foreach($subjects as $subject)
+                                            <option  value="{{$subject->id}}" {{$optionals[$student->id] === $subject->id? 'selected':''}}>{{$subject->name}} </option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -89,7 +88,7 @@
 
             </div>
             {{--@if(count($optionalSubjects) != 0)--}}
-            <input type="submit" value="Submit" class="btn btn-outline-success"/>
+            <input type="submit" value="Update" class="btn btn-outline-success"/>
             {{--@endif--}}
         </form>
     </div>

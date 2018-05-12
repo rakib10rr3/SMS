@@ -67,7 +67,11 @@
                                 <td>{{$student->roll}}</td>
                                 <td>{{$student->name}}</td>
                                 <td>
-                                    <input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}" {{ (in_array($student->id,$attended_array))?'checked':''}}>
+                                    <div class="custom-control custom-checkbox mb-5">
+                                        <input type="checkbox" class="custom-control-input" name="{{$student->id}}" id="{{$student->id}}" {{ (in_array($student->id,$attended_array))?'checked':''}}>
+                                        <label class="custom-control-label" for="{{$student->id}}">Present</label>
+                                    </div>
+                                    {{--<input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}" {{ (in_array($student->id,$attended_array))?'checked':''}}>--}}
                                 </td>
                             </tr>
                         @endforeach

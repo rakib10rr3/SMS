@@ -23,7 +23,17 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/students/optional-subjects', 'OptionalAssignController@index');
+Route::get('/subjects/optional','OptionalAssignController@index');
+Route::post('/subjects/optional/list','OptionalAssignController@getData');
+Route::post('/subjects/optional/store','OptionalAssignController@store');
+Route::get('/subjects/optional/edit','OptionalAssignController@edit');
+Route::post('/subjects/optional/edit/list','OptionalAssignController@getStudentDataWithOptionalSubject');
+Route::post('/subjects/optional/update','OptionalAssignController@update');
+
+Route::get('/roll-generator','RollController@index');
+Route::get('/roll-generator/auto','RollController@autoGenerate')->name('autoRoll');
+Route::get('/roll-generator/merit')->name('meritRoll');
+
 Route::post('/getSubjects', 'SubjectController@getSubject');
 Route::resource('shifts', 'ShiftController');
 Route::resource('sections', 'SectionController');
@@ -85,3 +95,5 @@ Route::post('/marks/add', 'MarkController@store')->name('marks.add.store')->midd
 Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
 Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');
 Route::post('/attendances/update','AttendanceController@update')->name('attendance.update');
+Route::get('/attendances/select_for_view','AttendanceController@selectForView')->name('attendance.selectForView');
+Route::post('/attendances/show','AttendanceController@show')->name('attendance.show');

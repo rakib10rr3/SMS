@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use App\Model\Student;
 use App\Model\Subject;
@@ -8,11 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class OptionalAssign extends Model
 {
-    public function students(){
+
+    protected $guarded=[];
+
+    public function student(){
         return $this->belongsTo(Student::class);
     }
 
-    public function subjects(){
+    public function subject(){
         return $this->belongsTo(Subject::class);
     }
 }

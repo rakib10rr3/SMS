@@ -6,7 +6,7 @@ $factory->define(App\Model\Student::class, function (Faker $faker) {
     return [
 
         'user_id' => function () {
-            return \App\User::all()->random();
+            return \App\User::create(['name' => $this->faker->word]);
         },
         'religion_id' => function () {
             return \App\Model\Religion::all()->random();
