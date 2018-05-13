@@ -33,6 +33,7 @@ Route::post('/subjects/optional/update','OptionalAssignController@update');
 Route::get('/roll-generator','RollController@index');
 Route::get('/roll-generator/auto','RollController@autoGenerate')->name('autoRoll');
 Route::get('/roll-generator/merit')->name('meritRoll');
+Route::post('/roll-generator/auto/list','RollController@getAutoRollList')->name('autoRollList');
 
 Route::post('/getSubjects', 'SubjectController@getSubject');
 Route::resource('shifts', 'ShiftController');
