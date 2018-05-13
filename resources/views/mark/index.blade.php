@@ -1,9 +1,24 @@
-@extends('layouts.app') @section('styles')
+@extends('layouts.app')
 
-<link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
-<link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css"> @endsection @section('content')
+@section('styles')
 
+    <link rel="stylesheet" type="text/css" href="src/plugins/switchery/dist/switchery.css">
+    <!-- bootstrap-tagsinput css -->
+    <link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <!-- bootstrap-touchspin css -->
+    <link rel="stylesheet" type="text/css" href="src/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css">
+
+
+
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+@endsection
+
+
+@section('content')
 
 <form action="" method="post">
 
@@ -121,13 +136,12 @@
         </div>
     </div>
     <!-- Simple Datatable End -->
-
-
     <button type="submit" class="btn btn-primary">Submit</button>
-
 </form>
 
-@endsection @section('scripts')
+@endsection
+
+@section('scripts')
 
 <script src="/src/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="/src/plugins/datatables/media/js/dataTables.bootstrap4.js"></script>
@@ -196,6 +210,9 @@
             $(this).toggleClass('selected');
         });
     });
+
+
+
 </script>
 
 

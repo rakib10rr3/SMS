@@ -45,7 +45,7 @@
                     @foreach($classAssigns as $classAssign)
                         <tr>
                             <td class="table-plus">{{$loop->iteration}}</td>
-                            <td>{{$classAssign->class->name}}</td>
+                            <td>{{$classAssign->theClass->name}}</td>
                             <td>{{$classAssign->subject->name}}</td>
                             <td>{{$classAssign->teacher->name}}</td>
                             <td>{{$classAssign->section->name}}</td>

@@ -68,15 +68,8 @@ Route::resource('/classAssigns', 'ClassAssignController');
 Route::get('/sendSms/select','SendSmsController@select')->name('sendSms.select');
 Route::post('/sendSms/create','SendSmsController@create')->name('sendSms.create');
 Route::post('/sendSms/show','SendSmsController@store')->name('sendSms.store');
-Route::get('/sendSms/dropdown','SendSmsController@dropdown')->name('sendSms.dropdown');
 
 
-
-Route::get('api/dropdown', function(){
-    $id = Input::get('option');
-    $models = TheClass::find($id)->subjects;
-    return $models;
-});
 
 Route::get('api/subjects/{id}', function($id){
     $subjects = TheClass::find($id)->subjects;
@@ -87,7 +80,7 @@ Route::get('api/subjects/{id}', function($id){
 //Route::resource('/attendances','AttendanceController');
 Route::get('/attendances/select','AttendanceController@select')->name('attendance.select');
 Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
-Route::post('/attendances/show','AttendanceController@store')->name('attendance.store');
+Route::post('/attendances/store','AttendanceController@store')->name('attendance.store');
 
 Route::get('/marks/add', 'MarkController@add')->name('marks.add.select')->middleware('auth');
 Route::post('/marks/add', 'MarkController@store')->name('marks.add.store')->middleware('auth');

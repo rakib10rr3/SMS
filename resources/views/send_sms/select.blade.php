@@ -63,9 +63,8 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label class="col-sm-12 col-md-2 col-form-label">Shift:</label>
-                                                <select class="custom-select2 form-control" id="shift_id"
+                                                <select class="form-control" id="shift_id"
                                                         name="shift_id">
-                                                    <option value="">Select Shift</option>
                                                     @foreach($shifts as $shift)
                                                         <option value="{{$shift->id}}">{{$shift->name}}</option>
                                                     @endforeach
@@ -74,6 +73,8 @@
                                         </div>
 
                                     </div>
+                                    <input value="student" type="hidden" name="type"/>
+
                                     <button type="submit" name="submit" class="btn btn-outline-success">Next</button>
                                 </form>
                             </div>
@@ -89,7 +90,9 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label>Class:</label>
-                                                <select name="the_class_id" id="theclass" class="custom-select form-control">
+                                                <select name="the_class_id" id="theclass"
+                                                        class="custom-select form-control">
+                                                    <option selected value=""> All</option>
                                                     @foreach ($classes as $class)
                                                         <option value="{{ $class->id }}">
                                                             {{ $class->name }}
@@ -103,11 +106,9 @@
                                             <div class="form-group">
                                                 <label class="col-sm-12 col-md-2 col-form-label">Subject:</label>
                                                 <select class="form-control" id="subject"
-                                                        name="shift_id">
-                                                    <option value="">Select Subject</option>
-                                                    @foreach($subjects as $subject)
-                                                        <option value="{{$subject->id}}">{{$subject->name}}</option>
-                                                    @endforeach
+                                                        name="subject_id">
+                                                    <option selected value="">All</option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -116,6 +117,9 @@
                                             <div class="form-group">
                                                 <label>Section:</label>
                                                 <select name="section_id" class="custom-select form-control">
+                                                    <option selected value="">
+                                                        All
+                                                    </option>
                                                     @foreach ($sections as $section)
                                                         <option value="{{ $section->id }}">
                                                             {{ $section->name }}
@@ -125,9 +129,9 @@
                                             </div>
                                         </div>
 
-
-
                                     </div>
+
+                                    <input value="teacher" type="hidden" name="type"/>
                                     <button type="submit" name="submit" class="btn btn-outline-success">Next</button>
                                 </form>
                             </div>
@@ -158,6 +162,7 @@
                                     </div>
 
                                     <input value="4d4419ddc0bc3324187600e2d19911cd" type="hidden" name="token"/>
+
                                     <button type="submit" name="submit" class="btn btn-outline-success">Send Message
                                     </button>
 
@@ -195,6 +200,7 @@
 
 
 
+
     <!-- Form wizard Js  -->
 @section('scripts')
 
@@ -205,15 +211,17 @@
     <script type="text/javascript">
 
         $(document).ready(function ($) {
-            $('#theclass').change(function(){
-                $.get("{{ url('sendSms/dropdown')}}",
-                    { option: $(this).val() },
-                    function(data) {
+            $('#theclass').change(function () {
+                $class_id=$(this).val();
+
+                $.get("/api/subjects/"+$class_id,
+
+                    function (data) {
                         var subject = $('#subject');
                         subject.empty();
-
-                        $.each(data, function(index, element) {
-                            subject.append("<option value='"+ element.id +"'>" + element.name + "</option>");
+                        subject.append("<option value=''>All</option>");
+                        $.each(data, function (index, element) {
+                            subject.append("<option value='" + element.id + "'>" + element.name + "</option>");
                         });
                     });
             });

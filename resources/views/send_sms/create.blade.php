@@ -15,84 +15,162 @@
             <h5 class="text-blue">Attendance</h5>
 
         </div>
-        <form method="post" action="{{ route('sendSms.store') }}">
-            @csrf
-            <div class="row">
-                <div class="col">
-                    <strong>Class:</strong>
-                    @foreach($class_name as $class_name)
-                        <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}</p>
-                    @endforeach
-                </div>
-                <div class="col">
-                    <strong>Shift:</strong>
-                    @foreach($shift_name as $shift_name)
-                        <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
-                    @endforeach
-                </div>
-                <div class="col">
-                    <strong>Section:</strong>
-                    @foreach($section_name as $section_name)
-                        <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
-                    @endforeach
-                </div>
 
-            </div>
+        <!----------------- If its for student  --------------------------------------------------->
 
-            <div class="row">
-                <table class="data-table stripe hover nowrap">
-                    <thead>
-                    <tr>
-                        <th>Roll</th>
-                        <th>Student Name</th>
-                        <th>Local Guardian Cell</th>
-                        <th>Send Sms</th>
-                    </tr>
-                    </thead>
-                    <tbody id="body">
-                    @if(empty($students))
-                        <p>Data does not exist</p>
-                    @else
-                        @foreach($students as $student)
-                            <tr>
-                                <td>{{$student->roll}}</td>
-                                <td>{{$student->name}}</td>
-                                <td>{{$student->local_guardian_cell}}</td>
-                                <td>
-                                    <div class="custom-control custom-checkbox mb-5">
-                                        <input type="checkbox"  name="checkbox[]" value="{{$student->local_guardian_cell}}" class="custom-control-input"
-                                               id="{{$student->id}}">
-                                        <label class="custom-control-label" for="{{$student->id}}">Send</label>
-                                    </div>
 
-                                </td>
-                            </tr>
+        @if($type=="student")
+
+            <form method="post" action="{{ route('sendSms.store') }}">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <strong>Class:</strong>
+                        @foreach($class_name as $class_name)
+                            <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}
+                            </p>
                         @endforeach
-                    @endif
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="row">
-
-                <div class="col">
-                    <div class="form-group">
-                        <label>Message :</label>
-
-                        <textarea name="message" id="message" class="form-control" tabindex="2"
-                                  placeholder="Write message" required></textarea>
                     </div>
+                    <div class="col">
+                        <strong>Shift:</strong>
+                        @foreach($shift_name as $shift_name)
+                            <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
+                        @endforeach
+                    </div>
+                    <div class="col">
+                        <strong>Section:</strong>
+                        @foreach($section_name as $section_name)
+                            <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}
+                            </p>
+                        @endforeach
+                    </div>
+
                 </div>
 
+                <div class="row">
+                    <table class="data-table stripe hover nowrap">
+                        <thead>
+                        <tr>
+                            <th>Roll</th>
+                            <th>Student Name</th>
+                            <th>Local Guardian Cell</th>
+                            <th>Send Sms</th>
+                        </tr>
+                        </thead>
+                        <tbody id="body">
+                        @if(empty($students))
+                            <p>Data does not exist</p>
+                        @else
+                            @foreach($students as $student)
+                                <tr>
+                                    <td>{{$student->roll}}</td>
+                                    <td>{{$student->name}}</td>
+                                    <td>{{$student->local_guardian_cell}}</td>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-5">
+                                            <input type="checkbox" name="checkbox[]"
+                                                   value="{{$student->local_guardian_cell}}"
+                                                   class="custom-control-input"
+                                                   id="{{$student->id}}">
+                                            <label class="custom-control-label" for="{{$student->id}}">Send</label>
+                                        </div>
 
-            </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
 
-            <input value="4d4419ddc0bc3324187600e2d19911cd" type="hidden" name="token"/>
+                <div class="row">
 
-            <button type="submit" name="submit" class="btn btn-outline-success">Send Message
-            </button>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Message :</label>
 
-        </form>
+                            <textarea name="message" id="message" class="form-control" tabindex="2"
+                                      placeholder="Write message" required></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <input value="4d4419ddc0bc3324187600e2d19911cd" type="hidden" name="token"/>
+
+                <button type="submit" name="submit" class="btn btn-outline-success">Send Message
+                </button>
+
+            </form>
+        @endif
+
+    <!--- -------------- If its for teacher --------------------------------------------------->
+
+        @if($type=="teacher")
+
+
+            <form method="post" action="{{ route('sendSms.store') }}">
+                @csrf
+
+
+                <div class="row">
+                    <table class="data-table stripe hover nowrap">
+                        <thead>
+                        <tr>
+                            <th> Teacher Name</th>
+                            <th> Teacher Cell</th>
+
+                            <th> Send Sms</th>
+                        </tr>
+                        </thead>
+                        <tbody id="body">
+                        @if(empty($teachers))
+                            <p>Data does not exist</p>
+                        @else
+                            @foreach($teachers as $teacher)
+                                <tr>
+                                    <td>{{$teacher->teacher->name}}</td>
+                                    <td>{{$teacher->teacher->cell}}</td>
+                                    <td>
+                                        <div class="custom-control custom-checkbox mb-5">
+                                            <input type="checkbox" name="checkbox[]"
+                                                   value="{{$teacher->teacher->cell}}"
+                                                   class="custom-control-input"
+                                                   id="{{$teacher->id}}">
+                                            <label class="custom-control-label" for="{{$teacher->id}}">Send</label>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Message :</label>
+
+                            <textarea name="message" id="message" class="form-control" tabindex="2"
+                                      placeholder="Write message" required></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <input value="4d4419ddc0bc3324187600e2d19911cd" type="hidden" name="token"/>
+
+                <button type="submit" name="submit" class="btn btn-outline-success">Send Message
+                </button>
+
+            </form>
+        @endif
+
     </div>
 
 @endsection
