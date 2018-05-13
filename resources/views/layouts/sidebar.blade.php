@@ -177,8 +177,8 @@
                         <span class="fa fa-clone"></span><span class="mtext">Marks</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route('marks.add.select')}}">Add Marks</a></li>
-
+                        <li><a href="{{route('marks.add.query')}}">Add Marks</a></li>
+                        <li><a href="{{route('marks.add.show.query')}}">Show Marks</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

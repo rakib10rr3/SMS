@@ -16,10 +16,10 @@ class CreateGradesTable extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name')->nullable(false);
-            $table->float('min_point')->nullable(false);
-            $table->float('max_point')->nullable(false);
-            $table->float('min_value')->nullable(false);
-            $table->float('max_value')->nullable(false);
+            $table->float('min_point',5,2)->nullable(false);
+            $table->float('max_point',5,2)->nullable(false);
+            $table->float('min_value',5,2)->nullable(false);
+            $table->float('max_value',5,2)->nullable(false);
             $table->timestamps();
         });
     }
