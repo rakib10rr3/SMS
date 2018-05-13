@@ -62,7 +62,12 @@
                             <tr>
                                 <td>{{$student->roll}}</td>
                                 <td>{{$student->name}}</td>
-                                <td><input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}">
+                                <td>
+                                    {{--<input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}">--}}
+                                    <div class="custom-control custom-checkbox mb-5">
+                                        <input type="checkbox" class="custom-control-input" name="{{$student->id}}" id="{{$student->id}}">
+                                        <label class="custom-control-label" for="{{$student->id}}">Present</label>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -80,6 +85,8 @@
     </div>
 @endsection
 @section('scripts')
+
+
     <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
     <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>

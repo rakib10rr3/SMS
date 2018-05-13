@@ -11,81 +11,89 @@
             <h5 class="text-blue">Attendance</h5>
 
         </div>
-        <form method="post" action="{{ route('attendance.update') }}">
-            @csrf
-            <div class="row">
-                <div class="col-md-2">
-                    <strong>Class:</strong>
-                    @foreach($class_name as $class_name)
-                        <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}</p>
-                    @endforeach
-                </div>
-                <div class="col-md-2">
-                    <strong>Shift:</strong>
-                    @foreach($shift_name as $shift_name)
-                        <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
-                    @endforeach
-                </div>
-                <div class="col-md-2">
-                    <strong>Section:</strong>
-                    @foreach($section_name as $section_name)
-                        <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
-                    @endforeach
-                </div>
-                <div class="col-md-2">
-                    <strong>Subject:</strong>
-                    @foreach($subject_name as $subject_name)
-                        <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
-                    @endforeach
-                </div>
+        <div class="row">
+            <div class="col-md-2">
+                <strong>Class:</strong>
+                @foreach($class_name as $class_name)
+                    <p><input hidden name="the_class_id" value="{{ $class_name->id }}">{{ $class_name->name }}</p>
+                @endforeach
             </div>
-            {{--@foreach($attended_students as $attended_student )--}}
-                {{--{{ $attended_student->student_id }}--}}
-            {{--@endforeach--}}
-            <div class="row" hidden>
-                <div class="form-group">
-                    <label>Date :</label>
-                    <input type="text" value="{{$date}}" name="date">
-                </div>
+            <div class="col-md-2">
+                <strong>Shift:</strong>
+                @foreach($shift_name as $shift_name)
+                    <p><input hidden name="shift_id" value="{{ $shift_name->id }}">{{ $shift_name->name }}</p>
+                @endforeach
             </div>
-            <div class="row">
-                <table class="data-table stripe hover nowrap">
-                    <thead>
-                    <tr>
-                        <th>Roll</th>
-                        <th>Student Name</th>
-                        <th>Is present?</th>
-                    </tr>
-                    </thead>
-                    <tbody id="body">
+            <div class="col-md-2">
+                <strong>Section:</strong>
+                @foreach($section_name as $section_name)
+                    <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
+                @endforeach
+            </div>
+            <div class="col-md-2">
+                <strong>Subject:</strong>
+                @foreach($subject_name as $subject_name)
+                    <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
+                @endforeach
+            </div>
+        </div>
+        {{--@foreach($attended_students as $attended_student )--}}
+        {{--{{ $attended_student->student_id }}--}}
+        {{--@endforeach--}}
+        <div class="row">
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Date:</strong>
+                <p>{{$date}}</p>
+            </div>
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Total Students:</strong>
+                <p>{{count($students)}}</p>
+            </div>
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Present Students:</strong>
+                <p>{{count($attended_array)}}</p>
+            </div>
+            <div class="col-md-2">
+                {{--<input type="text" value="{{$date}}" name="date">--}}
+                <strong>Absent Students:</strong>
+                <p>{{count($students)-count($attended_array)}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <table class="data-table stripe hover nowrap">
+                <thead>
+                <tr>
+                    <th>Roll</th>
+                    <th>Student Name</th>
+                    <th>Present/Absent</th>
+                </tr>
+                </thead>
+                <tbody id="body">
 
-                    @if(empty($students))
-                        <p>Data does not exist</p>
-                    @else
-                        @foreach($students as $student )
-                            <tr>
-                                <td>{{$student->roll}}</td>
-                                <td>{{$student->name}}</td>
-                                <td>
-                                    <div class="custom-control custom-checkbox mb-5">
-                                        <input type="checkbox" class="custom-control-input" name="{{$student->id}}" id="{{$student->id}}" {{ (in_array($student->id,$attended_array))?'checked':''}}>
-                                        <label class="custom-control-label" for="{{$student->id}}">Present</label>
-                                    </div>
+                @if(empty($students))
+                    <p>Data does not exist</p>
+                @else
+                    @foreach($students as $student )
+                        <tr>
+                            <td>{{$student->roll}}</td>
+                            <td>{{$student->name}}</td>
+                            <td>
+                                @if(in_array($student->id,$attended_array))
                                     {{--<input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}" {{ (in_array($student->id,$attended_array))?'checked':''}}>--}}
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                    </tbody>
-                </table>
-            </div>
-            <div class="row">
-                <label class="col-sm-12 col-md-2 col-form-label"></label>
-                <div class="col-sm-12 col-md-10">
-                    <button class="btn btn-success" type="submit" value="Add">Save</button>
-                </div>
-            </div>
-        </form>
+                                    <p class="badge badge-success">Present</p>
+                                @else
+                                    <p class="badge badge-danger">Absent</p>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
 @section('scripts')

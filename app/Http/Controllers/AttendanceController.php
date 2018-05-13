@@ -41,6 +41,7 @@ class AttendanceController extends Controller
         $subject_name = Subject::where('id','=', $subject_id)->get();
         $students = Student::where('the_class_id', $class_id )->where('shift_id',$shift_id)->where('section_id',$section_id)->get();
         return view('attendance.create',compact('students','subject_name','section_name','shift_name','class_name'));
+
     }
 
     /**
@@ -60,6 +61,7 @@ class AttendanceController extends Controller
 //        $date = date_create_from_format('Y-m-d', $date_string);
         $carbon = new Carbon($date_string);
         $date=$carbon->format('Y-m-d');
+
         foreach ($request->request as $key=>$value)
         {
             if(is_numeric($key))
@@ -91,9 +93,32 @@ class AttendanceController extends Controller
      * @param  \App\Model\Attendance  $attendance
      * @return \Illuminate\Http\Response
      */
-    public function show(Attendance $attendance)
+    public function show(Request $request)
     {
         //
+        $class_id = $request->get('the_class_id');
+        $class_name = TheClass::where('id','=',$class_id)->get();
+        $shift_id = $request->get('shift_id');
+        $shift_name = Shift::where('id','=', $shift_id)->get();
+        $section_id = $request->get('section_id');
+        $section_name = Section::where('id','=', $section_id)->get();
+        $subject_id = $request->get('subject_id');
+        $subject_name = Subject::where('id','=', $subject_id)->get();
+        $dob = request('date');
+        $date_string = $dob;
+//        $date = date_create_from_format('Y-m-d', $date_string);
+        $carbon = new Carbon($date_string);
+        $date=$carbon->format('Y-m-d');
+        $students = Student::where('the_class_id', $class_id )->where('shift_id',$shift_id)->where('section_id',$section_id)->get();
+        $attended_students = Attendance::where('the_class_id', $class_id )->where('shift_id',$shift_id)->where('section_id',$section_id)->where('date',$date)->get();
+        $attended_array = [];
+
+        foreach ($attended_students as $attended_student)
+        {
+            $attended_array[]=$attended_student->student_id;
+        }
+        return view('attendance.show',compact('students','attended_students', 'subject_name','section_name','shift_name','class_name','attended_array','date'));
+        //return $request;
     }
 
     /**
@@ -209,5 +234,14 @@ class AttendanceController extends Controller
         }
         return view('attendance.showForEdit',compact('students','attended_students', 'subject_name','section_name','shift_name','class_name','attended_array','date'));
         //return '1';
+    }
+
+    public function selectForView(){
+        $sections = Section::all();
+        $classes = TheClass::all();
+        $shifts = Shift::all();
+        $subjects = Subject::all();
+        // return '1';
+        return view('attendance.selectForView', compact('sections','classes', 'shifts', 'subjects'));
     }
 }

@@ -136,11 +136,11 @@
 
                     </ul>
                 </li>
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle">
-                                <span class="fa fa-clone"></span><span class="mtext">Subject</span>
-                            </a>
-                            <ul class="submenu">
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Subject</span>
+                    </a>
+                    <ul class="submenu">
                         <li><a href="/subjects/create">Add Subject</a></li>
                         <li><a href="/subjects">View Subjects</a></li>
                         <li><a href="/subjects/optional">Assign Optional Subject</a></li>
@@ -172,8 +172,7 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="fa fa-clone"></span><span class="mtext">Attendance</span>
+
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="fa fa-clone"></span><span class="mtext">Marks</span>
                     </a>
@@ -182,15 +181,25 @@
 
                     </ul>
                 </li>
+                <li class="dropdown">
+
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="fa fa-clone"></span><span class="mtext">Attendance</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="{{ route('attendance.select') }}">Add Attendance</a></li>
+                        <li><a href="{{ route('attendance.edit') }}">Edit Attendance</a> </li>
+                        <li><a href="{{ route('attendance.selectForView') }}">View Attendance</a> </li>
+                    </ul>
+                </li>
+
 
                 <li class="dropdown">
                     <a href="{{route('preference.index')}}" class="dropdown-toggle no-arrow">
                         <span class="fa fa-clone"></span><span class="mtext">Preferences</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a href="{{ route('attendance.select') }}">Add Attendance</a></li>
-                        <li><a href="{{ route('attendance.edit') }}">Edit Attendance</a> </li>
-                    </ul>
+
                 </li>
 
                 <li class="dropdown">
@@ -208,8 +217,8 @@
                         <span class="fa fa-clone"></span><span class="mtext">Send Sms </span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route('sendSms.create')}}">Create</a></li>
-                        <li><a href="{{route('sendSms.index')}}">View</a></li>
+                        <li><a href="{{route('sendSms.select')}}">Create</a></li>
+                        {{--<li><a href="{{route('sendSms.index')}}">View</a></li>--}}
                     </ul>
                 </li>
 
