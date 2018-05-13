@@ -2,7 +2,7 @@
 <div class="header clearfix">
     <div class="header-right">
         <div class="brand-logo">
-            <a href="index.php">
+            <a href="/">
                 {{--<img src="vendors/images/logo.png" alt="" class="mobile-logo">--}}
                 <img src="{{ asset('vendors/images/logo.svg') }}" alt="" class="mobile-logo">
             </a>

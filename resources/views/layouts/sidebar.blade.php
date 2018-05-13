@@ -1,6 +1,6 @@
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="index.php">
+        <a href="/">
             {{--<img src="vendors/images/deskapp-logo.png" alt="">--}}
             <img src="/vendors/images/logo-full-color.png" alt="Logo">
         </a>
@@ -177,8 +177,8 @@
                         <span class="fa fa-clone"></span><span class="mtext">Marks</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route('marks.add.select')}}">Add Marks</a></li>
-
+                        <li><a href="{{route('marks.add.query')}}">Add Marks</a></li>
+                        <li><a href="{{route('marks.add.show.query')}}">Show Marks</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

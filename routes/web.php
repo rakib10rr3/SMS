@@ -83,8 +83,12 @@ Route::get('/attendances/select','AttendanceController@select')->name('attendanc
 Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
 Route::post('/attendances/store','AttendanceController@store')->name('attendance.store');
 
-Route::get('/marks/add', 'MarkController@add')->name('marks.add.select')->middleware('auth');
-Route::post('/marks/add', 'MarkController@store')->name('marks.add.store')->middleware('auth');
+Route::get('/marks/add', 'MarkController@query')->name('marks.add.query')->middleware('auth');
+Route::post('/marks/add', 'MarkController@add')->name('marks.add.add')->middleware('auth');
+Route::put('/marks/add', 'MarkController@store')->name('marks.add.store')->middleware('auth');
+
+Route::get('/marks/show', 'MarkController@showQuery')->name('marks.add.show.query')->middleware('auth'); // todo not implemented yet
+Route::post('/marks/show', 'MarkController@show')->name('marks.add.show')->middleware('auth'); // todo not implemented yet
 
 Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
 Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');
