@@ -9,9 +9,52 @@
 @section('content')
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
+        <div class="clearfix mb-20">
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+
+            <form method="post" action="/groups">
+                {{csrf_field()}}
+                <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label">Group Name</label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" placeholder="Group Name" id="name"
+                               name="name">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="example-color-input" class="col-2 col-form-label"></label>
+                    <div class="col-10">
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Exam Terms Information</h5>
+                <h5 class="text-blue">Groups Information</h5>
 
             </div>
         </div>
@@ -20,7 +63,7 @@
                 <thead>
                 <tr>
                     <th>Serial</th>
-                    <th>Exam Term Name</th>
+                    <th>Group Name</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
@@ -39,8 +82,14 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/groups/{{$group->id}}/edit"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
+
+                                        {{--<a class="dropdown-item" href="/groups/{{$group->id}}/edit"><i--}}
+                                        {{--class="fa fa-pencil"></i> Edit</a>--}}
+
+                                        <button class="edit-modal btn btn-info" data-id="{{$group->id}}"
+                                                data-content="{{$group->name}}">
+                                            <span class="glyphicon glyphicon-edit"></span> Edit
+                                        </button>
                                         {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
                                         {{--{{csrf_field()}}--}}
                                         {{--@method('DELETE')--}}
@@ -57,6 +106,42 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Modal form to edit a form -->
+        <div id="editModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="content">Content:</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="content_edit" cols="20" rows="5"></textarea>
+                                    <p class="errorContent text-center alert alert-danger hidden"></p>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary edit" data-dismiss="modal">
+                                <span class='glyphicon glyphicon-check'></span> Edit
+                            </button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                <span class='glyphicon glyphicon-remove'></span> Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 @endsection
 
@@ -146,7 +231,7 @@
                     if (willDelete) {
                         $.ajax({
                             type: "POST",
-                            url: "/groups/"+id,
+                            url: "/groups/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
                                 _method: "DELETE"
@@ -164,6 +249,86 @@
                     }
                 });
         });
+    </script>
+
+
+
+
+    <script type="text/javascript">
+        // Edit a post
+        $(document).on('click', '.edit-modal', function () {
+
+
+            $('.modal-title').text('Edit');
+            $('#content_edit').val($(this).data('content'));
+            id = $(this).data('id');
+            $('#editModal').modal('show');
+
+
+        });
+        $('.modal-footer').on('click', '.edit', function () {
+            $.ajax({
+                type: 'PUT',
+                url: '/groups/' + id,
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'content': $('#content_edit').val()
+                },
+                success: function (data) {
+
+                    $('.errorTitle').addClass('hidden');
+                    $('.errorContent').addClass('hidden');
+
+                    if ((data.errors)) {
+                        setTimeout(function () {
+                            $('#editModal').modal('show');
+                            toastr.error('Validation error!', 'Error Alert', {timeOut: 5000});
+                        }, 500);
+
+                        if (data.errors.title) {
+                            $('.errorTitle').removeClass('hidden');
+                            $('.errorTitle').text(data.errors.title);
+                        }
+                        if (data.errors.content) {
+                            $('.errorContent').removeClass('hidden');
+                            $('.errorContent').text(data.errors.content);
+                        }
+                    } else {
+                        toastr.success('Successfully updated Post!', 'Success Alert', {timeOut: 5000});
+                        $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.title + "</td><td>" + data.content + "</td><td class='text-center'><input type='checkbox' class='edit_published' data-id='" + data.id + "'></td><td>Right now</td><td><button class='show-modal btn btn-success' data-id='" + data.id + "' data-title='" + data.title + "' data-content='" + data.content + "'><span class='glyphicon glyphicon-eye-open'></span> Show</button> <button class='edit-modal btn btn-info' data-id='" + data.id + "' data-title='" + data.title + "' data-content='" + data.content + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-title='" + data.title + "' data-content='" + data.content + "'><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
+
+                        if (data.is_published) {
+                            $('.edit_published').prop('checked', true);
+                            $('.edit_published').closest('tr').addClass('warning');
+                        }
+                        $('.edit_published').iCheck({
+                            checkboxClass: 'icheckbox_square-yellow',
+                            radioClass: 'iradio_square-yellow',
+                            increaseArea: '20%'
+                        });
+                        $('.edit_published').on('ifToggled', function (event) {
+                            $(this).closest('tr').toggleClass('warning');
+                        });
+                        $('.edit_published').on('ifChanged', function (event) {
+                            id = $(this).data('id');
+                            $.ajax({
+                                type: 'GET',
+                                url: "/groups/",
+                                data: {
+                                    '_token': $('input[name=_token]').val(),
+                                    'id': id
+                                },
+                                success: function (data) {
+                                    // empty
+                                },
+                            });
+                        });
+                    }
+                }
+            });
+        });
+
+
     </script>
 
 

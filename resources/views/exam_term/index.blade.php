@@ -9,6 +9,41 @@
 @section('content')
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
+        <div class="clearfix mb-20">
+            @if ($errors->any())
+
+                <div>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+                <form method="post" action="/exam-terms">
+                    {{ csrf_field() }}
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Text</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input class="form-control" type="text" placeholder="" name="name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label"></label>
+                        <div class="col-sm-12 col-md-10">
+                            <button class="btn btn-success" type="submit" value="Add">Add</button>
+                        </div>
+                    </div>
+
+                </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
                 <h5 class="text-blue">Exam Terms Information</h5>
