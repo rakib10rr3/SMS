@@ -22,7 +22,7 @@ class Mark extends Model
         return $this->belongsTo(Shift::class);
     }
 
-    public function students()
+    public function student()
     {
         return $this->belongsTo(Student::class);
     }

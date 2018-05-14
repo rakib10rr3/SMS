@@ -15,4 +15,10 @@ class Grade extends Model
         return $this->hasMany(MeritList::class);
 
     }
+   
+    function ts_get_grade($value)
+    {
+       //static $grades = Grade::get();
+        
+    }
 }
