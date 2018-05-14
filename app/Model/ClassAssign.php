@@ -10,7 +10,7 @@ class ClassAssign extends Model
 
     protected $guarded=[];
 
-    public function class()
+    public function theClass()
     {
         return $this->belongsTo(TheClass::class);
     }

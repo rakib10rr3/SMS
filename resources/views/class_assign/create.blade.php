@@ -14,7 +14,8 @@
 
         <div class="form-group">
             <label>Class</label>
-            <select  id="theclass" class="custom-select2 form-control" name="class_id" style="width: 100%; height: 38px;">
+            <select  id="theclass" class="custom-select2 form-control" name="the_class_id" style="width: 100%; height: 38px;">
+                <option disabled selected value> -- select an option -- </option>
                 @foreach ($classes as $class)
                     <option value="{{ $class->id }}">
                         {{ $class->name }}
@@ -77,15 +78,17 @@
     <script type="text/javascript">
 
         $(document).ready(function ($) {
-            $('#theclass').change(function(){
-                $.get("{{ url('api/dropdown')}}",
-                    { option: $(this).val() },
-                    function(data) {
+            $('#theclass').change(function () {
+                $class_id=$(this).val();
+
+                $.get("/api/subjects/"+$class_id,
+
+                    function (data) {
                         var subject = $('#subject');
                         subject.empty();
-
-                        $.each(data, function(index, element) {
-                            subject.append("<option value='"+ element.id +"'>" + element.name + "</option>");
+                        
+                        $.each(data, function (index, element) {
+                            subject.append("<option value='" + element.id + "'>" + element.name + "</option>");
                         });
                     });
             });

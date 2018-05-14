@@ -6,6 +6,7 @@
  * Time: 11:13 AM
  */
 
+use App\Model\Grade;
 use App\Model\Section;
 use App\Model\ExamTerm;
 use App\Model\TheClass;
@@ -135,6 +136,9 @@ $groups = \App\Model\Group::query()->get();
 if (count($groups) == 0) {
 \App\Model\Group::insert([
     [
+        'name' => 'None',
+    ],
+    [
         'name' => 'Science',
     ],
     [
@@ -253,4 +257,76 @@ if(count($preferences) == 0) {
     echo "Preference data already exist<br>";
 }
 
-//TODO district kora lagbe
+/*
+http://www.educationboard.gov.bd/grads.htm
+
+Class Interval 	Letter Grade 	Grade Point
+80-100 	        A+ 	            5
+70-79       	A           	4
+60-69       	A-          	3.5
+50-59       	B           	3
+40-49       	C           	2
+33-39       	D           	1
+0-32        	F           	0
+*/
+
+/**
+ * Todo: if you change this change also in "Mark" views
+ */
+
+$grades = Grade::query()->get();
+if(count($grades) == 0) {
+    Grade::insert([
+        [
+            'name' => 'A+',
+            'min_point' => '005.00',
+            'max_point' => '005.00',
+            'min_value' => '80',
+            'max_value' => '100'
+        ],
+        [
+            'name' => 'A',
+            'min_point' => '004.00',
+            'max_point' => '004.99',
+            'min_value' => '70',
+            'max_value' => '79'
+        ],
+        [
+            'name' => 'A-',
+            'min_point' => '03.50',
+            'max_point' => '03.99',
+            'min_value' => '60',
+            'max_value' => '69'
+        ],
+        [
+            'name' => 'B',
+            'min_point' => '003.00',
+            'max_point' => '003.49',
+            'min_value' => '50',
+            'max_value' => '59'
+        ],
+        [
+            'name' => 'C',
+            'min_point' => '002.00',
+            'max_point' => '002.99',
+            'min_value' => '40',
+            'max_value' => '49'
+        ],
+        [
+            'name' => 'D',
+            'min_point' => '001.00',
+            'max_point' => '001.99',
+            'min_value' => '33',
+            'max_value' => '39'
+        ],
+        [
+            'name' => 'F',
+            'min_point' => '000.00',
+            'max_point' => '000.99',
+            'min_value' => '0',
+            'max_value' => '32'
+        ],
+    ]);
+}else {
+    echo "Grade data already exist<br>";
+}
