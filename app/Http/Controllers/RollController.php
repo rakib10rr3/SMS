@@ -54,7 +54,7 @@ class RollController extends Controller
         //return $students;
 
 
-        return view('roll_generate.auto', compact('classes', 'groups', 'sections', 'students', 'shifts'));
+        return $students;
     }
 
     public function meritGenerate()

@@ -18,15 +18,19 @@ class OptionalAssignController extends Controller
         $classes = TheClass::query()->get();
         $groups = Group::query()->get();
         $sections = Section::query()->get();
-        return view('optional_assign.index', compact('classes', 'groups', 'sections'));
+        $optionalSubjects = Subject::query()->where('is_optional', '=', '1')->get();
+        return view('optional_assign.index', compact('classes', 'groups', 'sections','optionalSubjects'));
     }
 
     public function getData(Request $request)
     {
         $optionalSubjects = array();
         //return $request->all();
-        $students = Student::query()->where('the_class_id', '=', $request->class)->where('group_id', '=', $request->group)->where('section_id', '=', $request->section)->get();
-        //return $students;
+        $students = Student::query()->where('the_class_id', '=', $request->the_class_id)
+            ->where('group_id', '=', $request->group_id)
+            ->where('section_id', '=', $request->section_id)
+            ->orderBy('roll')
+            ->get();
         $classes = TheClass::query()->get();
         $groups = Group::query()->get();
         $sections = Section::query()->get();
@@ -40,11 +44,14 @@ class OptionalAssignController extends Controller
         //$optionalSubjects = $groups->subjects->name;
         //return $optionalSubjects
         //return true;
-        return view('optional_assign.index', compact('students', 'classes', 'groups', 'sections', 'optionalSubjects'));
+       // return view('optional_assign.index', compact('students', 'classes', 'groups', 'sections', 'optionalSubjects'));
+
+        return $students;
     }
 
     public function store(Request $request)
     {
+        return $request->all();
         foreach ($request->request as $key => $value) {
             if (is_numeric($key)) {
                 OptionalAssign::query()->create([
@@ -84,7 +91,7 @@ class OptionalAssignController extends Controller
 
     public function update(Request $request)
     {
-        //return $request->all();
+        return $request->all();
         foreach ($request->request as $key => $value) {
             if (is_numeric($key)) {
                 OptionalAssign::query()->where('student_id', $key)->update(['subject_id' => $value]);

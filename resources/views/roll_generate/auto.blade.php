@@ -21,77 +21,77 @@
         </div>
 
         <div class="form-group">
-                    <form id="multi" action="{{route('autoRollList')}}" method="post">
-                        @csrf
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Class:</label>
-                                    <select name="the_class_id" class="custom-select form-control">
-                                        @foreach ($classes as $class)
-                                            <option name="class"
-                                                    value="{{ $class->id }}" {{$class->name != "One" ? 'disabled':''}}>
-                                                {{ $class->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Section:</label>
-                                    <select name="section_id" class="custom-select form-control">
-                                        @foreach ($sections as $section)
-                                            <option value="{{ $section->id }}"
-                                                    name="section">
-                                                {{ $section->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="form-group">
-                                    <label>Shift:</label>
-                                    <select name="shift_id" class="custom-select form-control">
-                                        @foreach ($shifts as $shift)
-                                            <option value="{{ $shift->id }}"
-                                                      name="shift">
-                                                {{ $shift->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            {{--<div class="col">--}}
-                            {{--<div class="form-group">--}}
-                            {{--<label>Group:</label>--}}
-                            {{--<select name="group_id" class="custom-select form-control">--}}
-                            {{--@foreach ($groups as $group)--}}
-                            {{--<option value="{{ $group->id }}">--}}
-                            {{--{{ $group->name }}--}}
-                            {{--</option>--}}
-                            {{--@endforeach--}}
-                            {{--</select>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-
+            <form id="multi">
+                @csrf
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Class:</label>
+                            <select id="the_class_id" class="custom-select2 form-control" name="the_class_id"
+                                    style="width: 100%; height: 38px;">
+                                @foreach ($classes as $class)
+                                    <option value="{{ $class->id }}">
+                                        {{ $class->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
+                    </div>
 
-                        <input type="submit" id="submit" class="btn btn-success" value="Generate">
-                    </form>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Section:</label>
+                            <select id="section_id" class="custom-select2 form-control" name="section_id"
+                                    style="width: 100%; height: 38px;">
+                                @foreach ($sections as $section)
+                                    <option value="{{ $section->id }}">
+                                        {{ $section->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Shift:</label>
+                            <select id="shift_id" class="custom-select2 form-control" name="shift_id"
+                                    style="width: 100%; height: 38px;">
+                                @foreach ($shifts as $shift)
+                                    <option value="{{ $shift->id }}">
+                                        {{ $shift->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    {{--<div class="col">--}}
+                    {{--<div class="form-group">--}}
+                    {{--<label>Group:</label>--}}
+                    {{--<select name="group_id" class="custom-select form-control">--}}
+                    {{--@foreach ($groups as $group)--}}
+                    {{--<option value="{{ $group->id }}">--}}
+                    {{--{{ $group->name }}--}}
+                    {{--</option>--}}
+                    {{--@endforeach--}}
+                    {{--</select>--}}
+                    {{--</div>--}}
+                    {{--</div>--}}
+
+                </div>
+
+                <button id="btn-generate" name="btn-generate" class="btn btn-success">Generate</button>
+            </form>
         </div>
         {{--@endif--}}
-        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30" id="container">
             <div class="clearfix mb-20">
                 <div class="pull-left">
                     <h5 class="text-blue">Students List</h5>
                 </div>
             </div>
             <div class="row">
-                <table class="stripe hover multiple-select-row data-table-export nowrap">
+                <table id="students_table" class="stripe hover multiple-select-row data-table-export nowrap">
                     <thead>
                     <tr>
                         <th>Roll</th>
@@ -139,6 +139,75 @@
 
 
 
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $("#btn-generate").click(function (e) {
+                e.preventDefault();
+                //disable buttons and states
+                disable();
+                var _token = $("input[name='_token']").val();
+                var the_class_id = {"class": $('#the_class_id option:selected').val()};
+                var section_id = {"section": $('#section_id option:selected').val()};
+                var shift_id = {"shift": $('#shift_id option:selected').val()};
+
+                $.ajax({
+                    url: "{{route('autoRollList')}}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        the_class_id: the_class_id,
+                        section_id: section_id,
+                        shift_id: shift_id,
+                    },
+                    success: function (data) {
+                        var table = $('#students_table').DataTable();
+                        if ($.isEmptyObject(data.error)) {
+                            console.log(data);
+                            console.log(section_id);
+                            console.log(shift_id);
+                            //enable button and states
+                            enable();
+                            $.each(data, function (index, element) {
+                                //subject.append("<option value='"+ element.id +"'>" + element.name + "</option>");
+                                table.row.add( [
+                                    element.roll,
+                                    element.name,
+                                    element.father_name,
+                                    element.mother_name,
+                                    element.local_guardian_name,
+                                ] ).draw( false );
+                              //  $("#students_table").find('tbody').append('<tr>' + '<td>' + element.roll + '</td>' + '<td>' + element.name + '<td>' + element.father_name + '<td>' + element.mother_name + '</td>' + '<td>' + element.local_guardian_name + '</td>' + '</tr>');
+                                console.log(element.roll);
+                            });
+
+                        } else {
+                            printErrorMsg(data.error);
+                        }
+
+                    }
+                });
+            });
+        });
+
+        function enable() {
+            $('#btn-generate').html("Generate").prop('disabled', false).removeClass('btn btn-warning').addClass('btn btn-success');
+            $("#the_class_id").prop("disabled", false);
+            $("#section_id").prop("disabled", false);
+            $("#shift_id").prop("disabled", false);
+        }
+
+        function disable() {
+            $("#students_table").DataTable().clear().draw();
+            $('#btn-generate').html("Wait...").prop('disabled', true).removeClass('btn btn-success').addClass('btn btn-warning');
+            $("#the_class_id").prop("disabled", true);
+            $("#section_id").prop("disabled", true);
+            $("#shift_id").prop("disabled", true);
+        }
+    </script>
 
     <script>
         $('document').ready(function () {
@@ -188,42 +257,6 @@
             $('.multiple-select-row tbody').on('click', 'tr', function () {
                 $(this).toggleClass('selected');
             });
-        });
-    </script>
-
-
-    <script>
-        $(document).on('click', '.ts-delete', function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            swal({
-                title: "Are you sure!",
-                type: "error",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            type: "POST",
-                            url: "/teachers/" + id,
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                _method: "DELETE"
-                            },
-                            success: function (data) {
-                                swal("Poof! Your imaginary file has been deleted!", {
-                                    icon: "success",
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            }
-                        });
-                    } else {
-                        swal("Your imaginary file is safe!");
-                    }
-                });
         });
     </script>
 @endsection

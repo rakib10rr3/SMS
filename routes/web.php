@@ -24,7 +24,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/subjects/optional','OptionalAssignController@index');
-Route::post('/subjects/optional/list','OptionalAssignController@getData');
+Route::post('/subjects/optional/list','OptionalAssignController@getData')->name('getStudentDataForSelection');
 Route::post('/subjects/optional/store','OptionalAssignController@store');
 Route::get('/subjects/optional/edit','OptionalAssignController@edit');
 Route::post('/subjects/optional/edit/list','OptionalAssignController@getStudentDataWithOptionalSubject');
