@@ -45,6 +45,12 @@ class RollController extends Controller
                 ->update(['roll' => $i++]);
         }
 
+        $students = Student::query()
+            ->where('the_class_id', '=', $request->the_class_id)
+            ->where('section_id', '=', $request->section_id)
+            ->where('shift_id', '=', $request->shift_id)
+            ->get();
+
 //        $students = Student::query()
 //            ->where('the_class_id', '=', $request->the_class_id)
 //            ->where('section_id', '=', $request->section_id)
@@ -54,7 +60,7 @@ class RollController extends Controller
         //return $students;
 
 
-        return view('roll_generate.auto', compact('classes', 'groups', 'sections', 'students', 'shifts'));
+        return $students;
     }
 
     public function meritGenerate()

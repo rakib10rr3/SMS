@@ -23,12 +23,14 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/subjects/optional', 'OptionalAssignController@index');
-Route::post('/subjects/optional/list', 'OptionalAssignController@getData');
-Route::post('/subjects/optional/store', 'OptionalAssignController@store');
-Route::get('/subjects/optional/edit', 'OptionalAssignController@edit');
+Route::get('/subjects/optional','OptionalAssignController@index');
+Route::post('/subjects/optional/list','OptionalAssignController@getData')->name('getStudentDataForSelection');
+Route::get('/subjects/optional/assign','OptionalAssignController@assign')->name('assign');
+Route::post('/subjects/optional/store','OptionalAssignController@store');
+//Route::get('/subjects/optional/edit','OptionalAssignController@edit');
+Route::post('/subjects/optional/edit','OptionalAssignController@getStudentDataWithOptionalSubject')->name('edit');
+Route::post('/subjects/optional/update','OptionalAssignController@update');
 Route::post('/subjects/optional/edit/list', 'OptionalAssignController@getStudentDataWithOptionalSubject');
-Route::post('/subjects/optional/update', 'OptionalAssignController@update');
 
 Route::get('/roll-generator', 'RollController@index');
 Route::get('/roll-generator/auto', 'RollController@autoGenerate')->name('autoRoll');
@@ -91,8 +93,11 @@ Route::put('/marks/add', 'MarkController@store')->name('marks.add.store')->middl
 Route::get('/marks/show', 'MarkController@showQuery')->name('marks.add.show.query')->middleware('auth'); // todo not implemented yet
 Route::post('/marks/show', 'MarkController@show')->name('marks.add.show')->middleware('auth'); // todo not implemented yet
 
-Route::post('/attendances/show_for_edit', 'AttendanceController@showForEdit')->name('attendance.showForEdit');
-Route::get('/attendances/edit', 'AttendanceController@edit')->name('attendance.edit');
-Route::post('/attendances/update', 'AttendanceController@update')->name('attendance.update');
-Route::get('/attendances/select_for_view', 'AttendanceController@selectForView')->name('attendance.selectForView');
-Route::post('/attendances/show', 'AttendanceController@show')->name('attendance.show');
+Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
+Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');
+Route::post('/attendances/update','AttendanceController@update')->name('attendance.update');
+Route::get('/attendances/select_for_view','AttendanceController@selectForView')->name('attendance.selectForView');
+Route::post('/attendances/show','AttendanceController@show')->name('attendance.show');
+Route::get('promotion/select','PromotionController@select')->name('promotion.select');
+Route::post('promotion/select','PromotionController@view')->name('promotion.view');
+Route::post('promotion/update','PromotionController@update')->name('promotion.update');

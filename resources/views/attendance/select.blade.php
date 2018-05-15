@@ -28,6 +28,7 @@
                         <label class="col-sm-12 col-md-2 col-form-label">Class:</label>
                         <select id="theclass" class="custom-select2 form-control" name="the_class_id"
                                 style="width: 100%; height: 38px;">
+                            <option value="">Select Class</option>
                             @foreach ($classes as $class)
                                 <option value="{{ $class->id }}">
                                     {{ $class->name }}
