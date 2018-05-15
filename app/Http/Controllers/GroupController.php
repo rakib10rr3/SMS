@@ -65,7 +65,6 @@ class GroupController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  \App\Model\Group  $group
      * @return \Illuminate\Http\Response
      */

@@ -34,7 +34,7 @@ class CreateStudentsTable extends Migration
             $table->integer('roll')->unsigned();
             $table->bigInteger('user_id')->unsigned()->index()->nullable(false);
             $table->integer('shift_id')->unsigned()->index();
-            $table->date('admission_year');
+            $table->year('admission_year');
             $table->integer('the_class_id')->unsigned()->index();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('group_id')->unsigned()->index();

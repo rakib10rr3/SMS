@@ -96,3 +96,9 @@ Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.ed
 Route::post('/attendances/update','AttendanceController@update')->name('attendance.update');
 Route::get('/attendances/select_for_view','AttendanceController@selectForView')->name('attendance.selectForView');
 Route::post('/attendances/show','AttendanceController@show')->name('attendance.show');
+
+
+
+Route::get('promotion/select','PromotionController@select')->name('promotion.select');
+Route::post('promotion/select','PromotionController@view')->name('promotion.view');
+Route::post('promotion/update','PromotionController@update')->name('promotion.update');

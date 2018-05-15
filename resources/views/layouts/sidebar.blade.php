@@ -25,7 +25,7 @@
                     </a>
                     <ul class="submenu">
 
-                        <li><a href="/groups/create">Create Group</a></li>
+                        {{--<li><a href="/groups/create">Create Group</a></li>--}}
                         <li><a href="/groups">View Group</a></li>
 
                     </ul>
@@ -37,7 +37,7 @@
                     </a>
                     <ul class="submenu">
 
-                        <li><a href="/shifts/create">Create Shift</a></li>
+                        {{--<li><a href="/shifts/create">Create Shift</a></li>--}}
                         <li><a href="/shifts">View Shift</a></li>
 
                     </ul>
@@ -49,7 +49,7 @@
                     </a>
                     <ul class="submenu">
 
-                        <li><a href="/sections/create">Create Section</a></li>
+                        {{--<li><a href="/sections/create">Create Section</a></li>--}}
                         <li><a href="/sections">View Section</a></li>
 
                     </ul>
@@ -61,7 +61,7 @@
                     </a>
                     <ul class="submenu">
 
-                        <li><a href="/grades/create">Create Grade point</a></li>
+                        {{--<li><a href="/grades/create">Create Grade point</a></li>--}}
                         <li><a href="/grades">View Grade point</a></li>
 
                     </ul>
@@ -73,7 +73,7 @@
                     </a>
                     <ul class="submenu">
 
-                        <li><a href="/notices/create">Add Notice</a></li>
+                        {{--<li><a href="/notices/create">Add Notice</a></li>--}}
                         <li><a href="/notices">View Notices</a></li>
 
                     </ul>
@@ -85,7 +85,7 @@
                         <span class="fa fa-clone"></span><span class="mtext">Exam Terms</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="{{route('exam-terms.create')}}">Create Exam Terms</a></li>
+                        {{--<li><a href="{{route('exam-terms.create')}}">Create Exam Terms</a></li>--}}
                         <li><a href="{{route('exam-terms.index')}}">View Exam Terms</a></li>
                     </ul>
                 </li>
@@ -95,7 +95,7 @@
                     </a>
                     <ul class="submenu">
 
-                        <li><a href="/groups/create">Create Group</a></li>
+                        {{--<li><a href="/groups/create">Create Group</a></li>--}}
                         <li><a href="/groups">View Group</a></li>
 
                     </ul>
@@ -106,7 +106,7 @@
                     </a>
                     <ul class="submenu">
 
-                        <li><a href="/class/create">Create Class</a></li>
+                        {{--<li><a href="/class/create">Create Class</a></li>--}}
                         <li><a href="/class">View Class</a></li>
 
                     </ul>
@@ -199,7 +199,6 @@
                     <a href="{{route('preference.index')}}" class="dropdown-toggle no-arrow">
                         <span class="fa fa-clone"></span><span class="mtext">Preferences</span>
                     </a>
-
                 </li>
 
                 <li class="dropdown">
@@ -222,6 +221,11 @@
                     </ul>
                 </li>
 
+                <li class="dropdown">
+                    <a href="{{route('promotion.select')}}" class="dropdown-toggle no-arrow">
+                        <span class="fa fa-clone"></span><span class="mtext">Promotion</span>
+                    </a>
+                </li>
 
             </ul>
 
