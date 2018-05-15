@@ -260,7 +260,7 @@ if(count($preferences) == 0) {
 /*
 http://www.educationboard.gov.bd/grads.htm
 
-Class Interval 	Letter Grade 	Grade Point
+Class Interval 	Letter grade 	grade Point
 80-100 	        A+ 	            5
 70-79       	A           	4
 60-69       	A-          	3.5
@@ -328,5 +328,5 @@ if(count($grades) == 0) {
         ],
     ]);
 }else {
-    echo "Grade data already exist<br>";
+    echo "grade data already exist<br>";
 }

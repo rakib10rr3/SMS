@@ -120,7 +120,6 @@
                         <tr>
                             <th> Teacher Name</th>
                             <th> Teacher Cell</th>
-
                             <th> Send Sms</th>
                         </tr>
                         </thead>

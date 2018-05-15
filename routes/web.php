@@ -23,17 +23,17 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/subjects/optional','OptionalAssignController@index');
-Route::post('/subjects/optional/list','OptionalAssignController@getData');
-Route::post('/subjects/optional/store','OptionalAssignController@store');
-Route::get('/subjects/optional/edit','OptionalAssignController@edit');
-Route::post('/subjects/optional/edit/list','OptionalAssignController@getStudentDataWithOptionalSubject');
-Route::post('/subjects/optional/update','OptionalAssignController@update');
+Route::get('/subjects/optional', 'OptionalAssignController@index');
+Route::post('/subjects/optional/list', 'OptionalAssignController@getData');
+Route::post('/subjects/optional/store', 'OptionalAssignController@store');
+Route::get('/subjects/optional/edit', 'OptionalAssignController@edit');
+Route::post('/subjects/optional/edit/list', 'OptionalAssignController@getStudentDataWithOptionalSubject');
+Route::post('/subjects/optional/update', 'OptionalAssignController@update');
 
-Route::get('/roll-generator','RollController@index');
-Route::get('/roll-generator/auto','RollController@autoGenerate')->name('autoRoll');
+Route::get('/roll-generator', 'RollController@index');
+Route::get('/roll-generator/auto', 'RollController@autoGenerate')->name('autoRoll');
 Route::get('/roll-generator/merit')->name('meritRoll');
-Route::post('/roll-generator/auto/list','RollController@getAutoRollList')->name('autoRollList');
+Route::post('/roll-generator/auto/list', 'RollController@getAutoRollList')->name('autoRollList');
 
 Route::post('/getSubjects', 'SubjectController@getSubject');
 Route::resource('shifts', 'ShiftController');
@@ -50,13 +50,16 @@ Route::get('/setup', function () {
 });
 
 Route::resource('/exam-terms', 'ExamTermController');
-Route::resource('groups', 'GroupController');
+Route::resource('/groups', 'GroupController');
+
+//Route::Post('/Tesla/test','GroupController@tesla');
+
 Route::resource('class', 'TheClassController');
 Route::resource('roles', 'RoleController');
 Route::resource('teachers', 'TeacherController');
 
-Route::resource('/students','StudentController');
-Route::resource('/subjects','SubjectController');
+Route::resource('/students', 'StudentController');
+Route::resource('/subjects', 'SubjectController');
 Route::get('preference', 'PreferenceController@index')->name('preference.index')->middleware('auth');
 Route::put('preference', 'PreferenceController@update')->name('preference.update')->middleware('auth');
 Route::resource('/students', 'StudentController');
@@ -65,23 +68,21 @@ Route::resource('/subjectAssigns', 'SubjectAssignController');
 Route::resource('/classAssigns', 'ClassAssignController');
 
 
-
-Route::get('/sendSms/select','SendSmsController@select')->name('sendSms.select');
-Route::post('/sendSms/create','SendSmsController@create')->name('sendSms.create');
-Route::post('/sendSms/show','SendSmsController@store')->name('sendSms.store');
-
+Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select');
+Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
+Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
 
 
-Route::get('api/subjects/{id}', function($id){
+Route::get('api/subjects/{id}', function ($id) {
     $subjects = TheClass::find($id)->subjects;
     return $subjects;
 });
 
 
 //Route::resource('/attendances','AttendanceController');
-Route::get('/attendances/select','AttendanceController@select')->name('attendance.select');
-Route::post('/attendances/create','AttendanceController@create')->name('attendance.create');
-Route::post('/attendances/store','AttendanceController@store')->name('attendance.store');
+Route::get('/attendances/select', 'AttendanceController@select')->name('attendance.select');
+Route::post('/attendances/create', 'AttendanceController@create')->name('attendance.create');
+Route::post('/attendances/store', 'AttendanceController@store')->name('attendance.store');
 
 Route::get('/marks/add', 'MarkController@query')->name('marks.add.query')->middleware('auth');
 Route::post('/marks/add', 'MarkController@add')->name('marks.add.add')->middleware('auth');
@@ -90,8 +91,8 @@ Route::put('/marks/add', 'MarkController@store')->name('marks.add.store')->middl
 Route::get('/marks/show', 'MarkController@showQuery')->name('marks.add.show.query')->middleware('auth'); // todo not implemented yet
 Route::post('/marks/show', 'MarkController@show')->name('marks.add.show')->middleware('auth'); // todo not implemented yet
 
-Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
-Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');
-Route::post('/attendances/update','AttendanceController@update')->name('attendance.update');
-Route::get('/attendances/select_for_view','AttendanceController@selectForView')->name('attendance.selectForView');
-Route::post('/attendances/show','AttendanceController@show')->name('attendance.show');
+Route::post('/attendances/show_for_edit', 'AttendanceController@showForEdit')->name('attendance.showForEdit');
+Route::get('/attendances/edit', 'AttendanceController@edit')->name('attendance.edit');
+Route::post('/attendances/update', 'AttendanceController@update')->name('attendance.update');
+Route::get('/attendances/select_for_view', 'AttendanceController@selectForView')->name('attendance.selectForView');
+Route::post('/attendances/show', 'AttendanceController@show')->name('attendance.show');

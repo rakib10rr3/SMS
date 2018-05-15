@@ -86,7 +86,6 @@ class GroupController extends Controller
     {
         $group->update($request->all());
         return redirect('/groups');
-
     }
 
     /**
@@ -100,5 +99,20 @@ class GroupController extends Controller
         $group->delete();
         return redirect('/groups');
 
+    }
+
+    public function tesla(Request $request)
+    {
+        return $request;
+    }
+
+    public function customEdit(Request $request)
+    {
+
+        $group_id = $request->get('id');
+        $group= Group::find($group_id);
+        $group->name = $request->get('name');
+        $group->save();
+        return $group;
     }
 }

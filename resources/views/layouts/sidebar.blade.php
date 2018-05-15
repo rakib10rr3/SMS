@@ -61,7 +61,7 @@
                     </a>
                     <ul class="submenu">
 
-                        {{--<li><a href="/grades/create">Create Grade point</a></li>--}}
+                        {{--<li><a href="/grades/create">Create grade point</a></li>--}}
                         <li><a href="/grades">View Grade point</a></li>
 
                     </ul>

@@ -15,7 +15,7 @@ class GradeController extends Controller
     public function index()
     {
         $grades = Grade::all();
-        return view('Grade.index', compact('grades'))->with('i',(request()->input('page',1)-1)*5);
+        return view('grade.index', compact('grades'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /**
@@ -25,7 +25,7 @@ class GradeController extends Controller
      */
     public function create()
     {
-        return view('Grade.create');
+        return view('grade.create');
     }
 
     /**
@@ -59,7 +59,7 @@ class GradeController extends Controller
      */
     public function edit(Grade $grade)
     {
-        return view('Grade.edit', compact('grade'));
+        return view('grade.edit', compact('grade'));
     }
 
     /**

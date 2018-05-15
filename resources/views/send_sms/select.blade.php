@@ -141,7 +141,7 @@
 
                         <div class="tab-pane fade" id="profile3" role="tabpanel">
                             <div class="pd-20">
-                                <form action="" method="post">
+                                <form action="{{route('sendSms.create')}}" method="post">
 
                                     {{csrf_field()}}
                                     <div class="row">

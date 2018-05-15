@@ -252,7 +252,7 @@
     {{--<table class="table table-bordered">--}}
         {{--<tr>--}}
             {{--<th>No</th>--}}
-            {{--<th>Grade</th>--}}
+            {{--<th>grade</th>--}}
             {{--<th>Minimum Point</th>--}}
             {{--<th>Maximum Point</th>--}}
             {{--<th>Minimum Value</th>--}}

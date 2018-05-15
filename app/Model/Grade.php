@@ -18,7 +18,7 @@ class Grade extends Model
    
     function ts_get_grade($value)
     {
-       //static $grades = Grade::get();
+       //static $grades = grade::get();
         
     }
 }

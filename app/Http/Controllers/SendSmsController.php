@@ -60,6 +60,27 @@ class SendSmsController extends Controller
             //$teachers = ClassAssign::where('the_class_id', $class_id)->where('subject_id', $subject_id)->where('section_id', $section_id)->get();
             return view('send_sms.create', compact('teachers', 'type', 'section_name', 'subject_name', 'class_name'));
         }
+        else
+        {
+
+            $to = $request->get('to');
+            $message = $request->get('message');
+            $token = $request->get('token');
+
+
+            $uri = "http://sms.greenweb.com.bd/api.php";
+            $client = new Client(); //GuzzleHttp\Client
+            $result = $client->post($uri, [
+                'form_params' => [
+                    'to' => $to,
+                    'message' => $message,
+                    'token' => $token
+                ]
+            ]);
+
+            return redirect('sendSms/select');
+
+        }
 
     }
 
@@ -86,6 +107,7 @@ class SendSmsController extends Controller
         $request->merge([
             'checkbox' => implode(',', (array)$request->get('checkbox'))
         ]);
+
         $to = $request->get('checkbox');
         $message = $request->get('message');
         $token = $request->get('token');

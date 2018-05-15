@@ -9869,7 +9869,7 @@
 		 *          { "title": "Browser" },
 		 *          { "title": "Platform" },
 		 *          { "title": "Version" },
-		 *          { "title": "Grade" }
+		 *          { "title": "grade" }
 		 *        ]
 		 *      } );
 		 *    } );
@@ -9899,7 +9899,7 @@
 		 *          { "title": "Browser",  "data": "browser" },
 		 *          { "title": "Platform", "data": "platform" },
 		 *          { "title": "Version",  "data": "version" },
-		 *          { "title": "Grade",    "data": "grade" }
+		 *          { "title": "grade",    "data": "grade" }
 		 *        ]
 		 *      } );
 		 *    } );

@@ -183,7 +183,7 @@ class MarkController extends Controller
                 $final_grade_point = 0;
                 $final_grade = '';
 
-                // Grade point
+                // grade point
                 foreach ($grades as $grade) {
                     if ($mark_total >= $grade->min_value) {
                         $final_grade_point = $grade->min_point;
