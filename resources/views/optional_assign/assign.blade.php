@@ -55,21 +55,18 @@
                             </select>
                         </div>
                     </div>
-
-
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Shift:</label>
-                            <select id="shift_id" class="custom-select2 form-control" name="shift_id"
-                                    style="width: 100%; height: 38px;">
-                                @foreach ($shifts as $shift)
-                                    <option value="{{ $shift->id }}">
-                                        {{ $shift->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    {{--<div class="col">--}}
+                    {{--<div class="form-group">--}}
+                    {{--<label>Group:</label>--}}
+                    {{--<select name="group_id" class="custom-select form-control">--}}
+                    {{--@foreach ($groups as $group)--}}
+                    {{--<option value="{{ $group->id }}">--}}
+                    {{--{{ $group->name }}--}}
+                    {{--</option>--}}
+                    {{--@endforeach--}}
+                    {{--</select>--}}
+                    {{--</div>--}}
+                    {{--</div>--}}
 
                 </div>
 
@@ -83,7 +80,7 @@
                     <h5 class="text-blue">Students List</h5>
                 </div>
             </div>
-            <form id="assign_form" method="post">
+            <form method="post" action="/subjects/optional/store">
                 @csrf
                 <div class="row">
                     <table id="students_table" class="data-table stripe hover nowrap">
@@ -91,7 +88,7 @@
                         <tr>
                             <th>Roll</th>
                             <th>Name</th>
-                            <th class="datatable-nosort">Optional Subject</th>
+                            <th class="datatable-nosort">Select Subject</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -99,26 +96,25 @@
                         @else
                             @foreach($students as $student)
 
-                                <tr>
-                                    <td class="table-plus">{{$loop->iteration}}</td>
-                                    <td>{{$student->name}}</td>
-                                    <td>{{$student->theClass->name}}</td>
-                                    <td>{{$student->section->name}}</td>
-                                    <td>{{$student->roll}}</td>
-                                    <td>{{$student->group->name}}</td>
-                                    <td>{{$student->id}}</td>
-                                    <input type="hidden" name="class" value="{{$student->id}}">
-                                    <td>
-                                        <select class="custom-select form-control" id="optional_id"
-                                                name="{{$student->id}}">
-                                            <option value="">Select Optional Subject</option>
-                                            @foreach($optionalSubjects as $optionalSubject)
-                                                <option value="{{$optionalSubject->id}}">{{$optionalSubject->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
+                                {{--<tr>--}}
+                                {{--<td class="table-plus">{{$loop->iteration}}</td>--}}
+                                {{--<td>{{$student->name}}</td>--}}
+                                {{--<td>{{$student->theClass->name}}</td>--}}
+                                {{--<td>{{$student->section->name}}</td>--}}
+                                {{--<td>{{$student->roll}}</td>--}}
+                                {{--<td>{{$student->group->name}}</td>--}}
+                                {{--<td>{{$student->id}}</td>--}}
+                                {{--<td>--}}
+                                {{--<select class="custom-select form-control" id="optional_id"--}}
+                                {{--name="{{$student->id}}">--}}
+                                {{--<option value="">Select Optional Subject</option>--}}
+                                {{--@foreach($optionalSubjects as $optionalSubject)--}}
+                                {{--<option value="{{$optionalSubject->id}}">{{$optionalSubject->name}}</option>--}}
+                                {{--@endforeach--}}
+                                {{--</select>--}}
+                                {{--</td>--}}
 
-                                </tr>
+                                {{--</tr>--}}
                             @endforeach
                         @endif
                         </tbody>
@@ -126,9 +122,7 @@
 
                 </div>
                 {{--@if(count($optionalSubjects) != 0)--}}
-
-                <button type="button" onclick="submitform()" name="assign" class="btn btn-outline-success">Assign
-                </button>
+                <input type="submit" value="Submit" class="btn btn-outline-success"/>
                 {{--@endif--}}
             </form>
         </div>
@@ -215,13 +209,6 @@
                 var the_class_id = {"class": $('#the_class_id option:selected').val()};
                 var section_id = {"section": $('#section_id option:selected').val()};
                 var group_id = {"group": $('#group_id option:selected').val()};
-                var shift_id = {"shift": $('#shift_id option:selected').val()};
-
-                console.log(the_class_id);
-                console.log(section_id);
-                console.log(group_id);
-                console.log(shift_id);
-
 
                 $.ajax({
                     url: "{{route('getStudentDataForSelection')}}",
@@ -231,7 +218,6 @@
                         the_class_id: the_class_id,
                         section_id: section_id,
                         group_id: group_id,
-                        shift_id: shift_id
                     },
                     success: function (data) {
                         var table = $('#students_table').DataTable();
@@ -241,11 +227,16 @@
                             //enable button and states
                             enable();
                             $.each(data, function (index, element) {
-                                table.row.add([
+                                table.row.add( [
                                     element.roll,
                                     element.name,
-                                    element.optional,
-                                ]).draw(false);
+                                    '<select class="custom-select form-control"  id="optional_id"\n' +
+                                    '                                                name=" + ' + element.id + ' + ">\n' +
+                                    '                                            @foreach($optionalSubjects as $optionalSubject)\n' +
+                                    '                                                <option value="{{$optionalSubject->id}}">{{$optionalSubject->name}}</option>\n' +
+                                    '                                            @endforeach\n' +
+                                    '                                        </select>',
+                                ] ).draw( false );
                             });
                         } else {
                             printErrorMsg(data.error);
@@ -256,11 +247,10 @@
         });
 
         function enable() {
-            $('#btn-generate').html("Get Student List").prop('disabled', false).removeClass('btn btn-warning').addClass('btn btn-success');
+            $('#btn-generate').html("Generate").prop('disabled', false).removeClass('btn btn-warning').addClass('btn btn-success');
             $("#the_class_id").prop("disabled", false);
             $("#section_id").prop("disabled", false);
             $("#shift_id").prop("disabled", false);
-            $("#group_id").prop("disabled", false);
         }
 
         function disable() {
@@ -269,23 +259,6 @@
             $("#the_class_id").prop("disabled", true);
             $("#section_id").prop("disabled", true);
             $("#shift_id").prop("disabled", true);
-            $("#group_id").prop("disabled", true);
-        }
-    </script>
-
-    <script>
-        function submitform() {
-            var url = '{{route('edit')}}';
-            $('#assign_form').attr('action', url);
-            var the_class_id = $('#the_class_id option:selected').val();
-            var section_id = $('#section_id option:selected').val();
-            var group_id = $('#group_id option:selected').val();
-            var shift_id = $('#shift_id option:selected').val()
-            $('<input type="hidden" name="the_class_id"/>').val(the_class_id).appendTo('#assign_form');
-            $('<input type="hidden" name="section_id"/>').val(section_id).appendTo('#assign_form');
-            $('<input type="hidden" name="group_id"/>').val(group_id).appendTo('#assign_form');
-            $('<input type="hidden" name="shift_id"/>').val(shift_id).appendTo('#assign_form');
-            $("#assign_form").submit();
         }
     </script>
 

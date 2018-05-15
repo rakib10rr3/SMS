@@ -25,9 +25,10 @@ Auth::routes();
 
 Route::get('/subjects/optional','OptionalAssignController@index');
 Route::post('/subjects/optional/list','OptionalAssignController@getData')->name('getStudentDataForSelection');
+Route::get('/subjects/optional/assign','OptionalAssignController@assign')->name('assign');
 Route::post('/subjects/optional/store','OptionalAssignController@store');
-Route::get('/subjects/optional/edit','OptionalAssignController@edit');
-Route::post('/subjects/optional/edit/list','OptionalAssignController@getStudentDataWithOptionalSubject');
+//Route::get('/subjects/optional/edit','OptionalAssignController@edit');
+Route::post('/subjects/optional/edit','OptionalAssignController@getStudentDataWithOptionalSubject')->name('edit');
 Route::post('/subjects/optional/update','OptionalAssignController@update');
 
 Route::get('/roll-generator','RollController@index');

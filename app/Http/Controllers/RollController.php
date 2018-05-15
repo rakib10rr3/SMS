@@ -45,6 +45,12 @@ class RollController extends Controller
                 ->update(['roll' => $i++]);
         }
 
+        $students = Student::query()
+            ->where('the_class_id', '=', $request->the_class_id)
+            ->where('section_id', '=', $request->section_id)
+            ->where('shift_id', '=', $request->shift_id)
+            ->get();
+
 //        $students = Student::query()
 //            ->where('the_class_id', '=', $request->the_class_id)
 //            ->where('section_id', '=', $request->section_id)

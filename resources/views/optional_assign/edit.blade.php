@@ -12,51 +12,49 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Students Information</h5>
+                <h5 class="text-blue">Assign Optional Subjects</h5>
 
             </div>
         </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="form-group">
-                <label>multiple Select</label>
-                <form id="multi" action="/subjects/optional/edit/list" method="post">
-                    @csrf
-                    <select required="required" class="form-control" id="div_class" name="class">
-                        <option value="">Select Class</option>
-                        @foreach($classes as $class)
-                            <option value="{{$class->id}}">{{$class->name}}</option>
-                        @endforeach
-                    </select>
-                    <select required="required" class="form-control" id="div_group" name="group">
-                        <option value="">Select Group</option>
-                        @foreach($groups as $group)
-                            <option value="{{$group->id}}">{{$group->name}}</option>
-                        @endforeach
-                    </select>
-                    <select required="required" class="form-control" id="div_section" name="section">
-                        <option value="">Select Section</option>
-                        @foreach($sections as $section)
-                            <option value="{{$section->id}}">{{$section->name}}</option>
-                        @endforeach
-                    </select>
-                    <input type="submit" id="submit" class="btn btn-success" value="Submit">
-                </form>
-            </div>
-        </div>
+        {{--<div class="col-md-4 col-sm-12">--}}
+        {{--<div class="form-group">--}}
+        {{--<label>multiple Select</label>--}}
+        {{--<form id="multi" action="/subjects/optional/edit/list" method="post">--}}
+        {{--@csrf--}}
+        {{--<select required="required" class="form-control" id="div_class" name="class">--}}
+        {{--<option value="">Select Class</option>--}}
+        {{--@foreach($classes as $class)--}}
+        {{--<option value="{{$class->id}}">{{$class->name}}</option>--}}
+        {{--@endforeach--}}
+        {{--</select>--}}
+        {{--<select required="required" class="form-control" id="div_group" name="group">--}}
+        {{--<option value="">Select Group</option>--}}
+        {{--@foreach($groups as $group)--}}
+        {{--<option value="{{$group->id}}">{{$group->name}}</option>--}}
+        {{--@endforeach--}}
+        {{--</select>--}}
+        {{--<select required="required" class="form-control" id="div_section" name="section">--}}
+        {{--<option value="">Select Section</option>--}}
+        {{--@foreach($sections as $section)--}}
+        {{--<option value="{{$section->id}}">{{$section->name}}</option>--}}
+        {{--@endforeach--}}
+        {{--</select>--}}
+        {{--<input type="submit" id="submit" class="btn btn-success" value="Submit">--}}
+        {{--</form>--}}
+        {{--</div>--}}
+        {{--</div>--}}
         <form method="post" action="/subjects/optional/update">
             @csrf
             <div class="row">
                 <table class="data-table stripe hover nowrap">
                     <thead>
                     <tr>
-                        <th>Serial</th>
+                        <th>Roll</th>
                         <th>Name</th>
                         <th>Class</th>
                         <th>Section</th>
-                        <th>Roll</th>
                         <th>Group</th>
-                        <th>Photo</th>
-                        <th class="datatable-nosort">Action</th>
+                        <th class="datatable-nosort">Select Optional Subject</th>
                     </tr>
                     </thead>
                     <tbody id="body">
@@ -65,18 +63,24 @@
                         @foreach($students as $student)
 
                             <tr>
-                                <td class="table-plus">{{$loop->iteration}}</td>
+                                <td>{{$student->roll}}</td>
                                 <td>{{$student->name}}</td>
                                 <td>{{$student->theClass->name}}</td>
                                 <td>{{$student->section->name}}</td>
-                                <td>{{$student->roll}}</td>
                                 <td>{{$student->group->name}}</td>
-                                <td>{{$student->id}}</td>
                                 <td>
                                     <select class="custom-select form-control" id="optional_id" name="{{$student->id}}">
+                                        @if(!isset($optionals[$student->id]))
+                                            <option value="">Select Optional Subject</option>
+                                        @endif
                                         @foreach($subjects as $subject)
-                                            <option  value="{{$subject->id}}" {{$optionals[$student->id] === $subject->id? 'selected':''}}>{{$subject->name}} </option>
+                                            @if(isset($optionals[$student->id]))
+                                                <option value="{{$subject->id}}" {{$optionals[$student->id] == $subject->id? 'selected':''}}>{{$subject->name}} </option>
+                                            @else
+                                                <option value="{{$subject->id}}">{{$subject->name}} </option>
+                                            @endif
                                         @endforeach
+
                                     </select>
                                 </td>
 
@@ -87,9 +91,9 @@
                 </table>
 
             </div>
-            {{--@if(count($optionalSubjects) != 0)--}}
-            <input type="submit" value="Update" class="btn btn-outline-success"/>
-            {{--@endif--}}
+            @if(count($optionalSubjects) != 0)
+                <input type="submit" value="Update" class="btn btn-outline-success"/>
+            @endif
         </form>
     </div>
 @endsection
@@ -109,8 +113,6 @@
     <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
-
-
 
 
     <script>
@@ -203,7 +205,6 @@
 
 
 {{--@include('layouts.header')--}}
-
 
 
 
