@@ -197,7 +197,11 @@
                             <th>Student Name</th>
                             <th>Roll</th>
                             <th>Result</th>
-                            <th>Select</th>
+                            <th class="datatable-nosort sorting_asc">
+                                <div class="custom-control custom-checkbox mb-5">
+                                <input class="custom-control-input" type="checkbox" id="select-all"/> <label class="custom-control-label" for="select-all">Select All</label>
+                                </div>
+                            </th>
                         </tr>
                         </thead>
                         <tbody id="body">
@@ -249,6 +253,8 @@
     <script src="/src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="/src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
+
+
     <script>
         $('document').ready(function () {
             $('.data-table').DataTable({
@@ -314,6 +320,17 @@
                             subject.append("<option value='" + element.id + "'>" + element.name + "</option>");
                         });
                     });
+            });
+        });
+
+        $(function () {
+            $('input#select-all').change(function () {
+                if(this.checked)
+                {
+                    $("input[type=checkbox]").prop('checked', true);
+                } else {
+                    $("input[type=checkbox]").prop('checked', false);
+                }
             });
         });
 
