@@ -199,7 +199,6 @@
                     <a href="{{route('preference.index')}}" class="dropdown-toggle no-arrow">
                         <span class="fa fa-clone"></span><span class="mtext">Preferences</span>
                     </a>
-
                 </li>
 
                 <li class="dropdown">
@@ -222,6 +221,11 @@
                     </ul>
                 </li>
 
+                <li class="dropdown">
+                    <a href="{{route('promotion.select')}}" class="dropdown-toggle no-arrow">
+                        <span class="fa fa-clone"></span><span class="mtext">Promotion</span>
+                    </a>
+                </li>
 
             </ul>
 

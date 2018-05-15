@@ -94,7 +94,7 @@ class StudentController extends Controller
 
         $admissionDateString = request('admission_year');
         $carbon = new Carbon($admissionDateString);
-        $admissionDate = $carbon->format('Y-m-d');
+        $admissionDate = $carbon->format('Y');
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
