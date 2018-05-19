@@ -25,17 +25,19 @@
             @endif
 
             <form action="{{ route('shifts.store') }}" method="POST">
-                @csrf
-                <div>
-                    <div>
-                        <div>
-                            <strong>Shift Name:</strong>
-                            <input type="text" name="name" class="form-control" placeholder="Shift Name">
-                        </div>
 
+                @csrf
+                <div class="form-group row">
+                    <label for="example-text-input" class="col-2 col-form-label">Shift Name</label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" placeholder="Shift Name" id="name" name="name">
                     </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+                <div class="form-group row">
+                    <label for="example-color-input" class="col-2 col-form-label"></label>
+                    <div class="col-10">
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
                     </div>
                 </div>
             </form>
@@ -43,8 +45,6 @@
         </div>
 
     </div>
-
-
 
 
 
@@ -79,13 +79,12 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="{{ route('shifts.edit',$shift->id) }}"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
+
+                                        <a class="edit-modal dropdown-item" data-toggle="modal"
+                                           data-target="#Medium-modal" data-id="{{$shift->id}}"
+                                           data-content="{{$shift->name}}">
+                                            <i class="fa fa-pencil"></i>Edit</a>
+
                                         <a class="dropdown-item ts-delete" href="" data-id="{{$shift->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
@@ -97,6 +96,47 @@
                 </tbody>
             </table>
         </div>
+
+
+
+
+
+        <!-- Medium modal -->
+        <div class="col-md-4 col-sm-12">
+            <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
+
+                <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myLargeModalLabel">Edit</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+
+                                <form method="POST" id="updateshift">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="_method" value="PUT">
+
+                                    <div class="form-group">
+                                        <label for="shift_name">Group name:</label>
+                                        <input type="text" name="shift_name" class="form-control" id="shift_name"
+                                               value="">
+                                    </div>
+                                    <input type="submit"  class="btn btn-success pull-right">
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 @endsection
 
@@ -204,6 +244,43 @@
                         swal("Your imaginary file is safe!");
                     }
                 });
+        });
+    </script>
+
+
+    <!-- Needed For Editing a shift-->
+
+    <script type="text/javascript">
+        // Edit a shift
+        $(document).on('click', '.edit-modal', function () {
+            message = $(this).data('content');
+            $('#content_edit').val(message);
+            console.log(message);
+            id = $(this).data('id');
+            console.log(id);
+            $('#Medium-modal').modal('show');
+            $('#shift_name').val(message);
+
+            $("#updateshift").on("submit", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/shifts/" + id,
+                    data: {
+                        id: id,
+                        name: $('#shift_name').val(),
+                        _token: '{{csrf_token()}}',
+                        _method: 'PUT'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        // $("#mytable").load(" #mytable");
+                        window.location.reload();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+            });
         });
     </script>
 

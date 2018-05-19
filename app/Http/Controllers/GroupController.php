@@ -15,8 +15,8 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::all();
-        return view('group.index', compact('groups'));
-
+        $success = false;
+        return view('group.index', compact('groups', 'success'));
     }
 
     /**
@@ -33,39 +33,34 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-
         ]);
-
-
-
-
         Group::query()->create($request->all());
-        return redirect('/groups');
-
+        $success = true;
+        $groups = Group::all();
+        return view('group.index', compact('success', 'groups'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Group  $group
+     * @param  \App\Model\Group $group
      * @return \Illuminate\Http\Response
      */
     public function show(Group $group)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
-     * @param  \App\Model\Group  $group
+     * @param  \App\Model\Group $group
      * @return \Illuminate\Http\Response
      */
     public function edit(Group $group)
@@ -78,8 +73,8 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Group  $group
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Model\Group $group
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Group $group)
@@ -91,7 +86,7 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Group  $group
+     * @param  \App\Model\Group $group
      * @return \Illuminate\Http\Response
      */
     public function destroy(Group $group)
@@ -110,7 +105,7 @@ class GroupController extends Controller
     {
 
         $group_id = $request->get('id');
-        $group= Group::find($group_id);
+        $group = Group::find($group_id);
         $group->name = $request->get('name');
         $group->save();
         return $group;

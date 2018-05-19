@@ -74,13 +74,13 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/exam-terms/{{$examTerm->id}}/edit"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
+
+
+                                        <a class="edit-modal dropdown-item" data-toggle="modal"
+                                           data-target="#Medium-modal" data-id="{{$examTerm->id}}"
+                                           data-content="{{$examTerm->name}}">
+                                            <i class="fa fa-pencil"></i>Edit</a>
+
                                         <a class="dropdown-item ts-delete" href="" data-id="{{$examTerm->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
@@ -93,6 +93,45 @@
             </table>
         </div>
     </div>
+
+
+    <!-- Medium modal -->
+    <div class="col-md-4 col-sm-12">
+        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
+
+            <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myLargeModalLabel">Edit</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="POST" id="updateExamTerm">
+                                {{csrf_field()}}
+                                <input type="hidden" name="_method" value="PUT">
+
+                                <div class="form-group">
+                                    <label for="ExamTerm_name">Exam Term:</label>
+                                    <input type="text" name="ExamTerm_name" class="form-control" id="ExamTerm_name"
+                                           value="">
+                                </div>
+                                <input type="submit"  class="btn btn-success pull-right">
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 @endsection
 
 
@@ -266,6 +305,43 @@
                         swal("Your imaginary file is safe!");
                     }
                 });
+        });
+    </script>
+
+
+    <!-- Needed For Editing an Exam Term-->
+
+    <script type="text/javascript">
+        // Edit a shift
+        $(document).on('click', '.edit-modal', function () {
+            message = $(this).data('content');
+            $('#content_edit').val(message);
+            console.log(message);
+            id = $(this).data('id');
+            console.log(id);
+            $('#Medium-modal').modal('show');
+            $('#ExamTerm_name').val(message);
+
+            $("#updateExamTerm").on("submit", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "/exam-terms/" + id,
+                    data: {
+                        id: id,
+                        name: $('#ExamTerm_name').val(),
+                        _token: '{{csrf_token()}}',
+                        _method: 'PUT'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        // $("#mytable").load(" #mytable");
+                        window.location.reload();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+            });
         });
     </script>
 

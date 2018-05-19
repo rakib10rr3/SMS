@@ -86,11 +86,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="{{ route('notices.edit',$notice->id) }}"><i
                                                     class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
+
                                         <a class="dropdown-item ts-delete" href="" data-id="{{$notice->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>

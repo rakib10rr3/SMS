@@ -27,7 +27,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::query()->get();
+        $students = Student::query()->limit(30)->get();
         return view('student.index',compact('students'));
     }
 
