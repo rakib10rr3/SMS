@@ -149,7 +149,7 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="{{route('marks.add.query')}}">Add Marks</a></li>
-                        <li><a href="{{route('marks.add.show.query')}}">Show Marks</a></li>
+                        <li><a href="{{route('marks.show.query')}}">Show Marks</a></li>
                     </ul>
                 </li>
 
