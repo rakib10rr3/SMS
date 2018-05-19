@@ -174,11 +174,12 @@
                 <li class="dropdown">
 
                     <a href="javascript:;" class="dropdown-toggle">
-                        <span class="fa fa-clone"></span><span class="mtext">Marks</span>
+                        <span class="fa fa-clone"></span><span class="mtext">Result</span>
                     </a>
                     <ul class="submenu">
                         <li><a href="{{route('marks.add.query')}}">Add Marks</a></li>
-                        <li><a href="{{route('marks.add.show.query')}}">Show Marks</a></li>
+                        <li><a href="{{route('marks.show.query')}}">Show/Update Marks</a></li>
+                        <li><a href="{{route('meritList.index')}}">Result Generator</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

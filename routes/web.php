@@ -12,8 +12,6 @@
  */
 
 use App\Model\TheClass;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -69,6 +67,9 @@ Route::resource('/subjects', 'SubjectController');
 Route::resource('/subjectAssigns', 'SubjectAssignController');
 Route::resource('/classAssigns', 'ClassAssignController');
 
+Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select');
+Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
+Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
 
 Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select');
 Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
@@ -80,6 +81,12 @@ Route::get('api/subjects/{id}', function ($id) {
     return $subjects;
 });
 
+Route::get('api/subjects/{class}/{group}', function ($class, $group) {
+    $subjects = \App\Model\Subject::query()
+        ->where('the_class_id', $class)
+        ->where('group_id', $group)->get();
+    return $subjects;
+});
 
 //Route::resource('/attendances','AttendanceController');
 Route::get('/attendances/select', 'AttendanceController@select')->name('attendance.select');
@@ -89,9 +96,16 @@ Route::post('/attendances/store', 'AttendanceController@store')->name('attendanc
 Route::get('/marks/add', 'MarkController@query')->name('marks.add.query')->middleware('auth');
 Route::post('/marks/add', 'MarkController@add')->name('marks.add.add')->middleware('auth');
 Route::put('/marks/add', 'MarkController@store')->name('marks.add.store')->middleware('auth');
+Route::get('/marks/show', 'MarkController@showQuery')->name('marks.show.query')->middleware('auth');
+Route::post('/marks/show', 'MarkController@show')->name('marks.show')->middleware('auth');
+Route::post('/marks/update', 'MarkController@updateAdd')->name('marks.update.add')->middleware('auth');
+Route::patch('/marks/update', 'MarkController@update')->name('marks.update')->middleware('auth');
 
-Route::get('/marks/show', 'MarkController@showQuery')->name('marks.add.show.query')->middleware('auth'); // todo not implemented yet
-Route::post('/marks/show', 'MarkController@show')->name('marks.add.show')->middleware('auth'); // todo not implemented yet
+Route::post('/attendances/show_for_edit', 'AttendanceController@showForEdit')->name('attendance.showForEdit');
+Route::get('/attendances/edit', 'AttendanceController@edit')->name('attendance.edit');
+Route::post('/attendances/update', 'AttendanceController@update')->name('attendance.update');
+Route::get('/attendances/select_for_view', 'AttendanceController@selectForView')->name('attendance.selectForView');
+Route::post('/attendances/show', 'AttendanceController@show')->name('attendance.show');
 
 Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
 Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');
@@ -101,3 +115,7 @@ Route::post('/attendances/show','AttendanceController@show')->name('attendance.s
 Route::get('promotion/select','PromotionController@select')->name('promotion.select');
 Route::post('promotion/select','PromotionController@view')->name('promotion.view');
 Route::post('promotion/update','PromotionController@update')->name('promotion.update');
+
+Route::get('/merit-list', 'MeritListController@index')->name('meritList.index')->middleware('auth');
+Route::post('/merit-list', 'MeritListController@show')->name('meritList.show')->middleware('auth');
+Route::put('/merit-list', 'MeritListController@update')->name('meritList.update')->middleware('auth');

@@ -18,13 +18,13 @@ class CreateMeritListsTable extends Migration
             $table->integer('session')->unsigned();
             $table->float('total_marks');
             $table->integer('grade_id')->unsigned()->index();
-            $table->float('point',3,2);
-            $table->integer('class_id')->unsigned()->index();
+            $table->float('point', 3, 2);
+            $table->integer('the_class_id')->unsigned()->index();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('shift_id')->unsigned()->index();
             $table->bigInteger('student_id')->unsigned()->index()->nullable(false);
             $table->integer('exam_term_id')->unsigned()->index();
-            $table->integer('roll');
+            $table->integer('roll')->nullable(true);
             $table->timestamps();
         });
     }

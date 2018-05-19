@@ -8,55 +8,67 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
 
-    protected $guarded=[];
+    protected $guarded = [];
 
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function theClass(){
+    public function theClass()
+    {
         return $this->belongsTo(TheClass::class);
     }
 
-    public function shift(){
+    public function shift()
+    {
         return $this->belongsTo(Shift::class);
     }
 
-    public function group(){
+    public function group()
+    {
         return $this->belongsTo(Group::class);
     }
 
-    public function religion(){
+    public function religion()
+    {
         return $this->hasOne(Religion::class);
     }
 
-    public function bloodGroup(){
+    public function bloodGroup()
+    {
         return $this->belongsTo(BloodGroup::class);
     }
 
-    public function gender(){
+    public function gender()
+    {
         return $this->belongsTo(Gender::class);
     }
 
 
-    public function section(){
+    public function section()
+    {
         return $this->belongsTo(Section::class);
     }
 
-    public function marks(){
-        return$this->hasMany(Mark::class);
+    public function marks()
+    {
+        return $this->hasMany(Mark::class);
     }
 
-    public function meritLists(){
-        return$this->hasMany(MeritList::class);
+    public function meritLists()
+    {
+        return $this->hasMany(MeritList::class);
     }
 
-    public function attendances(){
-        return$this->hasMany(Attendance::class);
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
     }
 
-    public function optionalAssign(){
+    public function optionalAssign()
+    {
         return $this->hasOne(OptionalAssign::class);
     }
 
