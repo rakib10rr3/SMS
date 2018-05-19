@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         
         // $this->call(UsersTableSeeder::class);
         DB::table('students')->delete();
-        factory(\App\Model\Student::class, 5000)->create();
+        factory(\App\Model\Student::class, 2000)->create();
         //
         DB::table('teachers')->delete();
         factory(\App\Teacher::class, 500)->create();
