@@ -12,8 +12,9 @@
 @section('content')
 <!-- -->
 
-{{--
-<form action="" method="post"> --}} @csrf
+
+<form action="{{route('marks.update.add')}}" method="post">
+    @csrf
     <!-- -->
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
@@ -25,11 +26,11 @@
         </div>
 
         <!-- -->
-        {{-- @foreach($query as $key => $value)
+        @foreach($query as $key => $value)
 
         <input type="hidden" name="{{$key}}" value="{{ $value }}">
         <!-- -->
-        @endforeach --}}
+        @endforeach
 
         <div class="row">
             <div class="form-group col-md-6">
@@ -175,16 +176,15 @@ Pass Marks:
 
     </div>
 
+
     <!-- Simple Datatable start -->
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue mb-10">Set the student marks and click
-                    <span class="badge badge-primary">Submit</span>
-                </h5>
-                <div class="alert alert-danger" role="alert">
-                    NOTE: If absent is checked then marks will not be saved.
-                </div>
+                <h4 class="text-blue mb-10">Student marks </h4>
+            </div>
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary pull-right">Update Marks</button>
             </div>
         </div>
         <div class="row">
@@ -209,7 +209,7 @@ Pass Marks:
                         <th>Total</th>
                         <th>Grade Point</th>
                         <th>Grade</th>
-                        <th>Is Absent?</th>
+                        <th>Is Present?</th>
                         {{--
                         <th class="datatable-nosort">Action</th> --}}
                     </tr>
@@ -224,18 +224,43 @@ Pass Marks:
 
                         @if($subject->has_written)
                         <td>
-                            <input type="text" pattern="^\d{1,3}$" class="form-control" name="written[{{$mark->student->id}}]" id="written" value="{{ $mark->written }}"
-                                placeholder="Written Mark" required>
+                            @if(empty($mark->written))
+                            <!-- -->
+                            {{ "0" }}
+                            <!-- -->
+                            @else
+                            <!-- -->
+                            {{ $mark->written }}
+                            <!-- -->
+                            @endif
                         </td>
-                        @endif @if($subject->has_mcq)
+                        @endif
+                        <!-- -->
+                        @if($subject->has_mcq)
                         <td>
-                            <input type="text" pattern="^\d{1,3}$" class="form-control" name="mcq[{{$mark->student->id}}]" id="mcq" value="{{ $mark->mcq }}"
-                                placeholder="MCQ Mark" required>
+                            @if(empty($mark->mcq))
+                            <!-- -->
+                            {{ "0" }}
+                            <!-- -->
+                            @else
+                            <!-- -->
+                            {{ $mark->mcq }}
+                            <!-- -->
+                            @endif
                         </td>
-                        @endif @if($subject->has_practical)
+                        @endif
+                        <!-- -->
+                        @if($subject->has_practical)
                         <td>
-                            <input type="text" pattern="^\d{1,3}$" class="form-control" name="practical[{{$mark->student->id}}]" id="practical" value="{{ $mark->practical }}"
-                                placeholder="Practical Mark" required>
+                            @if(empty($mark->practical))
+                            <!-- -->
+                            {{ "0" }}
+                            <!-- -->
+                            @else
+                            <!-- -->
+                            {{ $mark->practical }}
+                            <!-- -->
+                            @endif
                         </td>
                         @endif
 
@@ -253,18 +278,18 @@ Pass Marks:
                         <td id="point">
                             @if($mark->absent)
                             <!-- -->
-                            {{ "0" }}
+                            {{ "0.00" }}
                             <!-- -->
                             @else
                             <!-- -->
-                            {{ $mark->point }}
+                            {{ number_format($mark->point, 2) }}
                             <!-- -->
                             @endif
                         </td>
                         <td id="grade">
                             @if($mark->absent)
                             <!-- -->
-                            {{ "0" }}
+                            {{ "F" }}
                             <!-- -->
                             @else
                             <!-- -->
@@ -273,7 +298,9 @@ Pass Marks:
                             @endif
                         </td>
                         <td>
-                            <input type="checkbox" class="form-control" name="absent[{{$mark->student->id}}]" id="absent" value="true">
+                            @if($mark->absent)
+                            <span class="badge badge-danger">No</span> @else
+                            <span class="badge badge-success">Yes</span> @endif
                         </td>
                     </tr>
 
@@ -283,18 +310,20 @@ Pass Marks:
             </table>
         </div>
 
-        {{--
+
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-primary pull-right">Submit Marks</button>
+                <button type="submit" class="btn btn-primary pull-right">Update Marks</button>
             </div>
-        </div> --}}
+        </div>
     </div>
     <!-- Simple Datatable End -->
 
 
 
-    {{-- </form> --}} @endsection
+</form>
+<!-- -->
+@endsection
 <!-- -->
 @section('scripts')
 

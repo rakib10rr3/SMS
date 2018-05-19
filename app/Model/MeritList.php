@@ -4,12 +4,14 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class MeritList extends Model
 {
-    public function theClasses()
+    public function theClass()
     {
         return $this->belongsTo(TheClass::class);
     }
+
     public function sections()
     {
         return $this->belongsTo(Section::class);
@@ -25,7 +27,7 @@ class MeritList extends Model
         return $this->belongsTo(ExamTerm::class);
     }
 
-    public function students()
+    public function student()
     {
         return $this->belongsTo(Student::class);
     }

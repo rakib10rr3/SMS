@@ -12,18 +12,17 @@
 @section('content')
     <!-- -->
 
-    <form action="" method="post">
+    <form action="{{route('marks.update')}}" method="post">
 
     @csrf
     <!-- -->
-    @method('PUT')
-    <!-- -->
+        @method('patch')
 
         <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
             <div class="clearfix">
                 <div class="pull-left">
-                    <h4 class="text-blue">Add Marks</h4>
+                    <h4 class="text-blue">Update Marks</h4>
                 </div>
             </div>
 
@@ -179,12 +178,13 @@
 
         </div>
 
+
         <!-- Simple Datatable start -->
         <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
             <div class="clearfix mb-20">
                 <div class="pull-left">
-                    <h5 class="text-blue mb-10">Set the student marks and click
-                        <span class="badge badge-primary">Submit</span>
+                    <h5 class="text-blue mb-10">Update the student marks and click
+                        <span class="badge badge-primary">Update</span>
                     </h5>
                     <div class="alert alert-danger" role="alert">
                         NOTE: If absent is checked then marks will not be saved.
@@ -220,44 +220,81 @@
                     </thead>
                     <tbody>
 
-                    @foreach($students as $student)
+                    @foreach($marks as $mark)
 
-                        <tr id="{{$student->id}}" class="ts-student-row">
-                            <td class="table-plus">{{$student->roll}}</td>
-                            <td>{{$student->name}}</td>
+                        <tr id="{{$mark->student->id}}" class="ts-student-row">
+                            <td class="table-plus">{{$mark->student->roll}}</td>
+                            <td>{{$mark->student->name}}</td>
 
                             @if($subject->has_written)
                                 <td>
                                     <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="written[{{$student->id}}]" id="written" value="0"
-                                           placeholder="Written Mark"
-                                           required>
+                                           name="written[{{$mark->student->id}}]" id="written"
+                                           value="{{empty($mark->written) ? "0" : $mark->written }}"
+                                           placeholder="Written Mark" required>
                                 </td>
                             @endif @if($subject->has_mcq)
                                 <td>
                                     <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="mcq[{{$student->id}}]" id="mcq" value="0" placeholder="MCQ Mark"
-                                           required>
+                                           name="mcq[{{$mark->student->id}}]" id="mcq"
+                                           value="{{empty($mark->mcq) ? "0" : $mark->mcq }}"
+                                           placeholder="MCQ Mark" required>
                                 </td>
                             @endif @if($subject->has_practical)
                                 <td>
                                     <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="practical[{{$student->id}}]" id="practical" value="0"
-                                           placeholder="Practical Mark"
-                                           required>
+                                           name="practical[{{$mark->student->id}}]" id="practical"
+                                           value="{{empty($mark->practical) ? "0" : $mark->practical }}"
+                                           placeholder="Practical Mark" required>
                                 </td>
                             @endif
 
-                            <td id="total">0</td>
-                            <td id="point">0</td>
-                            <td id="grade">-</td>
-                            <td>
-                                <input type="checkbox" class="form-control" name="absent[{{$student->id}}]" id="absent"
-                                       value="true">
+                            <td id="total">
+                            @if($mark->absent)
+                                <!-- -->
+                                {{ "0" }}
+                                <!-- -->
+                            @else
+                                <!-- -->
+                                {{ $mark->total_marks }}
+                                <!-- -->
+                                @endif
                             </td>
+                            <td id="point">
+                            @if($mark->absent)
+                                <!-- -->
+                                {{ "0" }}
+                                <!-- -->
+                            @else
+                                <!-- -->
+                                {{ $mark->point }}
+                                <!-- -->
+                                @endif
+                            </td>
+                            <td id="grade">
+                            @if($mark->absent)
+                                <!-- -->
+                                {{ "F" }}
+                                <!-- -->
+                            @else
+                                <!-- -->
+                                {{ $mark->grade->name }}
+                                <!-- -->
+                                @endif
+                            </td>
+                            <td>
+                                <input type="checkbox" class="form-control" name="absent[{{$mark->student->id}}]"
+                                       id="absent" value="true" @if($mark->absent) checked @endif>
+
+                                <input type="hidden" name="mark_id[{{$mark->student->id}}]" value="{{$mark->id}}">
+                            </td>
+
                         </tr>
 
+
+
                     @endforeach
+
 
                     </tbody>
                 </table>
@@ -265,12 +302,11 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary pull-right">Submit Marks</button>
+                    <button type="submit" class="btn btn-primary pull-right">Update</button>
                 </div>
             </div>
         </div>
         <!-- Simple Datatable End -->
-
 
     </form>
 
@@ -353,6 +389,18 @@
 
             });
 
+            $('input#absent').each(function () {
+
+                $parent = $(this).parent().parent();
+
+                var checkbox_this = this;
+
+                $parent.find('input[type=text]').each(function () {
+                    $(this).prop('disabled', checkbox_this.checked);
+                });
+
+            });
+
             $('input#absent').on('change', function () {
                 $parent = $(this).parent().parent();
 
@@ -372,12 +420,44 @@
             var pass_mcq = parseInt($('#pass_mcq').text()) || 0;
             var pass_practical = parseInt($('#pass_practical').text()) || 0;
 
-            $('.ts-student-row input').on('keyup', function () {
-                var $parent = $(this).parent().parent();
 
-                var $written = parseInt($parent.find('#written').val()) || 0;
-                var $mcq = parseInt($parent.find('#mcq').val()) || 0;
-                var $practical = parseInt($parent.find('#practical').val()) || 0;
+            $('.ts-student-row input').on('keyup', function () {
+                $parent = $(this).parent().parent();
+
+                $written = parseInt($parent.find('#written').val()) || 0;
+                $mcq = parseInt($parent.find('#mcq').val()) || 0;
+                $practical = parseInt($parent.find('#practical').val()) || 0;
+
+                var is_fail = false;
+
+                if ($written < pass_written) {
+                    is_fail = true;
+                }
+                if ($mcq < pass_mcq) {
+                    is_fail = true;
+                }
+                if ($practical < pass_practical) {
+                    is_fail = true;
+                }
+
+                var total_mark = $written + $mcq + $practical;
+                $parent.find('#total').text(total_mark);
+                if (is_fail) {
+                    $parent.find('#point').text("0.00");
+                    $parent.find('#grade').text("F");
+                } else {
+                    $parent.find('#point').text(getPoint(total_mark));
+                    $parent.find('#grade').text(getGrade(total_mark));
+                }
+
+            });
+
+            $('.ts-student-row input#absent').each(function () {
+                $parent = $(this).parent().parent();
+
+                $written = parseInt($parent.find('#written').val()) || 0;
+                $mcq = parseInt($parent.find('#mcq').val()) || 0;
+                $practical = parseInt($parent.find('#practical').val()) || 0;
 
                 var is_fail = false;
 
@@ -407,7 +487,7 @@
 
         var grade_value = [
             @foreach($grades as $value)
-            {{$value['min_value']}},
+                {{$value['min_value']}},
             @endforeach
         ];
 
@@ -422,7 +502,6 @@
                 "{{$value['name']}}",
             @endforeach
         ];
-
 
         function getPoint(val) {
             val = parseInt(val);
