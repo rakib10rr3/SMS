@@ -33,10 +33,12 @@ class RollController extends Controller
         $sections = Section::query()->get();
         $shifts = Shift::query()->get();
 
+
         $students = Student::query()
             ->where('the_class_id', '=', $request->the_class_id)
             ->where('section_id', '=', $request->section_id)
             ->where('shift_id', '=', $request->shift_id)
+            ->where('group_id', '=', $request->group_id)
             ->get();
 
         $i=1;
@@ -49,6 +51,7 @@ class RollController extends Controller
             ->where('the_class_id', '=', $request->the_class_id)
             ->where('section_id', '=', $request->section_id)
             ->where('shift_id', '=', $request->shift_id)
+            ->where('group_id', '=', $request->group_id)
             ->get();
 
 //        $students = Student::query()

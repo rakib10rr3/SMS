@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 
 class OptionalAssignController extends Controller
 {
+
     public function index()
     {
         //$students = Student::query()->get();

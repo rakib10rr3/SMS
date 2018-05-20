@@ -27,8 +27,12 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::query()->limit(30)->get();
-        return view('student.index',compact('students'));
+        $classes = TheClass::query()->get();
+        $groups = Group::query()->get();
+        $sections = Section::query()->get();
+        $shifts = Shift::query()->get();
+        //$students = Student::query()->limit(10)->get();
+        return view('student.index', compact('classes','groups','sections','shifts'));
     }
 
     /**
@@ -58,29 +62,84 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+
+        $rules = [
             'name' => 'required|',
+            'dob' => 'required',
+            'father_name' => 'required',
+            'father_cell' => 'required',
+            'mother_name' => 'required',
+            'mother_cell' => 'required',
+            'local_guardian_name' => 'required',
+            'local_guardian_cell' => 'required',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
             'gender_id' => 'required',
             'nationality' => 'required',
-            'dob' => 'required',
-            'extra_activity' => 'required',
             'photo' => 'required',
-            'father_name' => 'required',
-            'mother_name' => 'required',
-            'local_guardian_name' => 'required',
-            'father_cell' => 'required',
-            'mother_cell' => 'required',
-            'local_guardian_cell' => 'required',
             'current_address' => 'required',
             'permanent_address' => 'required',
             'roll' => 'required',
+            'the_class_id' => 'required',
             //'user_id' => 'required',
             'shift_id' => 'required',
-            'admission_year' => 'required',
-            'the_class_id' => 'required',
             'section_id' => 'required',
             'group_id' => 'required',
-        ]);
+            'admission_year' => 'required',
+
+
+        ];
+
+        $customMessages = [
+            'name.required' => 'Name field is required',
+            'dob.required' => 'Date of Birth field is required',
+            'father_name.required' => "Father's Name field is required",
+            'mother_name.required' => "Mother's Name field is required",
+            'local_guardian_name.required' => "Local Guardian's  Name field is required",
+            'father_cell.required' => "Father's Phone Number field is required",
+            'mother_cell.required' => "Father's Phone Number field is required",
+            'local_guardian_cell.required' => "Local Guardian's Phone Number field is required",
+            'religion_id.required' => "Religion field is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'photo.required' => "Photo field is required",
+            'current_address.required' => "Present Address field is required",
+            'permanent_address.required' => "Permanent Address field is required",
+            'roll' => "Roll field is required",
+            'the_class_id' => "Class field is required",
+            'shift_id' => "Shift field is required",
+            'section_id' => "Section field is required",
+            'group_id' => "Group field is required",
+            'admission_year' => "Admission Year field is required",
+
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
+//        $request->validate([
+//            'name' => 'required|',
+//            'gender_id' => 'required',
+//            'nationality' => 'required',
+//            'dob' => 'required',
+//            'extra_activity' => 'required',
+//            'photo' => 'required',
+//            'father_name' => 'required',
+//            'mother_name' => 'required',
+//            'local_guardian_name' => 'required',
+//            'father_cell' => 'required',
+//            'mother_cell' => 'required',
+//            'local_guardian_cell' => 'required',
+//            'current_address' => 'required',
+//            'permanent_address' => 'required',
+//            'roll' => 'required',
+//            //'user_id' => 'required',
+//            'shift_id' => 'required',
+//            'admission_year' => 'required',
+//            'the_class_id' => 'required',
+//            'section_id' => 'required',
+//            'group_id' => 'required',
+//        ]);
         //Student::query()->create($request->all());
 
         $user_obj = new User;
@@ -215,7 +274,7 @@ class StudentController extends Controller
 //        } else {
 //            $picture_name = "No Image Found ";
 //        }
-        Student::query()->where('id','=',$request->id)->update([
+        Student::query()->where('id', '=', $request->id)->update([
             'name' => $request->name,
             'religion_id' => $request->religion_id,
             'blood_group_id' => $request->blood_group_id,
@@ -242,7 +301,7 @@ class StudentController extends Controller
             'cell' => $request->cell,
 
         ]);
-       // return $request->all();
+        // return $request->all();
         return redirect('/students');
     }
 
@@ -256,5 +315,15 @@ class StudentController extends Controller
     {
         $student->delete();
         return redirect('/students');
+    }
+
+    public function getStudentList(Request $request){
+        $students = Student::query()->where('the_class_id', '=', $request->the_class_id)
+            ->where('group_id', '=', $request->group_id)
+            ->where('section_id', '=', $request->section_id)
+            ->where('shift_id', '=', $request->shift_id)
+            ->orderBy('roll')
+            ->get();
+        return $students;
     }
 }
