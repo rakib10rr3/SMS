@@ -221,7 +221,7 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="{{route('sendSms.select')}}">Send</a></li>
-                        {{--<li><a href="{{route('sendSms.index')}}">View</a></li>--}}
+                        <li><a href="{{route('smsHistory.index')}}">Sms History</a></li>
                     </ul>
                 </li>
 

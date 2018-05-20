@@ -32,7 +32,7 @@ class StudentController extends Controller
         $sections = Section::query()->get();
         $shifts = Shift::query()->get();
         //$students = Student::query()->limit(10)->get();
-        return view('student.index', compact('classes','groups','sections','shifts'));
+        return view('student.index', compact('classes', 'groups', 'sections', 'shifts'));
     }
 
     /**
@@ -79,7 +79,7 @@ class StudentController extends Controller
             'photo' => 'required',
             'current_address' => 'required',
             'permanent_address' => 'required',
-            'roll' => 'required',
+            //'roll' => 'required',
             'the_class_id' => 'required',
             //'user_id' => 'required',
             'shift_id' => 'required',
@@ -106,12 +106,12 @@ class StudentController extends Controller
             'photo.required' => "Photo field is required",
             'current_address.required' => "Present Address field is required",
             'permanent_address.required' => "Permanent Address field is required",
-            'roll' => "Roll field is required",
-            'the_class_id' => "Class field is required",
-            'shift_id' => "Shift field is required",
-            'section_id' => "Section field is required",
-            'group_id' => "Group field is required",
-            'admission_year' => "Admission Year field is required",
+           // 'roll.required' => "Roll field is required",
+            'the_class_id.required' => "Class field is required",
+            'shift_id.required' => "Shift field is required",
+            'section_id.required' => "Section field is required",
+            'group_id.required' => "Group field is required",
+            'admission_year.required' => "Admission Year field is required",
 
         ];
 
@@ -162,6 +162,19 @@ class StudentController extends Controller
         } else {
             $picture_name = "No Image Found ";
         }
+
+        $lastRoll = Student::query()
+            ->where('group_id', $request->group_id)
+            ->where('shift_id', $request->shift_id)
+            ->where('the_class_id', $request->the_class_id)
+            ->where('section_id', $request->section_id)
+            ->max('roll');
+
+        if (empty($lastRoll)) {
+            $newRoll = 1;
+        } else
+            $newRoll = ++$lastRoll;
+
         Student::query()->create([
             'name' => $request->name,
             'religion_id' => $request->religion_id,
@@ -179,7 +192,7 @@ class StudentController extends Controller
             'local_guardian_cell' => $request->local_guardian_cell,
             'current_address' => $request->current_address,
             'permanent_address' => $request->permanent_address,
-            'roll' => $request->roll,
+            'roll' => $newRoll,
             'user_id' => $user_obj->id,
             'shift_id' => $request->shift_id,
             'admission_year' => $admissionDate,
@@ -317,7 +330,8 @@ class StudentController extends Controller
         return redirect('/students');
     }
 
-    public function getStudentList(Request $request){
+    public function getStudentList(Request $request)
+    {
         $students = Student::query()->where('the_class_id', '=', $request->the_class_id)
             ->where('group_id', '=', $request->group_id)
             ->where('section_id', '=', $request->section_id)

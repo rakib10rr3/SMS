@@ -38,6 +38,7 @@ class OptionalAssignController extends Controller
         $students = Student::query()->where('the_class_id', '=', $request->the_class_id)
             ->where('group_id', '=', $request->group_id)
             ->where('section_id', '=', $request->section_id)
+            ->where('shift_id','=', $request->shift_id)
             ->orderBy('roll')
             ->get();
         $classes = TheClass::query()->get();

@@ -71,7 +71,6 @@ Route::resource('/classAssigns', 'ClassAssignController');
 Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select');
 Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
 Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
-
 Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select');
 Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
 Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
@@ -120,3 +119,7 @@ Route::post('promotion/update','PromotionController@update')->name('promotion.up
 Route::get('/merit-list', 'MeritListController@index')->name('meritList.index')->middleware('auth');
 Route::post('/merit-list', 'MeritListController@show')->name('meritList.show')->middleware('auth');
 Route::put('/merit-list', 'MeritListController@update')->name('meritList.update')->middleware('auth');
+
+
+Route::get('/Sms-History', 'SmsHistoryController@index')->name('smsHistory.index');
+Route::post('/Sms-History', 'SmsHistoryController@store')->name('smsHistory.store');
