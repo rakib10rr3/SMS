@@ -64,14 +64,14 @@ class StudentController extends Controller
     {
 
         $rules = [
-            'name' => 'required|',
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
             'dob' => 'required',
-            'father_name' => 'required',
-            'father_cell' => 'required',
-            'mother_name' => 'required',
-            'mother_cell' => 'required',
-            'local_guardian_name' => 'required',
-            'local_guardian_cell' => 'required',
+            'father_name' => 'required|alpha',
+            'father_cell' => 'required|digits:11',
+            'mother_name' => 'required|alpha',
+            'mother_cell' => 'required|digits:11',
+            'local_guardian_name' => 'required|alpha',
+            'local_guardian_cell' => 'required|digits:11',
             'religion_id' => 'required',
             'blood_group_id' => 'required',
             'gender_id' => 'required',
@@ -92,11 +92,19 @@ class StudentController extends Controller
 
         $customMessages = [
             'name.required' => 'Name field is required',
+            'name.regex' => 'Name field must contain only letters',
             'dob.required' => 'Date of Birth field is required',
             'father_name.required' => "Father's Name field is required",
+            'father_name.alpha' => "Father's Name must contain only letters",
             'mother_name.required' => "Mother's Name field is required",
-            'local_guardian_name.required' => "Local Guardian's  Name field is required",
+            'mother_name.alpha' => "Mother's Name field must contain only letters",
+            'local_guardian_name.required' => "Local Guardian's Name field is required",
+            'local_guardian_name.alpha' => "Local Guardian's Name field field must contain only letters",
             'father_cell.required' => "Father's Phone Number field is required",
+            'father_cell.digits' => "Father's Phone Number must contain 11 digits",
+            'mother_cell.digits' => "Mother's Phone Number must contain 11 digits",
+            'local_guardian_cell.digits' => "Local Guardian's Phone Number must contain 11 digits",
+           // 'student_cell.digits' => "Student's Phone Number must contain 11 digits",
             'mother_cell.required' => "Father's Phone Number field is required",
             'local_guardian_cell.required' => "Local Guardian's Phone Number field is required",
             'religion_id.required' => "Religion field is required",
@@ -247,29 +255,65 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        $request->validate([
-            'name' => 'required|',
+        $rules = [
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'dob' => 'required',
+            'father_name' => 'required|alpha',
+            'father_cell' => 'required|digits:11',
+            'mother_name' => 'required|alpha',
+            'mother_cell' => 'required|digits:11',
+            'local_guardian_name' => 'required|alpha',
+            'local_guardian_cell' => 'required|digits:11',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
             'gender_id' => 'required',
             'nationality' => 'required',
-            'dob' => 'required',
-            'extra_activity' => 'required',
-            'father_name' => 'required',
-            'mother_name' => 'required',
-            'local_guardian_name' => 'required',
-            'father_cell' => 'required',
-            'mother_cell' => 'required',
-            'local_guardian_cell' => 'required',
+            'photo' => 'required',
             'current_address' => 'required',
             'permanent_address' => 'required',
-            'roll' => 'required',
+            //'roll' => 'required',
+            'the_class_id' => 'required',
             //'user_id' => 'required',
             'shift_id' => 'required',
-            'admission_year' => 'required',
-            'the_class_id' => 'required',
             'section_id' => 'required',
             'group_id' => 'required',
-        ]);
+            'admission_year' => 'required',
+        ];
 
+        $customMessages = [
+            'name.required' => 'Name field is required',
+            'name.regex' => 'Name field must contain only letters',
+            'dob.required' => 'Date of Birth field is required',
+            'father_name.required' => "Father's Name field is required",
+            'father_name.alpha' => "Father's Name must contain only letters",
+            'mother_name.required' => "Mother's Name field is required",
+            'mother_name.alpha' => "Mother's Name field must contain only letters",
+            'local_guardian_name.required' => "Local Guardian's Name field is required",
+            'local_guardian_name.alpha' => "Local Guardian's Name field field must contain only letters",
+            'father_cell.required' => "Father's Phone Number field is required",
+            'father_cell.digits' => "Father's Phone Number must contain 11 digits",
+            'mother_cell.digits' => "Mother's Phone Number must contain 11 digits",
+            'local_guardian_cell.digits' => "Local Guardian's Phone Number must contain 11 digits",
+            // 'student_cell.digits' => "Student's Phone Number must contain 11 digits",
+            'mother_cell.required' => "Father's Phone Number field is required",
+            'local_guardian_cell.required' => "Local Guardian's Phone Number field is required",
+            'religion_id.required' => "Religion field is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'photo.required' => "Photo field is required",
+            'current_address.required' => "Present Address field is required",
+            'permanent_address.required' => "Permanent Address field is required",
+            // 'roll.required' => "Roll field is required",
+            'the_class_id.required' => "Class field is required",
+            'shift_id.required' => "Shift field is required",
+            'section_id.required' => "Section field is required",
+            'group_id.required' => "Group field is required",
+            'admission_year.required' => "Admission Year field is required",
+
+        ];
+
+        $this->validate($request, $rules, $customMessages);
         //Student::query()->where('id',)
 
         $dobString = request('dob');
@@ -278,7 +322,7 @@ class StudentController extends Controller
 
         $admissionDateString = request('admission_year');
         $carbon = new Carbon($admissionDateString);
-        $admissionDate = $carbon->format('Y-m-d');
+        $admissionDate = $carbon->format('Y');
 
 //        if ($request->hasFile('photo')) {
 //            $file = $request->file('photo');

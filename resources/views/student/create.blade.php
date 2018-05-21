@@ -25,66 +25,66 @@
                     </ul>
                 </div>
             @endif
-            <form id="form" method="post" action="/students" class="tab-wizard wizard-circle wizard vertical" enctype="multipart/form-data">
+            <form id="form" method="post" action="/students"  enctype="multipart/form-data">
                 @csrf
                 <h5>Identity</h5>
                 <section>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Name :</label>
-                                <input type="text" class="form-control" name="name" id="name">
+                                <label for="name">Name :</label>
+                                <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}" required />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Date of Birth :</label>
+                                <label for="dob">Date of Birth :</label>
                                 <input type="text" class="form-control date-picker" placeholder="Select Date" id="dob"
-                                       name="dob">
+                                       name="dob" value="{{old('dob')}}" required/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Father's Name :</label>
-                                <input type="text" class="form-control" id="father_name" name="father_name">
+                                <label for="father_name">Father's Name :</label>
+                                <input type="text" class="form-control" id="father_name" name="father_name" value="{{old('father_name')}}" required/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Father's Phone Number :</label>
-                                <input type="text" class="form-control" id="father_cell" name="father_cell">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Mother's Name :</label>
-                                <input type="text" class="form-control" id="mother_name" name="mother_name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Mother's Phone Number :</label>
-                                <input type="text" class="form-control" id="mother_cell" name="mother_cell">
+                                <label for="father_cell">Father's Phone Number :</label>
+                                <input type="text" class="form-control" id="father_cell" name="father_cell"  value="{{old('father_cell')}}" required/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Local Guardian's Name :</label>
+                                <label for="mother_name">Mother's Name :</label>
+                                <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{old('mother_name')}}" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mother_cell">Mother's Phone Number :</label>
+                                <input type="text" class="form-control" id="mother_cell" name="mother_cell" value="{{old(('mother_cell'))}}" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="local_guardian_name">Local Guardian's Name :</label>
                                 <input type="text" class="form-control" id="local_guardian_name"
-                                       name="local_guardian_name">
+                                       name="local_guardian_name" value="{{old('local_guardian_name')}}" required/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Local Guardian's Phone Number :</label>
+                                <label for="local_guardian_cell">Local Guardian's Phone Number :</label>
                                 <input type="text" class="form-control" id="local_guardian_cell"
-                                       name="local_guardian_cell">
+                                       name="local_guardian_cell" value="{{old('local_guardian_cell')}}" required/>
                             </div>
                         </div>
                     </div>
@@ -110,11 +110,11 @@
                             {{--@endforeach--}}
                             {{--</select>--}}
                             {{--</div>--}}
-                            <div class="form-group">
-                                <label>Student's Phone Number (Optional) :</label>
-                                <input type="text" class="form-control" id="cell"
-                                       name="cell">
-                            </div>
+                            {{--<div class="form-group">--}}
+                                {{--<label for="student_cell">Student's Phone Number (Optional) :</label>--}}
+                                {{--<input type="text" class="form-control" id="cell"--}}
+                                       {{--name="student_cell" value="{{old('student_cell')}}"/>--}}
+                            {{--</div>--}}
 
                         </div>
                     </div>
@@ -125,41 +125,41 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Religion :</label>
-                                <select class="custom-select form-control" id="religion_id" name="religion_id">
+                                <label for="religion_id">Religion :</label>
+                                <select class="custom-select form-control" id="religion_id" name="religion_id" required>
                                     <option value="">Select Religion</option>
                                     @foreach($religions as $religion)
-                                        <option value="{{$religion->id}}">{{$religion->name}}</option>
+                                        <option value="{{$religion->id}}" {{(old('religion_id') == $religion->id?'selected':'')}}>{{$religion->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Blood Group :</label>
-                                <select class="custom-select form-control" id="blood_group_id" name="blood_group_id">
+                                <label for="blood_group_id">Blood Group :</label>
+                                <select class="custom-select form-control" id="blood_group_id" name="blood_group_id" required>
                                     <option value="">Select Blood Group</option>
                                     @foreach($bloodGroups as $bloodGroup)
-                                        <option value="{{$bloodGroup->id}}">{{$bloodGroup->name}}</option>
+                                        <option value="{{$bloodGroup->id}}" {{(old('blood_group_id') == $bloodGroup->id?'selected':'')}}>{{$bloodGroup->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Gender :</label>
-                                <select class="custom-select form-control" id="gender_id" name="gender_id">
+                                <label for="gender_id">Gender :</label>
+                                <select class="custom-select form-control" id="gender_id" name="gender_id" required>
                                     <option value="">Select Gender</option>
                                     @foreach($genders as $gender)
-                                        <option value="{{$gender->id}}">{{$gender->name}}</option>
+                                        <option value="{{$gender->id}}" {{(old('gender_id') == $gender->id?'selected':'')}}>{{$gender->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Nationality :</label>
-                                <input type="text" class="form-control" id="nationality" name="nationality">
+                                <label for="nationality">Nationality :</label>
+                                <input type="text" class="form-control" id="nationality" name="nationality" value="{{old('nationality')}}" required/>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -171,15 +171,15 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Present Address :</label>
-                                <textarea class="form-control" id="current_address" name="current_address"></textarea>
+                                <label for="current_address">Present Address :</label>
+                                <textarea class="form-control" id="current_address" name="current_address"  required>{{old('current_address')}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Permanent Address :</label>
+                                <label for="permanent_address">Permanent Address :</label>
                                 <textarea class="form-control" id="permanent_address"
-                                          name="permanent_address"></textarea>
+                                          name="permanent_address" required>{{old('permanent_address')}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -195,59 +195,58 @@
                                 {{--<input type="number" class="form-control" id="roll" name="roll">--}}
                             {{--</div>--}}
                             <div class="form-group">
-                                <label>Shift :</label>
-                                <select class="custom-select form-control" id="shift_id" name="shift_id">
+                                <label for="shift_id">Shift :</label>
+                                <select class="custom-select form-control" id="shift_id" name="shift_id" required>
                                     <option value="">Select Shift</option>
                                     @foreach($shifts as $shift)
-                                        <option value="{{$shift->id}}">{{$shift->name}}</option>
+                                        <option value="{{$shift->id}}" {{(old('shift_id') == $shift->id?'selected':'')}}>{{$shift->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Group :</label>
-                                <select class="custom-select form-control" id="group_id" name="group_id">
+                                <label for="group_id">Group :</label>
+                                <select class="custom-select form-control" id="group_id" name="group_id" required>
                                     <option value="">Select Group</option>
                                     @foreach($groups as $group)
-                                        <option value="{{$group->id}}">{{$group->name}}</option>
+                                        <option value="{{$group->id}}" {{(old('group_id') == $group->id?'selected':'')}}>{{$group->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Class</label>
-                                <select class="custom-select form-control" id="the_class_id" name="the_class_id">
+                                <label for="the_class_id">Class</label>
+                                <select class="custom-select form-control" id="the_class_id" name="the_class_id" required>
                                     <option value="">Select Class</option>
                                     @foreach($classes as $class)
-                                        <option value="{{$class->id}}">{{$class->name}}</option>
+                                        <option value="{{$class->id}}" {{(old('the_class_id') == $class->id?'selected':'')}}>{{$class->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Section</label>
-                                <select class="custom-select form-control" id="section_id" name="section_id">
+                                <label for="section_id">Section</label>
+                                <select class="custom-select form-control" id="section_id" name="section_id" required>
                                     <option value="">Select Section</option>
                                     @foreach($sections as $section)
-                                        <option value="{{$section->id}}">{{$section->name}}</option>
+                                        <option value="{{$section->id}}" {{(old('section_id') == $section->id?'selected':'')}}>{{$section->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Admission Year :</label>
+                                <label for="admission_year">Admission Year :</label>
                                 <input type="text" class="form-control date-picker" placeholder="Select Date" id="admission_year"
-                                       name="admission_year">
+                                       name="admission_year" value="{{old('admission_year')}}" required/>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Extra Curricular Activities</label>
-                                <textarea class="form-control" id="extra_activity" name="extra_activity"></textarea>
+                                <label for="extra_activity">Extra Curricular Activities (Optional)</label>
+                                <textarea class="form-control" id="extra_activity" name="extra_activity">{{old('extra_activity')}}</textarea>
                             </div>
-
-
                         </div>
                     </div>
                 </section>
+                <input type="submit" value="Submit" class="btn btn-outline-success">
             </form>
         </div>
     </div>
