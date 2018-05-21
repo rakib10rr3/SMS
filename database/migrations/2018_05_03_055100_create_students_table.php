@@ -21,14 +21,14 @@ class CreateStudentsTable extends Migration
             $table->integer('gender_id')->unsigned()->index();
             $table->string('nationality',20);
             $table->date('dob');
-            $table->string('extra_activity',256);
-            $table->string('photo');
+            $table->string('extra_activity',256)->nullable(true);
+            $table->string('photo')->nullable(true);
             $table->string('father_name');
             $table->string('mother_name');
             $table->string('local_guardian_name');
-            $table->string('father_cell');
-            $table->string('mother_cell');
-            $table->string('local_guardian_cell');
+            $table->string('father_cell',11);
+            $table->string('mother_cell',11);
+            $table->string('local_guardian_cell',11);
             $table->string('current_address',256);
             $table->string('permanent_address',256);
             $table->integer('roll')->unsigned();
@@ -38,7 +38,7 @@ class CreateStudentsTable extends Migration
             $table->integer('the_class_id')->unsigned()->index();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('group_id')->unsigned()->index();
-            $table->string('cell',20);
+            $table->string('cell',11)->nullable(true);
             $table->timestamps();
         });
     }

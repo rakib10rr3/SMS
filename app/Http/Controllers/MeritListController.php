@@ -170,6 +170,39 @@ class MeritListController extends Controller
                     ->where('session', $query['session'])
                     ->sum('total_marks');
 
+                /**
+                 * Total Point
+                 */
+                $total_point = 0;
+                if ($student->theClass->name == 'Nine' || $student->theClass->name == 'Ten') {
+
+                    $marks = $student->marks
+                        ->where('session', $query['session']);
+
+                    $optional_subjects = Subject::query()
+                        ->where('is_optional', true)
+                        ->pluck('id')
+                        ->toArray();
+
+
+                    foreach ($marks as $mark) {
+                        /**
+                         * If the mark is for a optional subject, then it will be subtracted by 2
+                         */
+                        if (array_search($mark->subject_id, $optional_subjects)) {
+                            $temp_point = $mark->point - 2;
+                            if ($temp_point > 0) {
+                                $total_point += $temp_point;
+                            }
+                        } else {
+                            $total_point += $mark->point;
+                        }
+                    }
+                } else {
+                    $total_point = $student->marks
+                        ->where('session', $query['session'])
+                        ->sum('point');
+                }
 
                 $fail_count = $student->marks
                     ->where('session', $query['session'])
@@ -181,13 +214,13 @@ class MeritListController extends Controller
 
                 if ($fail_count == 0) {
 
-                    if ($student->theClass->name == '9' || $student->theClass->name == '10') {
+                    if ($student->theClass->name == 'Nine' || $student->theClass->name == 'Ten') {
                         /**
-                         * NODE: for 9 and 10, optional subject is not counted for calcualting gpa
+                         * NODE: for 9 and 10, optional subject is not counted for calculating gpa
                          */
-                        $final_grade_point = $total_mark / ($total_subject - 1);
+                        $final_grade_point = $total_point / ($total_subject - 1);
                     } else {
-                        $final_grade_point = $total_mark / $total_subject;
+                        $final_grade_point = $total_point / $total_subject;
                     }
 
                     /**
@@ -363,9 +396,11 @@ class MeritListController extends Controller
                 ->where('session', $query['session'])
                 ->sum('total_marks');
 
-
+            /**
+             * Total Point
+             */
+            $total_point = 0;
             if ($student->theClass->name == 'Nine' || $student->theClass->name == 'Ten') {
-                $total_point = 0;
 
                 $marks = $student->marks
                     ->where('session', $query['session']);
@@ -382,16 +417,13 @@ class MeritListController extends Controller
                      */
                     if (array_search($mark->subject_id, $optional_subjects)) {
                         $temp_point = $mark->point - 2;
-                        if($temp_point > 0)
-                        {
+                        if ($temp_point > 0) {
                             $total_point += $temp_point;
                         }
                     } else {
                         $total_point += $mark->point;
                     }
                 }
-
-
             } else {
                 $total_point = $student->marks
                     ->where('session', $query['session'])
@@ -409,7 +441,7 @@ class MeritListController extends Controller
             $final_grade_id = $grade_fail_id;
 
             if ($fail_count == 0) {
-                if ($student->theClass->name == '9' || $student->theClass->name == '10') {
+                if ($student->theClass->name == 'Nine' || $student->theClass->name == 'Ten') {
                     /**
                      * NODE: for 9 and 10, optional subject is not counted for calculating gpa
                      */

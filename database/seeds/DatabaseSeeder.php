@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
         
         // $this->call(UsersTableSeeder::class);
         DB::table('students')->delete();
-        factory(\App\Model\Student::class, 2000)->create();
+        factory(\App\Model\Student::class, 100)->create();
         //
         DB::table('teachers')->delete();
-        factory(\App\Teacher::class, 500)->create();
+        factory(\App\Teacher::class, 100)->create();
         //
         DB::table('subjects')->delete();
-        factory(\App\Model\Subject::class, 200)->create();
+        factory(\App\Model\Subject::class, 100)->create();
 
     }
 }

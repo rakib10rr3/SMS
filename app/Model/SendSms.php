@@ -2,7 +2,12 @@
 
 namespace App;
 
+use App\Model\Preference;
+use App\Model\SmsHistory;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class SendSms extends Model
 {
@@ -10,8 +15,9 @@ class SendSms extends Model
     {
 
 
-        $school_name = Preference::query()->pluck('institute_name');;
-        $message = "Absent Alert From ".$school_name;
+       // $school_name = Preference::query()->pluck('institute_name')->first();
+        $school_name = Preference::query()->where('key', 'institute_name')->first();;
+        $message = "Absent Alert From ".$school_name->value;
         $token = Config::get('constants.sms_bundle.token');
         $uri = "http://sms.greenweb.com.bd/api.php";
         //GuzzleHttp\Client
@@ -33,7 +39,5 @@ class SendSms extends Model
         $sms_history_obj->message = $message;
         $sms_history_obj->tag = $tag;
         $sms_history_obj->save();
-
-
     }
 }

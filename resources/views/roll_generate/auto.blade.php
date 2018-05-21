@@ -54,6 +54,20 @@
 
                     <div class="col">
                         <div class="form-group">
+                            <label>Group:</label>
+                            <select id="group_id" class="custom-select2 form-control" name="group_id"
+                                    style="width: 100%; height: 38px;">
+                                @foreach ($groups as $group)
+                                    <option value="{{ $group->id }}">
+                                        {{ $group->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
                             <label>Shift:</label>
                             <select id="shift_id" class="custom-select2 form-control" name="shift_id"
                                     style="width: 100%; height: 38px;">
@@ -153,6 +167,7 @@
                 var the_class_id = {"class": $('#the_class_id option:selected').val()};
                 var section_id = {"section": $('#section_id option:selected').val()};
                 var shift_id = {"shift": $('#shift_id option:selected').val()};
+                var group_id = {"group": $('#group_id option:selected').val()};
 
                 $.ajax({
                     url: "{{route('autoRollList')}}",
@@ -162,6 +177,7 @@
                         the_class_id: the_class_id,
                         section_id: section_id,
                         shift_id: shift_id,
+                        group_id: group_id
                     },
                     success: function (data) {
                         var table = $('#students_table').DataTable();
@@ -173,14 +189,14 @@
                             enable();
                             $.each(data, function (index, element) {
                                 //subject.append("<option value='"+ element.id +"'>" + element.name + "</option>");
-                                table.row.add( [
+                                table.row.add([
                                     element.roll,
                                     element.name,
                                     element.father_name,
                                     element.mother_name,
                                     element.local_guardian_name,
-                                ] ).draw( false );
-                              //  $("#students_table").find('tbody').append('<tr>' + '<td>' + element.roll + '</td>' + '<td>' + element.name + '<td>' + element.father_name + '<td>' + element.mother_name + '</td>' + '<td>' + element.local_guardian_name + '</td>' + '</tr>');
+                                ]).draw(false);
+                                //  $("#students_table").find('tbody').append('<tr>' + '<td>' + element.roll + '</td>' + '<td>' + element.name + '<td>' + element.father_name + '<td>' + element.mother_name + '</td>' + '<td>' + element.local_guardian_name + '</td>' + '</tr>');
                                 console.log(element.roll);
                             });
 
@@ -198,6 +214,7 @@
             $("#the_class_id").prop("disabled", false);
             $("#section_id").prop("disabled", false);
             $("#shift_id").prop("disabled", false);
+            $("#group_id").prop("disabled", false);
         }
 
         function disable() {
@@ -206,6 +223,8 @@
             $("#the_class_id").prop("disabled", true);
             $("#section_id").prop("disabled", true);
             $("#shift_id").prop("disabled", true);
+            $("#group_id").prop("disabled", false);
+
         }
     </script>
 

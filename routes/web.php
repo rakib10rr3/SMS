@@ -58,6 +58,7 @@ Route::resource('class', 'TheClassController');
 Route::resource('roles', 'RoleController');
 Route::resource('teachers', 'TeacherController');
 
+Route::post('/students/getStudentList','StudentController@getStudentList')->name('getStudentListFromStudentController');
 Route::resource('/students', 'StudentController');
 Route::resource('/subjects', 'SubjectController');
 Route::get('preference', 'PreferenceController@index')->name('preference.index')->middleware('auth');

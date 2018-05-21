@@ -73,12 +73,12 @@ class AttendanceController extends Controller
                     array_push($absent_students, $key);
                 }
                 Attendance::create([
-                    'date'=>$date,
-                    'the_class_id'=>$class_id,
-                    'shift_id'=>$shift_id,
-                    'section_id'=>$section_id,
-                    'subject_id'=>$subject_id,
-                    'student_id'=>$key,
+                    'date' => $date,
+                    'the_class_id' => $class_id,
+                    'shift_id' => $shift_id,
+                    'section_id' => $section_id,
+                    'subject_id' => $subject_id,
+                    'student_id' => $key,
                 ]);
             }
         }
@@ -91,22 +91,21 @@ class AttendanceController extends Controller
             array_push($students_number, $student->local_guardian_cell);
         }
         $sms_to = implode(",", $students_number);
-        echo $sms_to;
+        // echo $sms_to;
 
-//        if($sms_to_absent=="on")
-//        {
-//            (new \App\SendSms)->send_sms($sms_to,"Absent Tag");
-//        }
+        if ($sms_to_absent == "on") {
+            (new \App\SendSms)->send_sms($sms_to, "Absent Tag");
+        }
 
         /**
          * Redirecting to attendance select with all value
          */
 
-//        $sections = Section::all();
-//        $classes = TheClass::all();
-//        $shifts = Shift::all();
-//        $subjects = Subject::all();
-//        return redirect ('attendances/select');
+        $sections = Section::all();
+        $classes = TheClass::all();
+        $shifts = Shift::all();
+        $subjects = Subject::all();
+        return redirect('attendances/select');
 
     }
 
