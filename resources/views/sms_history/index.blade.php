@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('styles')
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
@@ -10,11 +11,14 @@
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
+
             <div class="pull-left">
+
                 <h5 class="text-blue">Sms History Information</h5>
 
             </div>
         </div>
+
         <div class="row">
             <table class="data-table stripe hover nowrap">
                 <thead>
@@ -23,7 +27,9 @@
                     <th>To</th>
                     <th>Message</th>
                     <th>Tag</th>
-                    <th class="datatable-nosort">Action</th>
+                    <th>Time</th>
+                    {{--<th class="datatable-nosort">Action</th>--}}
+
                 </tr>
                 </thead>
                 <tbody>
@@ -32,30 +38,29 @@
                 @else
                     @foreach($all_sms as $sms)
                         <tr>
-                            <td class="table-plus">{{$loop->iteration}}</td>
                             <td>{{$sms->from}}</td>
                             <td>{{$sms->to}}</td>
                             <td>{{$sms->message}}</td>
                             <td>{{$sms->tag}}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
-                                       data-toggle="dropdown">
-                                        <i class="fa fa-ellipsis-h"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
+                            <td>{{$sms->created_at}}</td>
+                            {{--<td>--}}
+                            {{--<div class="dropdown">--}}
+                            {{--<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"--}}
+                            {{--data-toggle="dropdown">--}}
+                            {{--<i class="fa fa-ellipsis-h"></i>--}}
+                            {{--</a>--}}
+                            {{--<div class="dropdown-menu dropdown-menu-right">--}}
 
+                            {{--<a class="edit-modal dropdown-item" data-toggle="modal"--}}
+                            {{--data-target="#Medium-modal" data-id="{{$sms->id}}"--}}
+                            {{--data-content="{{$sms->message}}">--}}
+                            {{--<i class="fa fa-pencil"></i>Edit</a>--}}
 
-                                        <a class="edit-modal dropdown-item" data-toggle="modal"
-                                           data-target="#Medium-modal" data-id="{{$section->id}}"
-                                           data-content="{{$section->name}}">
-                                            <i class="fa fa-pencil"></i>Edit</a>
-
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$section->id}}"><i
-                                                    class="fa fa-pencil"></i> Delete</a>
-                                    </div>
-                                </div>
-                            </td>
+                            {{--<a class="dropdown-item ts-delete" href="" data-id="{{$sms->id}}"><i--}}
+                            {{--class="fa fa-pencil"></i> Delete</a>--}}
+                            {{--</div>--}}
+                            {{--</div>--}}
+                            {{--</td>--}}
                         </tr>
                     @endforeach
                 @endif
@@ -66,40 +71,7 @@
 
 
 
-    <!-- Medium modal -->
-    <div class="col-md-4 col-sm-12">
-        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
-
-            <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
-                 aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myLargeModalLabel">Edit</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        </div>
-                        <div class="modal-body">
-
-                            <form method="POST" id="updatesection">
-                                {{csrf_field()}}
-                                <input type="hidden" name="_method" value="PUT">
-
-                                <div class="form-group">
-                                    <label for="group_name">Section name:</label>
-                                    <input type="text" name="group_name" class="form-control" id="section_name"
-                                           value="">
-                                </div>
-                                <input type="submit" class="btn btn-success pull-right">
-                            </form>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -124,7 +96,6 @@
     <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
-
 
 
 
@@ -178,8 +149,6 @@
             });
         });
     </script>
-
-
     <script>
         $(document).on('click', '.ts-delete', function (e) {
             e.preventDefault();
@@ -214,10 +183,7 @@
                 });
         });
     </script>
-
-
     <!-- Needed For Editing a section-->
-
     <script type="text/javascript">
         // Edit a section
         $(document).on('click', '.edit-modal', function () {
@@ -251,12 +217,7 @@
             });
         });
     </script>
-
-
-
 @endsection
-
-
 {{--@include('layouts.header')--}}
 
 

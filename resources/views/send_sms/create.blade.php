@@ -23,6 +23,7 @@
 
             <form method="post" action="{{ route('sendSms.store') }}">
                 @csrf
+                <input type="hidden" name="tag" value="student">
                 <div class="row">
                     <div class="col">
                         <strong>Class:</strong>
@@ -113,7 +114,7 @@
             <form method="post" action="{{ route('sendSms.store') }}">
                 @csrf
 
-
+                <input type="hidden" name="tag" value="teacher">
                 <div class="row">
                     <table class="data-table stripe hover nowrap">
                         <thead>

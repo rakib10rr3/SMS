@@ -61,9 +61,9 @@ class TeacherController extends Controller
         ]);
 
 
-
-
-        //Teacher::query()->create($request->all());
+       /*
+        * Creating a new user
+        */
         $user_obj = new User;
         $user_name = request('name');
         $user_obj->name = $user_name;
@@ -72,10 +72,8 @@ class TeacherController extends Controller
 
 
 
-
         $current_address = request('current_address');
         $permanent_address = request('permanent_address');
-
         $dob = request('dob');
         $date_string = $dob;
 //        $date = date_create_from_format('Y-m-d', $date_string);

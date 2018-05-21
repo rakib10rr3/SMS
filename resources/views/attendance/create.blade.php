@@ -13,6 +13,8 @@
         </div>
         <form method="post" action="{{ route('attendance.store') }}">
             @csrf
+
+
             <div class="row">
                 <div class="col-md-2">
                     <strong>Class:</strong>
@@ -39,12 +41,22 @@
                     @endforeach
                 </div>
             </div>
+
             <div class="row">
                 <div class="form-group">
                     <label>Date :</label>
-                    <input type="text" class="form-control date-picker" placeholder="Select Date" id="attendance_date" name="date">
+                    <input type="text" class="form-control date-picker" placeholder="Select Date" id="attendance_date"
+                           name="date">
                 </div>
             </div>
+
+
+            <div class="custom-control custom-checkbox mb-5">
+                <input type="checkbox" class="custom-control-input" name="sms_to_absent" id="sms_to_absent">
+                <label class="custom-control-label" for="sms_to_absent"> Send Sms to Absent Students </label>
+            </div>
+
+
             <div class="row">
                 <table class="data-table stripe hover nowrap">
                     <thead>
@@ -63,10 +75,11 @@
                                 <td>{{$student->roll}}</td>
                                 <td>{{$student->name}}</td>
                                 <td>
-                                    {{--<input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}">--}}
                                     <div class="custom-control custom-checkbox mb-5">
+
+                                        <input type="hidden" name="{{$student->id}}" value="0">
                                         <input type="checkbox" class="custom-control-input" name="{{$student->id}}" id="{{$student->id}}">
-                                        <label class="custom-control-label" for="{{$student->id}}">Present</label>
+                                        <label class="custom-control-label" for="{{$student->id}}" >Present</label>
                                     </div>
                                 </td>
                             </tr>
