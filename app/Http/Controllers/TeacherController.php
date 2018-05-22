@@ -47,19 +47,32 @@ class TeacherController extends Controller
     {
 
 
-        $validatedData = $request->validate([
-            'name' => 'required|max:50',
+        $rules = [
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
             'current_address' => 'required|max:50',
             'permanent_address' =>  'required|max:50',
             'dob' => 'required',
             'national_id' => 'required|max:20',
             'nationality' =>  'required',
-            'cell' => 'required|max:11',
-            'photo' =>  'required',
+            'cell' => 'required|digits:11',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
+            'gender_id' => 'required',
+        ];
 
+        $customMessages = [
+            'name.required' => 'Name is required',
+            'name.regex' => 'Name must contain only letters and whitespace',
+            'dob.required' => 'Date of Birth is required',
+            'religion_id.required' => "Religion is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'current_address.required' => "Current Address field is required",
+            'permanent_address.required' => "Permanent Address field is required",
+        ];
 
-        ]);
-
+        $this->validate($request, $rules, $customMessages);
 
        /*
         * Creating a new user
@@ -154,6 +167,32 @@ class TeacherController extends Controller
     public function update(Request $request, Teacher $teacher)
     {
         //Teacher::query()->create($request->all());
+        $rules = [
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'current_address' => 'required|max:50',
+            'permanent_address' =>  'required|max:50',
+            'dob' => 'required',
+            'national_id' => 'required|max:20',
+            'nationality' =>  'required',
+            'cell' => 'required|digits:11',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
+            'gender_id' => 'required',
+        ];
+
+        $customMessages = [
+            'name.required' => 'Name is required',
+            'name.regex' => 'Name must contain only letters and whitespace',
+            'dob.required' => 'Date of Birth is required',
+            'religion_id.required' => "Religion is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'current_address.required' => "Current Address field is required",
+            'permanent_address.required' => "Permanent Address field is required",
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $user_name = request('name');
 

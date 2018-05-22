@@ -13,7 +13,7 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Exam Terms Information</h5>
+                <h5 class="text-blue">Teachers Information</h5>
 
             </div>
         </div>
@@ -24,7 +24,7 @@
 
                     <th>Teacher</th>
                     <th>Religion</th>
-                    <th>Bloog Group</th>
+                    <th>Blood Group</th>
                     <th>Gender</th>
                     <th>photo</th>
                     <th class="datatable-nosort">Action</th>
