@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\BloodGroup;
 use App\Model\Gender;
 use App\Model\Religion;
-use App\Teacher;
+use App\Model\Teacher;
 use App\User;
 use Carbon\Carbon;
 use DateTime;
@@ -74,13 +74,32 @@ class TeacherController extends Controller
 
         $this->validate($request, $rules, $customMessages);
 
-       /*
-        * Creating a new user
-        */
+        $name = request('name');
+
+        /**
+         * Create a User Object
+         */
+        // Get the last reg id
+        $reg_id = intval(Preference::query()->where('key', 'staff_id_counter')->value('value'));
+
+        // Update the preference
+        $new_reg_id = intval($reg_id) + 1;
+        Preference::query()->where('key', 'staff_id_counter')
+            ->update(['value' => $new_reg_id]);
+
+        // Let's create the new user
         $user_obj = new User;
-        $user_name = request('name');
-        $user_obj->name = $user_name;
+        // Here, T for Teacher
+        $user_name = 'T' . date('y') . str_pad($reg_id, 4, "0", STR_PAD_LEFT);
+
+        $user_obj->username = $user_name;
+        $user_obj->password = bcrypt('password');
+        $user_obj->role_id = 2;
         $user_obj->save();
+
+        /**
+         * End Object Creation
+         */
 
 
 
@@ -112,8 +131,7 @@ class TeacherController extends Controller
 
         $teacher = Teacher::create([
             'user_id' => $user_obj->id,
-            'role_id' => 2,
-            'name' => $user_name,
+            'name' => $name,
             'current_address' => $current_address,
             'permanent_address' => $permanent_address,
             'dob' => $date,

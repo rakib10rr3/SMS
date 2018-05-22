@@ -375,26 +375,22 @@ if (count($grades) == 0) {
 
 $user = User::query()->where('username', 'kdait')->get();
 if (count($user) == 0) {
-    User::query()->create([
-
-        'username' => 'kdait',
-        'password' => bcrypt('password'),
-        'role_id' => '5',
-
-    ]);
+    $user = new User;
+    $user->username = 'kdait';
+    $user->password = bcrypt('password');
+    $user->role_id = 5;
+    $user->save();
 } else {
     echo "Super User already exist<br>";
 }
 
 $user = User::query()->where('username', 'admin')->get();
 if (count($user) == 0) {
-    User::query()->create([
-
-        'username' => 'admin',
-        'password' => bcrypt('password'),
-        'role_id' => '4',
-
-    ]);
+    $user = new User;
+    $user->username = 'admin';
+    $user->password = bcrypt('password');
+    $user->role_id = 4;
+    $user->save();
 } else {
     echo "Default User already exist<br>";
 }

@@ -82,40 +82,4 @@ class BloodGroupController extends Controller
     {
         //
     }
-
-    public  function setup()
-    {
-        $bloodGroups = BloodGroup::query()->get();
-        if (count($bloodGroups) == 0) {
-            BloodGroup::insert([
-                [
-                    'name' => 'A+',
-                ],
-                [
-                    'name' => 'A-',
-                ],
-                [
-                    'name' => 'B+',
-                ],
-                [
-                    'name' => 'B-',
-                ],
-                [
-                    'name' => 'O+',
-                ],
-                [
-                    'name' => 'O-',
-                ],
-                [
-                    'name' => 'AB+',
-                ],
-                [
-                    'name' => 'AB-',
-                ],
-            ]);
-        } else {
-            return "Data already exists";
-        }
-        return true;
-    }
 }

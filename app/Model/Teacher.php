@@ -1,12 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
-use App\Model\BloodGroup;
-use App\Model\ClassAssign;
-use App\Model\Gender;
-use App\Model\Religion;
-use App\Model\Subject;
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model

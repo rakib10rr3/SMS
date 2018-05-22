@@ -12,13 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
-        // $this->call(UsersTableSeeder::class);
+
+        DB::table('users')->delete();
+        //
         DB::table('students')->delete();
         factory(\App\Model\Student::class, 100)->create();
         //
         DB::table('teachers')->delete();
-        factory(\App\Teacher::class, 100)->create();
+        factory(\App\Model\Teacher::class, 100)->create();
         //
         DB::table('staff')->delete();
         factory(\App\Model\Staff::class, 20)->create();
