@@ -110,8 +110,9 @@ class TeacherController extends Controller
             $picture_name = "No Image Found ";
         }
 
-        $api_value = Teacher::create([
+        $teacher = Teacher::create([
             'user_id' => $user_obj->id,
+            'role_id' => 2,
             'name' => $user_name,
             'current_address' => $current_address,
             'permanent_address' => $permanent_address,
@@ -123,8 +124,11 @@ class TeacherController extends Controller
             'gender_id' => $gender_id,
             'nationality' => $nationality,
             'cell' => $cell,
-            'photo' => $picture_name,
+            'photo' => $picture_name
         ]);
+
+        $teacher->user->role_id = 2;
+        $teacher->user->save();
 
 
         return redirect('/teachers');

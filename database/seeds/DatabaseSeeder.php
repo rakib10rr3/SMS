@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
         DB::table('teachers')->delete();
         factory(\App\Teacher::class, 100)->create();
         //
+        DB::table('staff')->delete();
+        factory(\App\Model\Staff::class, 20)->create();
+        //
         DB::table('subjects')->delete();
         factory(\App\Model\Subject::class, 100)->create();
 

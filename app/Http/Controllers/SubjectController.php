@@ -201,6 +201,7 @@ class SubjectController extends Controller
      *
      * @param  \App\Model\Subject $subject
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Subject $subject)
     {
@@ -213,5 +214,19 @@ class SubjectController extends Controller
         $classes = TheClass::all();
         $subjects = Subject::where('the_class_id', $request->class_id)->get();
         return view('subject.index', compact('subjects', 'classes'));
+    }
+
+    public function apiGetSubjectByClass($class)
+    {
+        $subjects = TheClass::query()->find($class)->subjects;
+        return $subjects;
+    }
+
+    public function apiGetSubjectByClassAndGroup($class, $group)
+    {
+        $subjects = Subject::query()
+            ->where('the_class_id', $class)
+            ->where('group_id', $group)->get();
+        return $subjects;
     }
 }

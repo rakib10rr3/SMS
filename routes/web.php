@@ -11,23 +11,24 @@
 |
  */
 
-use App\Model\TheClass;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/', 'HomeController@index')->name('home')
+    ->middleware(['auth']);
 
 Auth::routes();
 
-Route::get('/subjects/optional','OptionalAssignController@index');
-Route::post('/subjects/optional/list','OptionalAssignController@getData')->name('getStudentDataForSelection');
-Route::get('/subjects/optional/assign','OptionalAssignController@assign')->name('assign');
-Route::post('/subjects/optional/store','OptionalAssignController@store');
+Route::get('/subjects/optional', 'OptionalAssignController@index')->name('subjects.optional.index')
+    ->middleware(['auth']);
+Route::post('/subjects/optional/list', 'OptionalAssignController@getData')->name('getStudentDataForSelection')
+    ->middleware(['auth']);
+Route::get('/subjects/optional/assign', 'OptionalAssignController@assign')->name('assign');
+Route::post('/subjects/optional/store', 'OptionalAssignController@store');
 //Route::get('/subjects/optional/edit','OptionalAssignController@edit');
-Route::post('/subjects/optional/edit','OptionalAssignController@getStudentDataWithOptionalSubject')->name('edit');
-Route::post('/subjects/optional/update','OptionalAssignController@update');
+Route::post('/subjects/optional/edit', 'OptionalAssignController@getStudentDataWithOptionalSubject')->name('edit');
+Route::post('/subjects/optional/update', 'OptionalAssignController@update');
 Route::post('/subjects/optional/edit/list', 'OptionalAssignController@getStudentDataWithOptionalSubject');
 
 Route::get('/roll-generator', 'RollController@index');
@@ -52,22 +53,32 @@ Route::get('/setup', function () {
 Route::resource('/exam-terms', 'ExamTermController');
 Route::resource('/groups', 'GroupController');
 
-//Route::Post('/Tesla/test','GroupController@tesla');
-
 Route::resource('class', 'TheClassController');
 Route::resource('roles', 'RoleController');
 Route::resource('teachers', 'TeacherController');
+Route::resource('staff', 'StaffController');
 
-Route::post('/students/getStudentList','StudentController@getStudentList')->name('getStudentListFromStudentController');
+Route::post('/students/getStudentList', 'StudentController@getStudentList')->name('getStudentListFromStudentController');
 Route::resource('/students', 'StudentController');
+
+
 Route::resource('/subjects', 'SubjectController');
-Route::get('preference', 'PreferenceController@index')->name('preference.index')->middleware('auth');
-Route::put('preference', 'PreferenceController@update')->name('preference.update')->middleware('auth');
+Route::get('api/subjects/{class}', 'SubjectController@apiGetSubject');
+Route::get('api/subjects/{class}/{group}', 'SubjectController@apiGetSubjectByClassAndGroup');
+
+
+Route::get('preference', 'PreferenceController@index')->name('preference.index')
+    ->middleware(['auth', 'can:preference-crud']);
+Route::put('preference', 'PreferenceController@update')->name('preference.update')
+    ->middleware(['auth', 'can:preference-crud']);
+
+
 Route::resource('/students', 'StudentController');
 Route::resource('/subjects', 'SubjectController');
 Route::resource('/subjectAssigns', 'SubjectAssignController');
 Route::resource('/classAssigns', 'ClassAssignController');
 
+
 Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select');
 Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
 Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
@@ -75,18 +86,6 @@ Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select'
 Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
 Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
 
-
-Route::get('api/subjects/{id}', function ($id) {
-    $subjects = TheClass::find($id)->subjects;
-    return $subjects;
-});
-
-Route::get('api/subjects/{class}/{group}', function ($class, $group) {
-    $subjects = \App\Model\Subject::query()
-        ->where('the_class_id', $class)
-        ->where('group_id', $group)->get();
-    return $subjects;
-});
 
 //Route::resource('/attendances','AttendanceController');
 Route::get('/attendances/select', 'AttendanceController@select')->name('attendance.select');
@@ -107,14 +106,14 @@ Route::post('/attendances/update', 'AttendanceController@update')->name('attenda
 Route::get('/attendances/select_for_view', 'AttendanceController@selectForView')->name('attendance.selectForView');
 Route::post('/attendances/show', 'AttendanceController@show')->name('attendance.show');
 
-Route::post('/attendances/show_for_edit','AttendanceController@showForEdit')->name('attendance.showForEdit');
-Route::get('/attendances/edit','AttendanceController@edit')->name('attendance.edit');
-Route::post('/attendances/update','AttendanceController@update')->name('attendance.update');
-Route::get('/attendances/select_for_view','AttendanceController@selectForView')->name('attendance.selectForView');
-Route::post('/attendances/show','AttendanceController@show')->name('attendance.show');
-Route::get('promotion/select','PromotionController@select')->name('promotion.select');
-Route::post('promotion/select','PromotionController@view')->name('promotion.view');
-Route::post('promotion/update','PromotionController@update')->name('promotion.update');
+Route::post('/attendances/show_for_edit', 'AttendanceController@showForEdit')->name('attendance.showForEdit');
+Route::get('/attendances/edit', 'AttendanceController@edit')->name('attendance.edit');
+Route::post('/attendances/update', 'AttendanceController@update')->name('attendance.update');
+Route::get('/attendances/select_for_view', 'AttendanceController@selectForView')->name('attendance.selectForView');
+Route::post('/attendances/show', 'AttendanceController@show')->name('attendance.show');
+Route::get('promotion/select', 'PromotionController@select')->name('promotion.select');
+Route::post('promotion/select', 'PromotionController@view')->name('promotion.view');
+Route::post('promotion/update', 'PromotionController@update')->name('promotion.update');
 
 Route::get('/merit-list', 'MeritListController@index')->name('meritList.index')->middleware('auth');
 Route::post('/merit-list', 'MeritListController@show')->name('meritList.show')->middleware('auth');

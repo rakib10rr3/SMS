@@ -2,14 +2,11 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Teacher::class, function (Faker $faker) {
-
-    // \App\User::all()->random();
-
+$factory->define(App\Model\Staff::class, function (Faker $faker) {
     return [
 
         'user_id' => function () {
-            return factory(App\User::class)->create(['role_id' => 2])->id;
+            return factory(App\User::class)->create(['role_id' => 3])->id;
         },
 
         'religion_id' => function () {

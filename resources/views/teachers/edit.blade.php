@@ -192,7 +192,7 @@
 
 
 
-
+@endsection
 
 
     <!-- Form wizard Js  -->
@@ -217,5 +217,3 @@
 
 @endsection
 
-
-@endsection

@@ -68,7 +68,7 @@
                 @else
                     @foreach($roles as $role)
                         <tr>
-                            <td class="table-plus">{{$loop->iteration}}</td>
+                            <td class="table-plus">{{$role->id}}</td>
                             <td>{{$role->name}}</td>
                             <td>
                                 <div class="dropdown">
@@ -82,8 +82,6 @@
                                            data-target="#Medium-modal" data-id="{{$role->id}}"
                                            data-content="{{$role->name}}">
                                             <i class="fa fa-pencil"></i>Edit</a>
-
-
 
                                         <a class="dropdown-item ts-delete" href="" data-id="{{$role->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
@@ -126,7 +124,7 @@
                                     <input type="text" name="role_name" class="form-control" id="role_name"
                                            value="">
                                 </div>
-                                <input type="submit"  class="btn btn-success pull-right">
+                                <input type="submit" class="btn btn-success pull-right">
                             </form>
 
                         </div>
@@ -225,7 +223,7 @@
                     if (willDelete) {
                         $.ajax({
                             type: "POST",
-                            url: "/roles/"+id,
+                            url: "/roles/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
                                 _method: "DELETE"

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Model\Notice;
 use App\Model\Role;
+use App\Model\Staff;
 use App\Model\Student;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username',
     ];
 
     /**
@@ -30,19 +31,28 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function teacher(){
+    public function teacher()
+    {
         return $this->hasOne(Teacher::class);
     }
 
-    public function student(){
+    public function student()
+    {
         return $this->hasOne(Student::class);
     }
 
-    public function notices(){
+    public function notices()
+    {
         return $this->hasMany(Notice::class);
     }
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class);
+    }
+
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
     }
 }

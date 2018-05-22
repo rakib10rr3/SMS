@@ -7,12 +7,14 @@
  */
 
 use App\Model\Grade;
+use App\Model\Role;
 use App\Model\Section;
 use App\Model\ExamTerm;
 use App\Model\TheClass;
 use \App\Model\Division;
 use App\Model\BloodGroup;
 use App\Model\Preference;
+use App\User;
 
 $bloodGroups = BloodGroup::query()->get();
 if (count($bloodGroups) == 0) {
@@ -134,20 +136,20 @@ if (count($shifts) == 0) {
 
 $groups = \App\Model\Group::query()->get();
 if (count($groups) == 0) {
-\App\Model\Group::insert([
-    [
-        'name' => 'None',
-    ],
-    [
-        'name' => 'Science',
-    ],
-    [
-        'name' => 'Commerce',
-    ],
-    [
-        'name' => 'Arts',
-    ],
-]);
+    \App\Model\Group::insert([
+        [
+            'name' => 'None',
+        ],
+        [
+            'name' => 'Science',
+        ],
+        [
+            'name' => 'Commerce',
+        ],
+        [
+            'name' => 'Arts',
+        ],
+    ]);
 } else {
     echo "Group data already exist<br>";
 }
@@ -226,7 +228,7 @@ if (count($exam_terms) == 0) {
 
 
 $preferences = Preference::query()->get();
-if(count($preferences) == 0) {
+if (count($preferences) == 0) {
     Preference::insert([
         [
             'key' => 'institute_name',
@@ -252,8 +254,21 @@ if(count($preferences) == 0) {
             'key' => 'address',
             'value' => 'Your Address'
         ],
+
+        [
+            'key' => 'teacher_id_counter',
+            'value' => '0'
+        ],
+        [
+            'key' => 'staff_id_counter',
+            'value' => '0'
+        ],
+        [
+            'key' => 'student_id_counter',
+            'value' => '0'
+        ],
     ]);
-}else {
+} else {
     echo "Preference data already exist<br>";
 }
 
@@ -275,7 +290,7 @@ Class Interval 	Letter grade 	grade Point
  */
 
 $grades = Grade::query()->get();
-if(count($grades) == 0) {
+if (count($grades) == 0) {
     Grade::insert([
         [
             'name' => 'A+',
@@ -327,6 +342,59 @@ if(count($grades) == 0) {
             'max_value' => '32'
         ],
     ]);
-}else {
+} else {
     echo "grade data already exist<br>";
+}
+
+// ========================
+
+$grades = Role::query()->get();
+if (count($grades) == 0) {
+    Role::insert([
+        [
+            'name' => 'Student'
+        ],
+        [
+            'name' => 'Teacher'
+        ],
+        [
+            'name' => 'Staff'
+        ],
+        [
+            'name' => 'Admin'
+        ],
+        [
+            'name' => 'KDA IT'
+        ]
+    ]);
+} else {
+    echo "role data already exist<br>";
+}
+
+// ========================
+
+$user = User::query()->where('username', 'kdait')->get();
+if (count($user) == 0) {
+    User::query()->create([
+
+        'username' => 'kdait',
+        'password' => bcrypt('password'),
+        'role_id' => '5',
+
+    ]);
+} else {
+    echo "Super User already exist<br>";
+}
+
+$user = User::query()->where('username', 'admin')->get();
+if (count($user) == 0) {
+    User::query()->create([
+
+        'username' => 'admin',
+        'password' => bcrypt('password'),
+        'role_id' => '4',
+
+    ]);
+} else {
+    echo "Default User already exist<br>";
 }

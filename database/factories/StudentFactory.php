@@ -9,9 +9,11 @@ $factory->define(App\Model\Student::class, function (Faker $faker) {
 
     // $word = $faker->unique()->word;
 
+    //\App\User::create(['name' => $this->faker->word]);
+
     return [
         'user_id' => function () {
-            return \App\User::create(['name' => $this->faker->word]);
+            return factory(App\User::class)->create(['role_id' => 1])->id;
         },
         'religion_id' => function () {
             return \App\Model\Religion::all()->random();
