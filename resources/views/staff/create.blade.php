@@ -38,13 +38,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Name:</label>
-                                    <input value="{{old('name')}}" name="name" type="text" class="form-control">
+                                    <input value="{{old('name')}}" name="name" type="text" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Cell :</label>
-                                    <input value="{{old('cell')}}" name="cell" type="text" class="form-control">
+                                    <input value="{{old('cell')}}" name="cell" type="text" class="form-control" required />
                                 </div>
                             </div>
                         </div>
@@ -54,14 +54,14 @@
                                 <div class="form-group">
                                     <label>Current Address :</label>
                                     <input value="{{old('current_address')}}" name="current_address" type="text"
-                                           class="form-control">
+                                           class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Permanent Number :</label>
                                     <input value="{{old('permanent_address')}}" name="permanent_address" type="text"
-                                           class="form-control">
+                                           class="form-control" required />
                                 </div>
                             </div>
                         </div>
@@ -71,14 +71,14 @@
                                 <div class="form-group">
                                     <label>Nationality :</label>
                                     <input value="{{old('nationality')}}" name="nationality" type="text"
-                                           class="form-control">
+                                           class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>National ID :</label>
                                     <input value="{{old('national_id')}}" name="national_id" type="text"
-                                           class="form-control">
+                                           class="form-control" required />
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Marital Status:</label>
-                                    <select name="marital_status" class="custom-select form-control">
+                                    <select name="marital_status" class="custom-select form-control" required>
                                         <option value="0"{{ (old("marital_status") == "0" ? "selected":"") }}>
                                             Unmarried
                                         </option>
@@ -102,7 +102,7 @@
                                     <label>Date of Birth :</label>
                                     <input value="{{old('dob')}}" type="text" name="dob"
                                            class="form-control date-picker"
-                                           placeholder="Select Date">
+                                           placeholder="Select Date" required />
                                 </div>
                             </div>
 
@@ -117,7 +117,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Religion:</label>
-                                    <select name="religion_id" class="custom-select form-control">
+                                    <select name="religion_id" class="custom-select form-control" required >
                                         @foreach ($religions as $religion)
                                             <option value="{{ $religion->id }}" {{ (old("religion_id") == $religion->id ? "selected":"") }}>
                                                 {{ $religion->name }}
@@ -132,7 +132,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Blood Group:</label>
-                                    <select name="blood_group_id" class="custom-select form-control">
+                                    <select name="blood_group_id" class="custom-select form-control" required >
                                         @foreach ($bloodGroups as $bloodGroup)
                                             <option value="{{ $bloodGroup->id }}" {{ (old("blood_group_id") == $bloodGroup->id ? "selected":"") }}>
                                                 {{ $bloodGroup->name }}
@@ -146,7 +146,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>Gender:</label>
-                                    <select name="gender_id" class="custom-select form-control">
+                                    <select name="gender_id" class="custom-select form-control" required >
                                         @foreach ($genders as $gender)
                                             <option value="{{ $gender->id }}" {{ (old("gender_id") == $gender->id ? "selected":"") }}>
                                                 {{ $gender->name }}
