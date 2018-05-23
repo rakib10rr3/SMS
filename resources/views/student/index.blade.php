@@ -116,7 +116,7 @@
                                         <a class="dropdown-item" href="/students/{{$student->id}}/edit"><i
                                                     class="fa fa-pencil"></i> Edit</a>
 
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}"><i
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}" data-user_id = {{$student->user_id}}><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
                                 </div>
@@ -283,6 +283,8 @@
         $(document).on('click', '.ts-delete', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
+            var userId = $(this).data('user_id');
+
             console.log(id);
             swal({
                 title: "Are you sure!",
@@ -298,7 +300,9 @@
                             url: "/students/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
-                                _method: "DELETE"
+                                _method: "DELETE",
+                                user_id: userId,
+
                             },
                             success: function (data) {
                                 swal("Poof! Your imaginary file has been deleted!", {

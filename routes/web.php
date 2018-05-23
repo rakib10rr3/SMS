@@ -75,7 +75,7 @@ Route::resource('class', 'TheClassController')
 Route::resource('roles', 'RoleController')
     ->middleware(['auth', 'role-crud']);
 Route::resource('teachers', 'TeacherController')
-    ->middleware(['auth', 'teacher-crud']);
+    ->middleware(['auth', 'can:teacher-crud']);
 Route::resource('staff', 'StaffController')
     ->middleware(['auth', 'can:staff-crud']);
 

@@ -231,6 +231,8 @@ class StaffController extends Controller
     public function destroy(Staff $staff)
     {
         $staff->delete();
+        User::query()->where('id',$staff->user_id)->delete();
+
         return redirect()->route('staff.index');
     }
 }
