@@ -12,7 +12,7 @@
         <div class="login-box bg-white box-shadow pd-30 border-radius-5">
 
 
-            <img src="vendors/images/logo.svg" alt="login" class="login-img">
+            <img src="/vendors/images/logo.svg" alt="login" class="login-img">
             <h1 class="text-center">{{ config('app.name', 'Management System') }}</h1>
 
             <h3 class="text-center mb-30">Login</h3>
@@ -22,20 +22,20 @@
                 <div class="input-group custom input-group-lg">
 
                     {{--
-                    <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>--}} {{--
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" --}} {{--name="email"
-                        value="{{ old('email') }}" required autofocus>--}} {{----}}
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Email"
-                        value="{{ old('email') }}" required>
+                    <label for="username" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>--}} {{--
+                    <input id="username" type="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" --}} {{--name="username"
+                        value="{{ old('username') }}" required autofocus>--}} {{----}}
+                    <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" placeholder="Username"
+                        value="{{ old('username') }}" required>
                     <div class="input-group-append custom">
                         <span class="input-group-text">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </span>
                     </div>
 
-                    @if ($errors->has('email'))
+                    @if ($errors->has('username'))
                     <span class="invalid-feedback">
-                        <strong>{{ $errors->first('email') }}</strong>
+                        <strong>{{ $errors->first('username') }}</strong>
                     </span>
                     @endif
 

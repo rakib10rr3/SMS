@@ -13,15 +13,23 @@
 
         <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
             <div class="clearfix">
-                <h4 class="text-blue">Step wizard vertical</h4>
-                <p class="mb-30 font-14">jQuery Step wizard</p>
+                <h4 class="text-blue">Edit Teacher</h4>
             </div>
             <div class="wizard-content">
-                <form id="form" method="post" enctype="multipart/form-data" action="/teachers/{{$teacher->id}}"
-                      class="tab-wizard wizard-circle wizard vertical">
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form id="form" method="post" enctype="multipart/form-data" action="/teachers/{{$teacher->id}}">
                     @csrf
                     {{method_field('PUT')}}
-                    <h5> Identity </h5>
                     <section>
                         <div class="row">
                             <div class="col-md-6">
@@ -97,7 +105,6 @@
 
                     </section>
                     <!-- Step 2 -->
-                    <h5> Personal Info </h5>
                     <section>
 
                         <div class="row">
@@ -150,7 +157,6 @@
                         </div>
                     </section>
                     <!-- Step 3 -->
-                    <h5>Photo</h5>
                     <section>
                         <div class="row">
                             <div class="col">
@@ -159,6 +165,8 @@
                             </div>
                         </div>
                     </section>
+                    <input type="submit" value="Update" class="btn btn-info">
+
                 </form>
             </div>
         </div>
@@ -184,7 +192,7 @@
 
 
 
-
+@endsection
 
 
     <!-- Form wizard Js  -->
@@ -209,5 +217,3 @@
 
 @endsection
 
-
-@endsection

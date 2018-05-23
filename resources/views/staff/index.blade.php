@@ -1,11 +1,13 @@
 @extends('layouts.app')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 @endsection
+
+
 @section('content')
 
 
@@ -13,7 +15,7 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Teachers Information</h5>
+                <h5 class="text-blue">Staff Information</h5>
 
             </div>
         </div>
@@ -21,8 +23,8 @@
             <table class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-
-                    <th>Teacher</th>
+                    <th>ID</th>
+                    <th>Name</th>
                     <th>Religion</th>
                     <th>Blood Group</th>
                     <th>Gender</th>
@@ -31,18 +33,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if(empty($teachers))
+                @if(empty($staffs))
                     <p>Data does not exist</p>
                 @else
-                    @foreach($teachers as $teacher)
+                    @foreach($staffs as $staff)
                         <tr>
 
-                            <td>{{$teacher->name}}</td>
-                            <td>{{$teacher->religion->name}}</td>
-                            <td>{{$teacher->bloodGroup->name}}</td>
-                            <td>{{$teacher->gender->name}}</td>
-                            <td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"
-                                     alt="Teacher Photo"></td>
+                            <td>{{$staff->user->username}}</td>
+                            <td>{{$staff->name}}</td>
+                            <td>{{$staff->religion->name}}</td>
+                            <td>{{$staff->bloodGroup->name}}</td>
+                            <td>{{$staff->gender->name}}</td>
+                            <td><img height="64" width="64" src="{{ ($staff->photo)?"/images/staffs/".$staff->photo:"/images/user.svg" }}"
+                                     class="img-rounded"
+                                     alt="staff Photo"></td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
@@ -50,14 +54,10 @@
                                         <i class="fa fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
+                                        <a class="dropdown-item"
+                                           href="{{route('staff.edit', ['staff'=>$staff->id])}}"><i
                                                     class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}"><i
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$staff->id}}"><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
                                 </div>
@@ -74,10 +74,10 @@
 
 @section('scripts')
 
-    <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
-    <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
-    <script src="{{asset('src/plugins/datatables/media/js/responsive.bootstrap4.js')}}"></script>
+    <script src="/src/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/src/plugins/datatables/media/js/dataTables.bootstrap4.js"></script>
+    <script src="/src/plugins/datatables/media/js/dataTables.responsive.js"></script>
+    <script src="/src/plugins/datatables/media/js/responsive.bootstrap4.js"></script>
     <!-- buttons for Export datatable -->
     <script src="src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
     <script src="src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
@@ -86,8 +86,6 @@
     <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
-
-
 
 
     <script>
@@ -157,7 +155,7 @@
                     if (willDelete) {
                         $.ajax({
                             type: "POST",
-                            url: "/teachers/" + id,
+                            url: "/staff/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
                                 _method: "DELETE"
@@ -180,8 +178,6 @@
 
 @endsection
 
-
-{{--@include('layouts.header')--}}
 
 
 

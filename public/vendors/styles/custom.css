@@ -17,3 +17,8 @@ body {
 .footer-wrap {
     margin-top: 20px;
 }
+
+.ts-sidebar-divider {
+    height: 3px;
+    background: #eee;
+}

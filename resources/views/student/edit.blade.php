@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label>Father's Phone Number :</label>
                                 <input type="text" class="form-control" id="father_cell" name="father_cell"
-                                       value="{{$student->cell}}" required/>
+                                       value="{{$student->father_cell}}" required/>
                             </div>
                         </div>
                     </div>

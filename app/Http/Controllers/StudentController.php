@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \App\Model\Division;
 use App\Model\District;
 use App\Model\Group;
+use App\Model\Preference;
 use App\Model\Section;
 use App\Model\Shift;
 use App\Model\Student;
@@ -150,10 +151,32 @@ class StudentController extends Controller
 //        ]);
         //Student::query()->create($request->all());
 
+        $name = request('name');
+
+        /**
+         * Create a User Object
+         */
+        // Get the last reg id
+        $reg_id = intval(Preference::query()->where('key', 'staff_id_counter')->value('value'));
+
+        // Update the preference
+        $new_reg_id = intval($reg_id) + 1;
+        Preference::query()->where('key', 'staff_id_counter')
+            ->update(['value' => $new_reg_id]);
+
+        // Let's create the new user
         $user_obj = new User;
-        $user_name = request('name');
-        $user_obj->name = $user_name;
+        // Here, S for Student
+        $user_name = 'S' . date('y') . str_pad($reg_id, 4, "0", STR_PAD_LEFT);
+
+        $user_obj->username = $user_name;
+        $user_obj->password = bcrypt('password');
+        $user_obj->role_id = 1;
         $user_obj->save();
+
+        /**
+         * End Object Creation
+         */
 
         $dobString = request('dob');
         $carbon = new Carbon($dobString);
@@ -184,7 +207,7 @@ class StudentController extends Controller
             $newRoll = ++$lastRoll;
 
         Student::query()->create([
-            'name' => $request->name,
+            'name' => $name,
             'religion_id' => $request->religion_id,
             'blood_group_id' => $request->blood_group_id,
             'gender_id' => $request->gender_id,

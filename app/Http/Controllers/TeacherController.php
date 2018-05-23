@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\BloodGroup;
 use App\Model\Gender;
 use App\Model\Religion;
-use App\Teacher;
+use App\Model\Teacher;
 use App\User;
 use Carbon\Carbon;
 use DateTime;
@@ -47,27 +47,59 @@ class TeacherController extends Controller
     {
 
 
-        $validatedData = $request->validate([
-            'name' => 'required|max:50',
+        $rules = [
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
             'current_address' => 'required|max:50',
             'permanent_address' =>  'required|max:50',
             'dob' => 'required',
             'national_id' => 'required|max:20',
             'nationality' =>  'required',
-            'cell' => 'required|max:11',
-            'photo' =>  'required',
+            'cell' => 'required|digits:11',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
+            'gender_id' => 'required',
+        ];
 
+        $customMessages = [
+            'name.required' => 'Name is required',
+            'name.regex' => 'Name must contain only letters and whitespace',
+            'dob.required' => 'Date of Birth is required',
+            'religion_id.required' => "Religion is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'current_address.required' => "Current Address field is required",
+            'permanent_address.required' => "Permanent Address field is required",
+        ];
 
-        ]);
+        $this->validate($request, $rules, $customMessages);
 
+        $name = request('name');
 
-       /*
-        * Creating a new user
-        */
+        /**
+         * Create a User Object
+         */
+        // Get the last reg id
+        $reg_id = intval(Preference::query()->where('key', 'staff_id_counter')->value('value'));
+
+        // Update the preference
+        $new_reg_id = intval($reg_id) + 1;
+        Preference::query()->where('key', 'staff_id_counter')
+            ->update(['value' => $new_reg_id]);
+
+        // Let's create the new user
         $user_obj = new User;
-        $user_name = request('name');
-        $user_obj->name = $user_name;
+        // Here, T for Teacher
+        $user_name = 'T' . date('y') . str_pad($reg_id, 4, "0", STR_PAD_LEFT);
+
+        $user_obj->username = $user_name;
+        $user_obj->password = bcrypt('password');
+        $user_obj->role_id = 2;
         $user_obj->save();
+
+        /**
+         * End Object Creation
+         */
 
 
 
@@ -97,9 +129,9 @@ class TeacherController extends Controller
             $picture_name = "No Image Found ";
         }
 
-        $api_value = Teacher::create([
+        $teacher = Teacher::create([
             'user_id' => $user_obj->id,
-            'name' => $user_name,
+            'name' => $name,
             'current_address' => $current_address,
             'permanent_address' => $permanent_address,
             'dob' => $date,
@@ -110,8 +142,11 @@ class TeacherController extends Controller
             'gender_id' => $gender_id,
             'nationality' => $nationality,
             'cell' => $cell,
-            'photo' => $picture_name,
+            'photo' => $picture_name
         ]);
+
+        $teacher->user->role_id = 2;
+        $teacher->user->save();
 
 
         return redirect('/teachers');
@@ -154,6 +189,32 @@ class TeacherController extends Controller
     public function update(Request $request, Teacher $teacher)
     {
         //Teacher::query()->create($request->all());
+        $rules = [
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'current_address' => 'required|max:50',
+            'permanent_address' =>  'required|max:50',
+            'dob' => 'required',
+            'national_id' => 'required|max:20',
+            'nationality' =>  'required',
+            'cell' => 'required|digits:11',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
+            'gender_id' => 'required',
+        ];
+
+        $customMessages = [
+            'name.required' => 'Name is required',
+            'name.regex' => 'Name must contain only letters and whitespace',
+            'dob.required' => 'Date of Birth is required',
+            'religion_id.required' => "Religion is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'current_address.required' => "Current Address field is required",
+            'permanent_address.required' => "Permanent Address field is required",
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $user_name = request('name');
 

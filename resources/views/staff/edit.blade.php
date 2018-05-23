@@ -3,7 +3,7 @@
 
 @section('styles')
 
-    <link rel="stylesheet" type="text/css" href="{{asset('src/plugins/jquery-steps/build/jquery.steps.css')}}">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/jquery-steps/build/jquery.steps.css">
 @endsection
 
 @section('content')
@@ -13,50 +13,28 @@
 
         <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
             <div class="clearfix">
-                <h4 class="text-blue">Create Teacher</h4>
+                <h4 class="text-blue">Step wizard vertical</h4>
+                <p class="mb-30 font-14">jQuery Step wizard</p>
             </div>
             <div class="wizard-content">
-
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form id="form" method="post" enctype="multipart/form-data" action="/teachers">
+                <form id="form" method="post" enctype="multipart/form-data"
+                      action="{{route('staff.update', ['staff' => $staff->id])}}"
+                      class="">
                     @csrf
-
+                    {{method_field('PUT')}}
+                    <h5> Identity </h5>
                     <section>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Name :</label>
-                                    <input name="name" type="text" id="name" class="form-control" value="{{old('name')}}" required/>
+                                    <label>Name :</label>
+                                    <input name="name" type="text" class="form-control" value="{{$staff->name}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="cell">Cell :</label>
-                                    <input name="cell" id="cell" type="text" class="form-control" value="{{old('cell')}}" required/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="current_address">Current Address :</label>
-                                    <input name="current_address" id="current_address" type="text" class="form-control" value="{{old('current_address')}}" required/>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="permanent_address">Permanent Number :</label>
-                                    <input name="permanent_address" type="text" id="permanent_address" class="form-control" value="{{old('permanent_address')}}" required/>
+                                    <label>Cell :</label>
+                                    <input name="cell" type="text" class="form-control" value="{{$staff->cell}}">
                                 </div>
                             </div>
                         </div>
@@ -64,14 +42,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nationality">Nationality :</label>
-                                    <input name="nationality" id="nationality" type="text" class="form-control" value="{{old('nationality')}}" required/>
+                                    <label>Current Address :</label>
+                                    <input name="current_address" type="text" class="form-control"
+                                           value="{{$staff->current_address}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="national_id">National ID :</label>
-                                    <input name="national_id" type="text" id="national_id" class="form-control" value="{{old('national_id')}}" required/>
+                                    <label>Permanent Address :</label>
+                                    <input name="permanent_address" type="text" class="form-control"
+                                           value="{{$staff->permanent_address}}">
                                 </div>
                             </div>
                         </div>
@@ -79,8 +59,26 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="marital_status">Marital Status:</label>
-                                    <select name="marital_status" id="marital_status" class="custom-select form-control" required>
+                                    <label>Nationality :</label>
+                                    <input name="nationality" type="text" class="form-control"
+                                           value="{{$staff->nationality}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>National ID :</label>
+                                    <input name="national_id" type="text" class="form-control"
+                                           value="{{$staff->national_id}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Marital Status:</label>
+                                    <select name="marital_status" class="custom-select form-control"
+                                            value="{{$staff->marital_status}}">
                                         <option value="0">Unmarried</option>
                                         <option value="1">Married</option>
                                     </select>
@@ -89,9 +87,10 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="dob">Date of Birth :</label>
-                                    <input type="text" name="dob" id="dob" class="form-control date-picker" value="{{old('dob')}}"
-                                           placeholder="Select Date" required />
+                                    <label>Date of Birth :</label>
+                                    <input type="text" name="dob" class="form-control date-picker"
+                                           value="{{Carbon\Carbon::parse($staff->dob)->format('d F Y')}}"
+                                           placeholder="Select Date">
                                 </div>
                             </div>
 
@@ -99,32 +98,24 @@
 
                     </section>
                     <!-- Step 2 -->
+                    <h5> Personal Info </h5>
                     <section>
 
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="religion_id">Religion:</label>
-                                    <select name="religion_id" id="religion_id" class="custom-select form-control" required>
+                                    <label>Religion:</label>
+                                    <select name="religion_id" class="custom-select form-control"
+                                            value="{{$staff->religion_id}}">
                                         @foreach ($religions as $religion)
-                                            <option value="{{ $religion->id }}" {{(old('religion_id') == $religion->id?'selected':'')}}>
-                                                {{ $religion->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                                            {{--<option value="{{ $religion->id }}">--}}
+                                            {{--{{ $religion->name }}--}}
+                                            {{--</option>--}}
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="blood_group">Blood Group:</label>
-                                    <select name="blood_group_id" id="blood_group" class="custom-select form-control" required>
-                                        @foreach ($bloodGroups as $bloodGroup)
-                                            <option value="{{ $bloodGroup->id }}" {{(old('blood_group_id') == $bloodGroup->id?'selected':'')}}>
-                                                {{ $bloodGroup->name }}
+                                            <option value="{{$religion->id}}" {{ $religion->id === $staff->religion_id? 'selected' : '' }}>{{$religion->name}}
+
                                             </option>
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -133,12 +124,26 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <label for="gender_id">Gender:</label>
-                                    <select name="gender_id" id="gender_id" class="custom-select form-control" required>
+                                    <label>Blood Group:</label>
+                                    <select name="blood_group_id" class="custom-select form-control"
+                                            value="{{$staff->blood_group_id}}">
+                                        @foreach ($bloodGroups as $bloodGroup)
+
+                                            <option value="{{$bloodGroup->id}}" {{ $bloodGroup->id === $staff->blood_group_id? 'selected' : '' }}>{{$bloodGroup->name}}
+
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Gender:</label>
+                                    <select name="gender_id" class="custom-select form-control"
+                                            value="{{$staff->gender_id}}">
                                         @foreach ($genders as $gender)
-                                            <option value="{{ $gender->id }}" {{(old('gender_id') == $gender->id?'selected':'')}}>
-                                                {{ $gender->name }}
-                                            </option>
+                                            <option value="{{$gender->id}}" {{ $gender->id === $staff->gender_id? 'selected' : '' }}>{{$gender->name}}
                                         @endforeach
                                     </select>
                                 </div>
@@ -146,20 +151,20 @@
                         </div>
                     </section>
                     <!-- Step 3 -->
+                    <h5>Photo</h5>
                     <section>
                         <div class="row">
                             <div class="col">
-                                <input type="file" name="photo" id="photo">
+                                <input type="file" name="photo" id="photo"
+                                       value="images/staffs/{{$staff->photo}}">
                             </div>
                         </div>
                     </section>
-                    <section>
-                        <div class="row">
-                            <div class="col">
-                                <input type="submit" value="Create" class="btn btn-success">
-                            </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
-                    </section>
+                    </div>
                 </form>
             </div>
         </div>
@@ -188,10 +193,10 @@
 
 
 
-    <!-- Form wizard Js  -->
+<!-- Form wizard Js  -->
 @section('scripts')
 
-    <script src="{{asset('src/plugins/jquery-steps/build/jquery.steps.js')}}"></script>
+    <script src="/src/plugins/jquery-steps/build/jquery.steps.js"></script>
     <script>
         $(".tab-wizard").steps({
             headerTag: "h5",
@@ -209,4 +214,3 @@
     </script>
 
 @endsection
-
