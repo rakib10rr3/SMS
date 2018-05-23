@@ -161,39 +161,60 @@ class SendSmsController extends Controller
 
     /**
      * @param $to => 0186666,018666,01585555,188855
-     * @param $tag=> From where you are sending the sms
+     * @param $tag => From where you are sending the sms
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
 
-    public function send_sms($to,$tag)
+//    public function send_sms($to, $tag)
+//    {
+//
+//
+//        $school_name = Preference::query()->pluck('institute_name');;
+//        $message = "Absent Alert From " . $school_name;
+//        $token = Config::get('constants.sms_bundle.token');
+//        $uri = "http://sms.greenweb.com.bd/api.php";
+//        //GuzzleHttp\Client
+//        $client = new Client();
+//        $result = $client->post($uri, [
+//            'form_params' => [
+//                'to' => $to,
+//                'message' => $message,
+//                'token' => $token
+//            ]
+//        ]);
+//        /*
+//         * Saving the log to the Sms History
+//         * tag name should be same as constant value
+//         */
+//        $sms_history_obj = new SmsHistory;
+//        $sms_history_obj->from = Auth::user()->name;
+//        $sms_history_obj->to = $to;
+//        $sms_history_obj->message = $message;
+//        $sms_history_obj->tag = $tag;
+//        $sms_history_obj->save();
+//
+//
+//    }
+
+    public function balance()
     {
-
-
-        $school_name = Preference::query()->pluck('institute_name');;
-        $message = "Absent Alert From ".$school_name;
-        $token = Config::get('constants.sms_bundle.token');
-        $uri = "http://sms.greenweb.com.bd/api.php";
-        //GuzzleHttp\Client
+        //  https://sms.greenweb.com.bd/g_api.php?token=4d4419ddc0bc3324187600e2d19911cd&tokensms
         $client = new Client();
-        $result = $client->post($uri, [
-            'form_params' => [
-                'to' => $to,
-                'message' => $message,
-                'token' => $token
-            ]
-        ]);
-        /*
-         * Saving the log to the Sms History
-         * tag name should be same as constant value
-         */
-        $sms_history_obj = new SmsHistory;
-        $sms_history_obj->from = Auth::user()->name;
-        $sms_history_obj->to = $to;
-        $sms_history_obj->message = $message;
-        $sms_history_obj->tag = $tag;
-        $sms_history_obj->save();
+        $token = Config::get('constants.sms_bundle.token');
+        $base_url = "https://sms.greenweb.com.bd/g_api.php?token=" . $token;
+        $balance_url = $base_url . "&balance";
+        $total_sent_sms_url = $base_url . "&totalsms";
 
 
+        $balance_request = $client->request('GET', $balance_url);
+        $total_sent_sms_request = $client->request('GET', $total_sent_sms_url);
+
+        $balance = strip_tags($balance_request->getBody());
+        $total_sms = strip_tags($total_sent_sms_request->getBody());
+
+        $result = "Your Total Balance is " . $balance . " taka and Total SMS Sent = " . $total_sms;
+        return $result;
+        //echo $balance ." ".$total_sms;
     }
 
 }

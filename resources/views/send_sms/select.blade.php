@@ -22,9 +22,15 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#profile2" role="tab" aria-selected="false">Teacher</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#profile3" role="tab" aria-selected="false">Custom</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#profile4" role="tab" aria-selected="false">Balance</a>
+                        </li>
+
 
                     </ul>
                     <div class="tab-content">
@@ -83,6 +89,8 @@
                         <!----------------  For  Tab  2----------------------------------------------------->
                         <div class="tab-pane fade" id="profile2" role="tabpanel">
                             <div class="pd-20">
+
+
                                 <form action="{{route('sendSms.create')}}" method="post">
 
                                     {{csrf_field()}}
@@ -134,6 +142,8 @@
                                     <input value="teacher" type="hidden" name="type"/>
                                     <button type="submit" name="submit" class="btn btn-outline-success">Next</button>
                                 </form>
+
+
                             </div>
                         </div>
 
@@ -168,6 +178,23 @@
 
                                 </form>
                             </div>
+                        </div>
+
+                        <!-----------------------------  For Tab 4 -------------------------------------- -->
+
+                        <div class="tab-pane fade" id="profile4" role="tabpanel">
+                            <div class="pd-20">
+                                <form action="{{route('sendSms.balance')}}" method="get" id="check_balance">
+                                    @csrf
+                                    <button type="submit" name="submit" class="btn btn-outline-success">Check Balance
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div id="sms_result" class="card-body alert alert-success">
+                                Sms result will be shown here
+                            </div>
+
                         </div>
 
                     </div>
@@ -211,10 +238,12 @@
     <script type="text/javascript">
 
         $(document).ready(function ($) {
-            $('#theclass').change(function () {
-                $class_id=$(this).val();
 
-                $.get("/api/subjects/"+$class_id,
+            $('#sms_result').hide();
+            $('#theclass').change(function () {
+                $class_id = $(this).val();
+
+                $.get("/api/subjects/" + $class_id,
 
                     function (data) {
                         var subject = $('#subject');
@@ -225,6 +254,23 @@
                         });
                     });
             });
+
+            $("#check_balance").on("submit", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "GET",
+                    url: "/sendSms/balance",
+
+                    success: function (data) {
+                        console.log(data);
+                        $("#sms_result").text(data).show();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    }
+                });
+            });
+
+
         });
 
     </script>

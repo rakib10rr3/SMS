@@ -13,8 +13,6 @@ class SendSms extends Model
 {
     public function send_sms($to,$tag)
     {
-
-
        // $school_name = Preference::query()->pluck('institute_name')->first();
         $school_name = Preference::query()->where('key', 'institute_name')->first();;
         $message = "Absent Alert From ".$school_name->value;

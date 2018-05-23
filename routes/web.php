@@ -74,6 +74,7 @@ Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
 Route::get('/sendSms/select', 'SendSmsController@select')->name('sendSms.select');
 Route::post('/sendSms/create', 'SendSmsController@create')->name('sendSms.create');
 Route::post('/sendSms/show', 'SendSmsController@store')->name('sendSms.store');
+Route::get('/sendSms/balance', 'SendSmsController@balance')->name('sendSms.balance');
 
 
 Route::get('api/subjects/{id}', function ($id) {
