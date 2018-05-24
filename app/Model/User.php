@@ -6,6 +6,7 @@ use App\Model\Notice;
 use App\Model\Role;
 use App\Model\Staff;
 use App\Model\Student;
+use App\Model\Teacher;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 

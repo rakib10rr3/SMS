@@ -84,10 +84,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Marital Status:</label>
-                                    <select name="marital_status" class="custom-select form-control"
-                                            value="{{$teacher->marital_status}}">
-                                        <option value="0">Unmarried</option>
-                                        <option value="1">Married</option>
+                                    <select name="marital_status" class="custom-select form-control">
+                                        <option value="0" {{"0" == $teacher->marital_status ? 'selected':''}}>Unmarried</option>
+                                        <option value="1" {{"1" == $teacher->marital_status ? 'selected':''}}>Married</option>
                                     </select>
                                 </div>
                             </div>

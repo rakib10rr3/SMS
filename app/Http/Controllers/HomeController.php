@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
+    /**web
      * Create a new controller instance.
      *
      * @return void
