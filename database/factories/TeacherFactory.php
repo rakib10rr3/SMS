@@ -38,7 +38,7 @@ $factory->define(App\Model\Teacher::class, function (Faker $faker) {
         'national_id' => '0123456789',
         'marital_status' => '0',
         'nationality' => 'Bangladeshi',
-        'cell' => '0123456789',
+        'cell' => '01866803833',
         'photo' => 'demo.jpg'
     ];
 });

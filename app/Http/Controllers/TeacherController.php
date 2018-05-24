@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\BloodGroup;
 use App\Model\Gender;
+use App\Model\Preference;
 use App\Model\Religion;
 use App\Model\Teacher;
 use App\User;
@@ -80,11 +81,11 @@ class TeacherController extends Controller
          * Create a User Object
          */
         // Get the last reg id
-        $reg_id = intval(Preference::query()->where('key', 'staff_id_counter')->value('value'));
+        $reg_id = intval(Preference::query()->where('key', 'teacher_id_counter')->value('value'));
 
         // Update the preference
         $new_reg_id = intval($reg_id) + 1;
-        Preference::query()->where('key', 'staff_id_counter')
+        Preference::query()->where('key', 'teacher_id_counter')
             ->update(['value' => $new_reg_id]);
 
         // Let's create the new user

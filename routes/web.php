@@ -71,11 +71,11 @@ Route::resource('exam-terms', 'ExamTermController')
 Route::resource('groups', 'GroupController')
     ->middleware(['auth', 'can:group-crud']);
 Route::resource('class', 'TheClassController')
-    ->middleware(['auth', 'the-class-crud']);
+    ->middleware(['auth', 'can:the-class-crud']);
 Route::resource('roles', 'RoleController')
-    ->middleware(['auth', 'role-crud']);
+    ->middleware(['auth', 'can:role-crud']);
 Route::resource('teachers', 'TeacherController')
-    ->middleware(['auth', 'teacher-crud']);
+    ->middleware(['auth', 'can:teacher-crud']);
 Route::resource('staff', 'StaffController')
     ->middleware(['auth', 'can:staff-crud']);
 
@@ -113,13 +113,8 @@ Route::get('send-sms/select', 'SendSmsController@select')->name('sendSms.select'
     ->middleware(['auth', 'can:sms-send']);
 Route::post('send-sms/create', 'SendSmsController@create')->name('sendSms.create')
     ->middleware(['auth', 'can:sms-send']);
-Route::post('send-sms/show', 'SendSmsController@store')->name('sendSms.store')
-    ->middleware(['auth', 'can:sms-send']);
-Route::get('send-sms/select', 'SendSmsController@select')->name('sendSms.select')
-    ->middleware(['auth', 'can:sms-send']);
-Route::post('send-sms/create', 'SendSmsController@create')->name('sendSms.create')
-    ->middleware(['auth', 'can:sms-send']);
-Route::post('send-sms/show', 'SendSmsController@store')->name('sendSms.store')
+Route::post('send-sms/show', 'SendSmsController@store')->name('sendSms.store');
+Route::get('send-sms/balance', 'SendSmsController@balance')->name('sendSms.balance')
     ->middleware(['auth', 'can:sms-send']);
 
 

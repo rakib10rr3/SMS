@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Model\ClassAssign;
 use App\Model\Section;
 use App\Model\Subject;
+use App\Model\Teacher;
 use App\Model\TheClass;
-use App\Teacher;
+
 use Illuminate\Http\Request;
 
 class ClassAssignController extends Controller

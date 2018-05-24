@@ -53,6 +53,8 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
+
+        //dd($request);
         $sms_to_absent = $request->get('sms_to_absent');
         $class_id = $request->get('the_class_id');
         $shift_id = $request->get('shift_id');
@@ -70,16 +72,19 @@ class AttendanceController extends Controller
             if (is_numeric($key)) {
 
                 if ($value == "0") {
+                    // here key is the student id
                     array_push($absent_students, $key);
+                } else {
+                    $result=Attendance::firstOrCreate([
+                        'date' => $date,
+                        'the_class_id' => $class_id,
+                        'shift_id' => $shift_id,
+                        'section_id' => $section_id,
+                        'subject_id' => $subject_id,
+                        'student_id' => $key,
+                    ]);
+                    dd($result) ;
                 }
-                Attendance::create([
-                    'date' => $date,
-                    'the_class_id' => $class_id,
-                    'shift_id' => $shift_id,
-                    'section_id' => $section_id,
-                    'subject_id' => $subject_id,
-                    'student_id' => $key,
-                ]);
             }
         }
         /*

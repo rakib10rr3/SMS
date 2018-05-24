@@ -67,11 +67,11 @@ class StudentController extends Controller
         $rules = [
             'name' => 'required|regex:/[a-zA-Z\s]+/',
             'dob' => 'required',
-            'father_name' => 'required|alpha',
+            'father_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'father_cell' => 'required|digits:11',
-            'mother_name' => 'required|alpha',
+            'mother_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'mother_cell' => 'required|digits:11',
-            'local_guardian_name' => 'required|alpha',
+            'local_guardian_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'local_guardian_cell' => 'required|digits:11',
             'religion_id' => 'required',
             'blood_group_id' => 'required',
@@ -105,7 +105,7 @@ class StudentController extends Controller
             'father_cell.digits' => "Father's Phone Number must contain 11 digits",
             'mother_cell.digits' => "Mother's Phone Number must contain 11 digits",
             'local_guardian_cell.digits' => "Local Guardian's Phone Number must contain 11 digits",
-           // 'student_cell.digits' => "Student's Phone Number must contain 11 digits",
+            // 'student_cell.digits' => "Student's Phone Number must contain 11 digits",
             'mother_cell.required' => "Father's Phone Number field is required",
             'local_guardian_cell.required' => "Local Guardian's Phone Number field is required",
             'religion_id.required' => "Religion field is required",
@@ -115,7 +115,7 @@ class StudentController extends Controller
             'photo.required' => "Photo field is required",
             'current_address.required' => "Present Address field is required",
             'permanent_address.required' => "Permanent Address field is required",
-           // 'roll.required' => "Roll field is required",
+            // 'roll.required' => "Roll field is required",
             'the_class_id.required' => "Class field is required",
             'shift_id.required' => "Shift field is required",
             'section_id.required' => "Section field is required",
@@ -234,7 +234,7 @@ class StudentController extends Controller
 
         ]);
 
-        //return $request->dob;
+        return redirect('/students');
     }
 
     /**
@@ -281,11 +281,11 @@ class StudentController extends Controller
         $rules = [
             'name' => 'required|regex:/[a-zA-Z\s]+/',
             'dob' => 'required',
-            'father_name' => 'required|alpha',
+            'father_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'father_cell' => 'required|digits:11',
-            'mother_name' => 'required|alpha',
+            'mother_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'mother_cell' => 'required|digits:11',
-            'local_guardian_name' => 'required|alpha',
+            'local_guardian_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'local_guardian_cell' => 'required|digits:11',
             'religion_id' => 'required',
             'blood_group_id' => 'required',

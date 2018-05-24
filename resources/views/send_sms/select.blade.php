@@ -259,8 +259,7 @@
                 e.preventDefault();
                 $.ajax({
                     type: "GET",
-                    url: "/sendSms/balance",
-
+                    url: "{{route('sendSms.balance')}}",
                     success: function (data) {
                         console.log(data);
                         $("#sms_result").text(data).show();
