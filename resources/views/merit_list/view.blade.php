@@ -13,9 +13,9 @@
     <!-- -->
 
 
-    <form action="{{route('meritList.update')}}" method="post">
-    @csrf
-    @method('PUT')
+    {{--<form action="{{route('meritList.update')}}" method="post">--}}
+    {{--@csrf--}}
+    {{--@method('PUT')--}}
     <!-- -->
 
         <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
@@ -132,9 +132,9 @@
                 <div class="pull-left">
                     <h4 class="text-blue mb-10">Student marks</h4>
                 </div>
-                <div class="pull-right">
-                    <button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>
-                </div>
+                {{--<div class="pull-right">--}}
+                    {{--<button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>--}}
+                {{--</div>--}}
             </div>
             <div class="row">
                 <table class="data-table stripe hover nowrap">
@@ -176,16 +176,16 @@
             </div>
 
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>
-                </div>
-            </div>
+            {{--<div class="row">--}}
+                {{--<div class="col-md-12">--}}
+                    {{--<button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
         <!-- Simple Datatable End -->
 
 
-    </form>
+    {{--</form>--}}
     <!-- -->
 @endsection
 <!-- -->

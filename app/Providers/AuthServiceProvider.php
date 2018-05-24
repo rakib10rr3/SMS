@@ -288,6 +288,15 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('access-system-setup', function ($user) {
+
+            if($user->role_id >= 5)
+            {
+                return true;
+            }
+
+            return false;
+        });
 
 
     }

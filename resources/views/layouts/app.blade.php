@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     @include('layouts.header')
@@ -7,24 +7,24 @@
 
 <body>
 
-    @include('layouts.navbar') @include('layouts.sidebar')
+@include('layouts.navbar') @include('layouts.sidebar')
 
-    <div class="main-container">
+<div class="main-container">
 
-        <div class="pd-ltr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
+    <div class="pd-lr-20 customscroll customscroll-10-p height-100-p xs-pd-20-10">
 
-            @yield('content')
+        @yield('content')
 
-            @include('layouts.footer') 
-
-        </div>
+        @include('layouts.footer')
 
     </div>
 
+</div>
 
-    @include('layouts.script')
 
-    @yield('scripts')
+@include('layouts.script')
+
+@yield('scripts')
 
 </body>
 

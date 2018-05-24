@@ -55,6 +55,7 @@ $factory->define(App\Model\Student::class, function (Faker $faker) {
         'roll' => $faker->numberBetween(1,100),
         'admission_year' => $faker->year,
         'cell' => '01866803833',
+        'session' => $faker->year,
         'dob' => $faker->date('Y-m-d'),
         'photo' => 'demo.jpg',
     ];
