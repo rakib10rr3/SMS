@@ -6,13 +6,17 @@
 @endsection
 @section('content')
 
-    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-        <div class="clearfix">
-            <div align="center">
-                <h4 class="text-danger">Promotion</h4>
-            </div>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
         </div>
-    </div>
+    @endif
+
+    @if(isset($error_message))
+        <div class="alert alert-danger" role="alert">
+            {{$error_message}}
+        </div>
+    @endif
 
     @if($come==1)
 
@@ -34,7 +38,7 @@
                                     style="width: 100%; height: 38px;">
                                 <option value="">Select Class</option>
                                 @foreach ($classes as $class)
-                                    <option value="{{ $class->id }}">
+                                    <option value="{{ $class->id }}" {{ (isset($query))?($query["the_class_id"] == $class->id ? "selected":""):"" }}>
                                         {{ $class->name }}
                                     </option>
                                 @endforeach
@@ -49,7 +53,9 @@
                                     style="width: 100%; height: 38px;">
                                 <option value="">Select Shift</option>
                                 @foreach($shifts as $shift)
-                                    <option value="{{$shift->id}}">{{$shift->name}}</option>
+                                    <option value="{{$shift->id}}" {{ (isset($query))?($query["shift_id"] == $shift->id ? "selected":""):"" }}>
+                                        {{$shift->name}}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -66,7 +72,9 @@
                                     style="width: 100%; height: 38px;">
                                 <option value="">Select Section</option>
                                 @foreach($sections as $section)
-                                    <option value="{{$section->id}}">{{$section->name}}</option>
+                                    <option value="{{$section->id}}" {{ (isset($query))?($query["section_id"] == $section->id ? "selected":""):"" }}>
+                                        {{$section->name}}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -78,7 +86,9 @@
                             <select class="custom-select2 form-control" id="group_id" name="group_id"
                                     style="width: 100%; height: 38px;">
                                 @foreach($groups as $group)
-                                    <option value="{{$group->id}}">{{$group->name}}</option>
+                                    <option value="{{$group->id}}" {{ (isset($query))?($query["group_id"] == $group->id ? "selected":""):"" }}>
+                                        {{$group->name}}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -91,12 +101,17 @@
                     <div class="col-md-6">
                         <div class="form-group ">
                             <label class="col-sm-12 col-form-label">Current Session Year:</label>
-                            <input value="{{Carbon\Carbon::now()->year - 1}}" name="session" class="form-control"
+                            <input value="{{(isset($query))?$query["session"]:(Carbon\Carbon::now()->year - 1)}}"
+                                   name="session" class="form-control"
                                    type="number"
                                    min="2000" max="2099" step="1" required/>
                         </div>
                     </div>
 
+                </div>
+
+                <div>
+                    {{old('session')}}
                 </div>
 
                 <div class="row">
@@ -292,11 +307,14 @@
                                     <td>{{ $student->name }}</td>
                                     <td>{{ $student->meritLists->first()->grade->name }}</td>
                                     <td>
-                                        {{--<input type="checkbox" name="{{$student->id}}" id="attend{{$student->id}}">--}}
                                         <div class="custom-control custom-checkbox mb-5">
+                                            <input type="hidden" class="custom-control-input"
+                                                   name="student[{{$student->id}}]" value="no">
+
                                             <input type="checkbox" class="custom-control-input"
-                                                   name="student[{{$student->id}}]"
+                                                   name="student[{{$student->id}}]" value="yes"
                                                    id="{{$student->id}}" {{ ($student->meritLists->first()->grade->name == 'F')?"":"checked" }}>
+
                                             <label class="custom-control-label"
                                                    for="{{$student->id}}">Promote</label>
                                         </div>
