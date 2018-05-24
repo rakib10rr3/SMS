@@ -46,15 +46,35 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:50',
-            'current_address' => 'required|max:50',
-            'permanent_address' => 'required|max:50',
+        $rules = [
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'current_address' => 'required|max:200',
+            'permanent_address' =>  'required|max:200',
             'dob' => 'required',
             'national_id' => 'required|max:20',
-            'nationality' => 'required',
-            'cell' => 'required|max:11',
-        ]);
+            'nationality' =>  'required',
+            'cell' => 'required|digits:11',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
+            'gender_id' => 'required',
+        ];
+
+        $customMessages = [
+            'name.required' => 'Name is required',
+            'name.regex' => 'Name must contain only letters and whitespace',
+            'dob.required' => 'Date of Birth is required',
+            'religion_id.required' => "Religion is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'current_address.required' => "Current Address field is required",
+            'current_address.max' => "Current Address should be less than 200 characters",
+            'permanent_address.required' => "Permanent Address field is required",
+            'permanent_address.max' => "Permanent Address should be less than 200 characters",
+
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $name = request('name');
 
@@ -167,7 +187,36 @@ class StaffController extends Controller
      */
     public function update(Request $request, Staff $staff)
     {
-        //Teacher::query()->create($request->all());
+
+        $rules = [
+            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'current_address' => 'required|max:200',
+            'permanent_address' =>  'required|max:200',
+            'dob' => 'required',
+            'national_id' => 'required|max:20',
+            'nationality' =>  'required',
+            'cell' => 'required|digits:11',
+            'religion_id' => 'required',
+            'blood_group_id' => 'required',
+            'gender_id' => 'required',
+        ];
+
+        $customMessages = [
+            'name.required' => 'Name is required',
+            'name.regex' => 'Name must contain only letters and whitespace',
+            'dob.required' => 'Date of Birth is required',
+            'religion_id.required' => "Religion is required",
+            'blood_group_id.required' => "Blood Group field is required",
+            'gender_id.required' => "Gender field is required",
+            'nationality.required' => "Nationality field is required",
+            'current_address.required' => "Current Address field is required",
+            'current_address.max' => "Current Address should be less than 200 characters",
+            'permanent_address.required' => "Permanent Address field is required",
+            'permanent_address.max' => "Permanent Address should be less than 200 characters",
+
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $user_name = request('name');
 
@@ -231,6 +280,8 @@ class StaffController extends Controller
     public function destroy(Staff $staff)
     {
         $staff->delete();
+        User::query()->where('id',$staff->user_id)->delete();
+
         return redirect()->route('staff.index');
     }
 }

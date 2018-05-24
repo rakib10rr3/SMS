@@ -50,8 +50,8 @@ class TeacherController extends Controller
 
         $rules = [
             'name' => 'required|regex:/[a-zA-Z\s]+/',
-            'current_address' => 'required|max:50',
-            'permanent_address' =>  'required|max:50',
+            'current_address' => 'required|max:200',
+            'permanent_address' =>  'required|max:200',
             'dob' => 'required',
             'national_id' => 'required|max:20',
             'nationality' =>  'required',
@@ -70,7 +70,9 @@ class TeacherController extends Controller
             'gender_id.required' => "Gender field is required",
             'nationality.required' => "Nationality field is required",
             'current_address.required' => "Current Address field is required",
+            'current_address.max' => "Current Address should be less than 200 characters",
             'permanent_address.required' => "Permanent Address field is required",
+            'permanent_address.max' => "Permanent Address should be less than 200 characters",
         ];
 
         $this->validate($request, $rules, $customMessages);
@@ -192,8 +194,8 @@ class TeacherController extends Controller
         //Teacher::query()->create($request->all());
         $rules = [
             'name' => 'required|regex:/[a-zA-Z\s]+/',
-            'current_address' => 'required|max:50',
-            'permanent_address' =>  'required|max:50',
+            'current_address' => 'required|max:200',
+            'permanent_address' =>  'required|max:200',
             'dob' => 'required',
             'national_id' => 'required|max:20',
             'nationality' =>  'required',
@@ -212,7 +214,10 @@ class TeacherController extends Controller
             'gender_id.required' => "Gender field is required",
             'nationality.required' => "Nationality field is required",
             'current_address.required' => "Current Address field is required",
+            'current_address.max' => "Current Address should be less than 200 characters",
             'permanent_address.required' => "Permanent Address field is required",
+            'permanent_address.max' => "Permanent Address should be less than 200 characters",
+
         ];
 
         $this->validate($request, $rules, $customMessages);
@@ -275,6 +280,7 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
+        User::query()->where('id',$teacher->user_id)->delete();
         return redirect('/teachers');
     }
 }
