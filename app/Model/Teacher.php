@@ -3,7 +3,6 @@
 namespace App\Model;
 use App\User;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model

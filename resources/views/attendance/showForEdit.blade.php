@@ -32,12 +32,14 @@
                         <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
                     @endforeach
                 </div>
+
                 <div class="col-md-2">
-                    <strong>Subject:</strong>
-                    @foreach($subject_name as $subject_name)
-                        <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
-                    @endforeach
+                    <strong>Date:</strong>
+                        <p>{{$date_string}}</p>
+
                 </div>
+
+
             </div>
             {{--@foreach($attended_students as $attended_student )--}}
                 {{--{{ $attended_student->student_id }}--}}
@@ -80,7 +82,6 @@
                 </table>
             </div>
             <div class="row">
-                <label class="col-sm-12 col-md-2 col-form-label"></label>
                 <div class="col-sm-12 col-md-10">
                     <button class="btn btn-success" type="submit" value="Add">Save</button>
                 </div>

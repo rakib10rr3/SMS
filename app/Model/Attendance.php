@@ -22,10 +22,6 @@ class Attendance extends Model
         return $this->belongsTo(TheClass::class);
     }
 
-    public function subjects()
-    {
-        return $this->belongsTo(Subject::class);
-    }
 
     public function students()
     {

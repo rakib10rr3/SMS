@@ -21,66 +21,59 @@
             </div>
         </div>
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form method="post" action="{{ route('attendance.create') }}">
             @csrf
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="col-sm-12 col-md-2 col-form-label">Class:</label>
                         <select id="theclass" class="custom-select2 form-control" name="the_class_id"
                                 style="width: 100%; height: 38px;">
                             <option value="">Select Class</option>
                             @foreach ($classes as $class)
-                                <option value="{{ $class->id }}">
+                                <option value="{{ $class->id }}" {{(old('the_class_id') == $class->id?'selected':'')}}>
                                     {{ $class->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="col-sm-12 col-md-2 col-form-label">Shift:</label>
                         <select class="custom-select2 form-control" id="shift_id" name="shift_id">
                             <option value="">Select Shift</option>
                             @foreach($shifts as $shift)
-                                <option value="{{$shift->id}}">{{$shift->name}}</option>
+                                <option value="{{$shift->id}}" {{(old('shift_id') == $shift->id?'selected':'')}}>{{$shift->name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="col-sm-12 col-md-2 col-form-label">Section:</label>
                         <select class="custom-select2 form-control" id="section_id" name="section_id">
                             <option value="">Select Section</option>
                             @foreach($sections as $section)
-                                <option value="{{$section->id}}">{{$section->name}}</option>
+                                <option value="{{$section->id}}" {{(old('section_id') == $section->id?'selected':'')}}>{{$section->name}}</option>
                             @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="col-sm-12 col-md-2 col-form-label">Subjects:</label>
-                        <select id="subject" class="custom-select2 form-control" name="subject_id"
-                                style="width: 100%; height: 38px;">
-
-                            @foreach ($subjects as $subject)
-                                <option value="{{ $subject->id }}">
-                                    {{ $subject->name }}
-                                </option>
-                            @endforeach
-
                         </select>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <label class="col-sm-12 col-md-2 col-form-label"></label>
                 <div class="col-sm-12 col-md-10">
                     <button class="btn btn-success" type="submit" value="Add">Select</button>
                 </div>

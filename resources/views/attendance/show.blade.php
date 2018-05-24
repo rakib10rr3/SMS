@@ -30,12 +30,7 @@
                     <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
                 @endforeach
             </div>
-            <div class="col-md-2">
-                <strong>Subject:</strong>
-                @foreach($subject_name as $subject_name)
-                    <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
-                @endforeach
-            </div>
+
         </div>
         {{--@foreach($attended_students as $attended_student )--}}
         {{--{{ $attended_student->student_id }}--}}
@@ -44,7 +39,7 @@
             <div class="col-md-2">
                 {{--<input type="text" value="{{$date}}" name="date">--}}
                 <strong>Date:</strong>
-                <p>{{$date}}</p>
+                <p>{{$date_string}}</p>
             </div>
             <div class="col-md-2">
                 {{--<input type="text" value="{{$date}}" name="date">--}}

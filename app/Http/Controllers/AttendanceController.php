@@ -31,17 +31,30 @@ class AttendanceController extends Controller
      */
     public function create(Request $request)
     {
-        //
+
+        $rules = [
+            'the_class_id' => 'required',
+            'shift_id' => 'required',
+            'section_id' => 'required',
+        ];
+
+        $customMessages = [
+            'the_class_id.required' => 'Select a class',
+            'shift_id.required' => 'Select a shift',
+            'section_id.required' => 'Select a section',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
+
         $class_id = $request->get('the_class_id');
         $class_name = TheClass::where('id', '=', $class_id)->get();
         $shift_id = $request->get('shift_id');
         $shift_name = Shift::where('id', '=', $shift_id)->get();
         $section_id = $request->get('section_id');
         $section_name = Section::where('id', '=', $section_id)->get();
-        $subject_id = $request->get('subject_id');
-        $subject_name = Subject::where('id', '=', $subject_id)->get();
         $students = Student::where('the_class_id', $class_id)->where('shift_id', $shift_id)->where('section_id', $section_id)->get();
-        return view('attendance.create', compact('students', 'subject_name', 'section_name', 'shift_name', 'class_name'));
+        return view('attendance.create', compact('students', 'section_name', 'shift_name', 'class_name'));
 
     }
 
@@ -59,7 +72,6 @@ class AttendanceController extends Controller
         $class_id = $request->get('the_class_id');
         $shift_id = $request->get('shift_id');
         $section_id = $request->get('section_id');
-        $subject_id = $request->get('subject_id');
         $date_string = request('date');
         $carbon = new Carbon($date_string);
         $date = $carbon->format('Y-m-d');
@@ -80,10 +92,8 @@ class AttendanceController extends Controller
                         'the_class_id' => $class_id,
                         'shift_id' => $shift_id,
                         'section_id' => $section_id,
-                        'subject_id' => $subject_id,
                         'student_id' => $key,
                     ]);
-                    dd($result) ;
                 }
             }
         }
@@ -122,15 +132,29 @@ class AttendanceController extends Controller
      */
     public function show(Request $request)
     {
-        //
+
+        $rules = [
+            'the_class_id' => 'required',
+            'shift_id' => 'required',
+            'section_id' => 'required',
+            'date' => 'required',
+        ];
+
+        $customMessages = [
+            'the_class_id.required' => 'Select a class',
+            'shift_id.required' => 'Select a shift',
+            'section_id.required' => 'Select a section',
+            'date.required' => 'Select a Date',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
         $class_id = $request->get('the_class_id');
         $class_name = TheClass::where('id', '=', $class_id)->get();
         $shift_id = $request->get('shift_id');
         $shift_name = Shift::where('id', '=', $shift_id)->get();
         $section_id = $request->get('section_id');
         $section_name = Section::where('id', '=', $section_id)->get();
-        $subject_id = $request->get('subject_id');
-        $subject_name = Subject::where('id', '=', $subject_id)->get();
         $dob = request('date');
         $date_string = $dob;
 //        $date = date_create_from_format('Y-m-d', $date_string);
@@ -143,7 +167,7 @@ class AttendanceController extends Controller
         foreach ($attended_students as $attended_student) {
             $attended_array[] = $attended_student->student_id;
         }
-        return view('attendance.show', compact('students', 'attended_students', 'subject_name', 'section_name', 'shift_name', 'class_name', 'attended_array', 'date'));
+        return view('attendance.show', compact('students', 'attended_students', 'section_name', 'shift_name', 'class_name', 'attended_array', 'date','date_string'));
         //return $request;
     }
 
@@ -176,7 +200,6 @@ class AttendanceController extends Controller
         $class_id = $request->get('the_class_id');
         $shift_id = $request->get('shift_id');
         $section_id = $request->get('section_id');
-        $subject_id = $request->get('subject_id');
         $dob = request('date');
         $date_string = $dob;
 //        $date = date_create_from_format('Y-m-d', $date_string);
@@ -197,7 +220,6 @@ class AttendanceController extends Controller
                         'the_class_id' => $class_id,
                         'shift_id' => $shift_id,
                         'section_id' => $section_id,
-                        'subject_id' => $subject_id,
                         'student_id' => $key,
                     ]);
                 }
@@ -234,14 +256,31 @@ class AttendanceController extends Controller
 
     public function showForEdit(Request $request)
     {
+
+        $rules = [
+            'the_class_id' => 'required',
+            'shift_id' => 'required',
+            'section_id' => 'required',
+            'date' => 'required',
+        ];
+
+        $customMessages = [
+            'the_class_id.required' => 'Select a class',
+            'shift_id.required' => 'Select a shift',
+            'section_id.required' => 'Select a section',
+            'date.required' => 'Select a date',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
+
+
         $class_id = $request->get('the_class_id');
         $class_name = TheClass::where('id', '=', $class_id)->get();
         $shift_id = $request->get('shift_id');
         $shift_name = Shift::where('id', '=', $shift_id)->get();
         $section_id = $request->get('section_id');
         $section_name = Section::where('id', '=', $section_id)->get();
-        $subject_id = $request->get('subject_id');
-        $subject_name = Subject::where('id', '=', $subject_id)->get();
         $dob = request('date');
         $date_string = $dob;
 //        $date = date_create_from_format('Y-m-d', $date_string);
@@ -254,7 +293,7 @@ class AttendanceController extends Controller
         foreach ($attended_students as $attended_student) {
             $attended_array[] = $attended_student->student_id;
         }
-        return view('attendance.showForEdit', compact('students', 'attended_students', 'subject_name', 'section_name', 'shift_name', 'class_name', 'attended_array', 'date'));
+        return view('attendance.showForEdit', compact('students', 'attended_students', 'section_name', 'shift_name', 'class_name', 'attended_array', 'date','date_string'));
         //return '1';
     }
 
