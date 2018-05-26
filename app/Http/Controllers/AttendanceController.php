@@ -27,6 +27,7 @@ class AttendanceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -67,7 +68,7 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
 
-        //dd($request);
+//        dd($request);
         $sms_to_absent = $request->get('sms_to_absent');
         $class_id = $request->get('the_class_id');
         $shift_id = $request->get('shift_id');
@@ -87,7 +88,7 @@ class AttendanceController extends Controller
                     // here key is the student id
                     array_push($absent_students, $key);
                 } else {
-                    $result=Attendance::firstOrCreate([
+                    $result = Attendance::firstOrCreate([
                         'date' => $date,
                         'the_class_id' => $class_id,
                         'shift_id' => $shift_id,

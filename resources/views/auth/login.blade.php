@@ -17,14 +17,20 @@
 
             <h3 class="text-center mb-30">Login</h3>
 
+            {{--@if ($errors->any())--}}
+                {{--<div class="alert alert-danger">--}}
+                    {{--<ul>--}}
+                        {{--@foreach ($errors->all() as $error)--}}
+                            {{--<li>{{ $error }}</li>--}}
+                        {{--@endforeach--}}
+                    {{--</ul>--}}
+                {{--</div>--}}
+            {{--@endif--}}
+
             <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <div class="input-group custom input-group-lg">
 
-                    {{--
-                    <label for="username" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>--}} {{--
-                    <input id="username" type="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" --}} {{--name="username"
-                        value="{{ old('username') }}" required autofocus>--}} {{----}}
                     <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" placeholder="Username"
                         value="{{ old('username') }}" required>
                     <div class="input-group-append custom">
@@ -47,10 +53,7 @@
                 </div>
 
                 <div class="input-group custom input-group-lg">
-                    {{--
-                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>--}} {{--
-                    <input id="password" type="password" --}} {{--class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
-                        required>--}}
+
                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Password" required>
                         
                     @if ($errors->has('password'))

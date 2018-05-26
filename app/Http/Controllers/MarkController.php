@@ -93,8 +93,8 @@ class MarkController extends Controller
             $groups = Group::all();
             $exam_terms = ExamTerm::all();
             $subjects = Subject::query()
-                ->where('the_class_id', $classes->first()->id)
-                ->where('group_id', $groups->first()->id)
+                ->where('the_class_id', $query['theclass'])
+                ->where('group_id', $query['group'])
                 ->get();
 
             $error_message = "Marks already added to this subject.";
