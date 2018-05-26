@@ -22,3 +22,7 @@ body {
     height: 3px;
     background: #eee;
 }
+
+.pd-lr-20 {
+    padding: 0 20px 0;
+}

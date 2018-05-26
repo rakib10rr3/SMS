@@ -232,12 +232,21 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="admission_year">Admission Year :</label>
                                 <input type="text" class="form-control date-picker" placeholder="Select Date" id="admission_year"
                                        name="admission_year" value="{{old('admission_year')}}" required/>
                             </div>
+                            <div class="form-group">
+                                <label for="session_year">Session :</label>
+                                <input type="number" class="form-control" placeholder="Select Date" id="session_year"
+                                    min="2000" max="2099"   name="session_year" value="{{Carbon\Carbon::now()->format('Y')}}" required/>
+                            </div>
                         </div>
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="extra_activity">Extra Curricular Activities (Optional)</label>

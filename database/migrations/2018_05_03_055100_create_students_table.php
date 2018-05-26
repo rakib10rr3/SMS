@@ -35,10 +35,12 @@ class CreateStudentsTable extends Migration
             $table->bigInteger('user_id')->unsigned()->index()->nullable(false);
             $table->integer('shift_id')->unsigned()->index();
             $table->year('admission_year');
+            $table->year('session');
             $table->integer('the_class_id')->unsigned()->index();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('group_id')->unsigned()->index();
             $table->string('cell',11)->nullable(true);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

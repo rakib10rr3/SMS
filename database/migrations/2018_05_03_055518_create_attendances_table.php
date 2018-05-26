@@ -18,7 +18,6 @@ class CreateAttendancesTable extends Migration
             $table->date('date');
             $table->bigInteger('student_id')->unsigned()->index()->nullable(false);
             $table->integer('the_class_id')->unsigned()->index();
-            $table->integer('subject_id')->unsigned()->index();
             $table->integer('section_id')->unsigned()->index();
             $table->integer('shift_id')->unsigned()->index();
             $table->timestamps();

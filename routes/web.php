@@ -78,7 +78,7 @@ Route::resource('roles', 'RoleController')
 Route::resource('teachers', 'TeacherController')
     ->middleware(['auth', 'can:teacher-crud']);
 Route::resource('staff', 'StaffController')
-    ->middleware(['auth', 'can:staff-crud']);
+    ->middleware(['auth', 'can:can:staff-crud']);
 
 
 Route::post('students/getStudentList', 'StudentController@getStudentList')->name('getStudentListFromStudentController')
@@ -100,9 +100,9 @@ Route::get('preference', 'PreferenceController@index')->name('preference.index')
 Route::put('preference', 'PreferenceController@update')->name('preference.update')
     ->middleware(['auth', 'can:preference-crud']);
 
-// todo -_-
-Route::resource('subjectAssigns', 'SubjectAssignController')
-    ->middleware(['auth']);
+
+//Route::resource('subjectAssigns', 'SubjectAssignController')
+//    ->middleware(['auth']);
 
 // todo -_-
 Route::resource('classAssigns', 'ClassAssignController')
@@ -153,8 +153,13 @@ Route::get('merit-list', 'MeritListController@index')->name('meritList.index')
     ->middleware(['auth', 'can:merit-list-crud']);
 Route::post('merit-list', 'MeritListController@show')->name('meritList.show')
     ->middleware(['auth', 'can:merit-list-crud']);
-Route::put('merit-list', 'MeritListController@update')->name('meritList.update')
-    ->middleware(['auth', 'can:merit-list-crud']);
+//Route::put('merit-list', 'MeritListController@update')->name('meritList.update')
+//    ->middleware(['auth', 'can:merit-list-crud']);
+
+//Route::get('merit-list/final', 'MeritListController@finalIndex')->name('meritList.final.index')
+//    ->middleware(['auth', 'can:merit-list-crud']);
+//Route::post('merit-list/final', 'MeritListController@finalShow')->name('meritList.final.show')
+//    ->middleware(['auth', 'can:merit-list-crud']);
 
 // todo: show_for_edit
 Route::post('attendances/edit', 'AttendanceController@showForEdit')->name('attendance.showForEdit')
@@ -170,9 +175,9 @@ Route::post('attendances/show', 'AttendanceController@show')->name('attendance.s
     ->middleware(['auth', 'can:attendance-crud']);
 
 
-Route::get('promotion/select', 'PromotionController@select')->name('promotion.select')
+Route::get('promotion', 'PromotionController@select')->name('promotion.select')
     ->middleware(['auth', 'can:promotion-crud']);
-Route::post('promotion/select', 'PromotionController@view')->name('promotion.view')
+Route::post('promotion', 'PromotionController@view')->name('promotion.view')
     ->middleware(['auth', 'can:promotion-crud']);
 Route::post('promotion/update', 'PromotionController@update')->name('promotion.update')
     ->middleware(['auth', 'can:promotion-crud']);

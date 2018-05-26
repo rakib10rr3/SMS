@@ -34,19 +34,13 @@
                         <p><input hidden name="section_id" value="{{ $section_name->id }}">{{ $section_name->name }}</p>
                     @endforeach
                 </div>
-                <div class="col-md-2">
-                    <strong>Subject:</strong>
-                    @foreach($subject_name as $subject_name)
-                        <p><input hidden name="subject_id" value="{{ $subject_name->id }}">{{ $subject_name->name }}</p>
-                    @endforeach
-                </div>
             </div>
 
             <div class="row">
-                <div class="form-group">
+                <div class="form-group col-md-2">
                     <label>Date :</label>
                     <input type="text" class="form-control date-picker" placeholder="Select Date" id="attendance_date"
-                           name="date">
+                           name="date" value="{{Carbon\Carbon::parse(\Carbon\Carbon::today())->format('d F Y')}}" required/>
                 </div>
             </div>
 
@@ -89,7 +83,6 @@
                 </table>
             </div>
             <div class="row">
-                <label class="col-sm-12 col-md-2 col-form-label"></label>
                 <div class="col-sm-12 col-md-10">
                     <button class="btn btn-success" type="submit" value="Add">Save</button>
                 </div>
@@ -100,21 +93,18 @@
 @section('scripts')
 
 
-    <script src="{{asset('src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
-    <script src="{{asset('src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
-    <script src="{{asset('src/plugins/datatables/media/js/responsive.bootstrap4.js')}}"></script>
+    <script src="/src/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/src/plugins/datatables/media/js/dataTables.bootstrap4.js"></script>
+    <script src="/src/plugins/datatables/media/js/dataTables.responsive.js"></script>
+    <script src="/src/plugins/datatables/media/js/responsive.bootstrap4.js"></script>
     <!-- buttons for Export datatable -->
-    <script src="src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
-    <script src="src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
-    <script src="src/plugins/datatables/media/js/button/buttons.print.js"></script>
-    <script src="src/plugins/datatables/media/js/button/buttons.html5.js"></script>
-    <script src="src/plugins/datatables/media/js/button/buttons.flash.js"></script>
-    <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
-    <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
-
-
-
+    <script src="/src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
+    <script src="/src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
+    <script src="/src/plugins/datatables/media/js/button/buttons.print.js"></script>
+    <script src="/src/plugins/datatables/media/js/button/buttons.html5.js"></script>
+    <script src="/src/plugins/datatables/media/js/button/buttons.flash.js"></script>
+    <script src="/src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
+    <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
 
     <script>
         $('document').ready(function () {
