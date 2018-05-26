@@ -55,7 +55,6 @@
                         </div>
                     </div>
 
-
                     <div class="col">
                         <div class="form-group">
                             <label>Shift:</label>
@@ -67,6 +66,14 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Session :</label>
+                            <input type="number" class="form-control" placeholder="Select Session Year" id="session_year"
+                                   min="2000" max="2099"   name="session_year" value="{{Carbon\Carbon::now()->format('Y')}}" required/>
                         </div>
                     </div>
 
@@ -91,6 +98,7 @@
                     <th>Father's Name</th>
                     <th>Mother's Name</th>
                     <th>Local Guardian's Cell</th>
+                    <th>Status</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
@@ -103,6 +111,8 @@
                             <td>{{$student->name}}</td>
                             <td>{{$student->theClass->name}}</td>
                             <td>{{$student->section->name}}</td>
+                            <td>{{$student->is_active}}</td>
+                            </td>
                             <td>{{$student->group->name}}</td>
                             
                             <td><img src="/images/{{$student->user_id}}/{{$student->photo}}" class="img-responsive" alt="Student Photo"></td>
@@ -207,11 +217,13 @@
                 var section_id = {"section": $('#section_id option:selected').val()};
                 var group_id = {"group": $('#group_id option:selected').val()};
                 var shift_id = {"shift": $('#shift_id option:selected').val()};
+                var session = {"session": $("#session_year").val()};
 
                 console.log(the_class_id);
                 console.log(section_id);
                 console.log(group_id);
                 console.log(shift_id);
+                console.log(session);
 
 
                 $.ajax({
@@ -222,9 +234,14 @@
                         the_class_id: the_class_id,
                         section_id: section_id,
                         group_id: group_id,
-                        shift_id: shift_id
+                        shift_id: shift_id,
+                        session_year: session,
                     },
                     success: function (data) {
+                        var opening;
+                        var activeStatus;
+                        var ending;
+
                         var table = $('#students_table').DataTable();
                         if ($.isEmptyObject(data.error)) {
                             console.log(data);
@@ -232,12 +249,23 @@
                             //enable button and states
                             enable();
                             $.each(data, function (index, element) {
+
+                                if (element.is_active == 1){
+                                    opening = '<p id=\"active\" class=\"badge badge-success\">';
+                                    activeStatus = "Active";
+                                } else {
+                                    opening = '<p id=\"active\" class=\"badge badge-danger\">';
+                                    activeStatus = "Inactive";
+
+                                }
+
                                 table.row.add([
                                     element.roll,
                                     element.name,
                                     element.father_name,
                                     element.mother_name,
                                     element.local_guardian_cell,
+                                    opening + activeStatus +'</p>',
                                     '<div class="dropdown">\n' +
                                     '                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"\n' +
                                     '                                       data-toggle="dropdown">\n' +

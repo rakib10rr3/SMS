@@ -87,6 +87,7 @@ class StudentController extends Controller
             'section_id' => 'required',
             'group_id' => 'required',
             'admission_year' => 'required',
+            'session_year' => 'required|integer|between:2000,2099|digits:4'
 
 
         ];
@@ -121,6 +122,8 @@ class StudentController extends Controller
             'section_id.required' => "Section field is required",
             'group_id.required' => "Group field is required",
             'admission_year.required' => "Admission Year field is required",
+            'session_year.between' => 'Session must be between year 2000 and 2099',
+            'session_year.digits' => 'Session year must be of 4 digits'
 
         ];
 
@@ -301,6 +304,8 @@ class StudentController extends Controller
             'section_id' => 'required',
             'group_id' => 'required',
             'admission_year' => 'required',
+            'session_year' => 'required|integer|between:2000,2099|digits:4'
+
         ];
 
         $customMessages = [
@@ -333,6 +338,8 @@ class StudentController extends Controller
             'section_id.required' => "Section field is required",
             'group_id.required' => "Group field is required",
             'admission_year.required' => "Admission Year field is required",
+            'session_year.between' => 'Session must be between year 2000 and 2099',
+            'session_year.digits' => 'Session year must be of 4 digits'
 
         ];
 
@@ -379,6 +386,9 @@ class StudentController extends Controller
             'section_id' => $request->section_id,
             'group_id' => $request->group_id,
             'cell' => $request->cell,
+            'session' => $request->session_year,
+            'is_active' => $request->status,
+
 
         ]);
         // return $request->all();
@@ -401,12 +411,19 @@ class StudentController extends Controller
 
     public function getStudentList(Request $request)
     {
-        $students = Student::query()->where('the_class_id', '=', $request->the_class_id)
+
+        $students = Student::query()
+            ->where('the_class_id', '=', $request->the_class_id)
             ->where('group_id', '=', $request->group_id)
             ->where('section_id', '=', $request->section_id)
             ->where('shift_id', '=', $request->shift_id)
+            ->where('session', '=', $request->session_year)
             ->orderBy('roll')
             ->get();
         return $students;
+    }
+
+    public function changeStatus($id){
+
     }
 }

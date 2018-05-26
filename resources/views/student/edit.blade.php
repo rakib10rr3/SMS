@@ -187,6 +187,13 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label>Status :</label>
+                                <select name="status" class="custom-select form-control">
+                                    <option value="1" {{"1" == $student->is_active ? 'selected':''}}>Active</option>
+                                    <option value="0" {{"0" == $student->is_active ? 'selected':''}}>Inactive</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -210,6 +217,11 @@
                                 <input type="text" class="form-control date-picker" placeholder="Select Date"
                                        id="admission_year"
                                        name="admission_year" value="{{ Carbon\Carbon::parse($student->admission_year)->format('d F Y')}}" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="session_year">Session :</label>
+                                <input type="number" class="form-control" placeholder="Select Date" id="session_year"
+                                       min="2000" max="2099"   name="session_year" value="{{$student->session}}" required/>
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{{$student->id}}">
