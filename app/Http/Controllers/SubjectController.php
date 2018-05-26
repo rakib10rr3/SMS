@@ -19,8 +19,9 @@ class SubjectController extends Controller
     public function index()
     {
         $classes = TheClass::all();
-        $subjects = Subject::all();
-        return view('subject.index', compact('subjects', 'classes'));
+        //$subjects = Subject::all();
+
+        return view('subject.index', compact( 'classes'));
     }
 
     /**
@@ -218,8 +219,9 @@ class SubjectController extends Controller
 
     public function apiGetSubjectByClass($class)
     {
-        $subjects = TheClass::query()->find($class)->subjects;
+        $subjects = Subject::where('the_class_id',$class)->get();
         return $subjects;
+
     }
 
     public function apiGetSubjectByClassAndGroup($class, $group)

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Teacher;
+use App\Model\Teacher;
 use Illuminate\Database\Eloquent\Model;
 
 class ClassAssign extends Model

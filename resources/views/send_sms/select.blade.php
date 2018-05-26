@@ -10,6 +10,9 @@
 
     <div class="min-height-200px">
 
+        @if(Session::has('message'))
+            <p class="alert alert-info">{{ Session::get('message') }}</p>
+        @endif
 
         <div class="col">
             <div class="pd-20 bg-white border-radius-4 box-shadow">
@@ -116,6 +119,11 @@
                                                 <select class="form-control" id="subject"
                                                         name="subject_id">
                                                     <option selected value="">All</option>
+                                                    @foreach ($subjects as $subject)
+                                                        <option value="{{ $subject->id }}">
+                                                            {{ $subject->name }}
+                                                        </option>
+                                                    @endforeach
 
                                                 </select>
                                             </div>
@@ -186,7 +194,8 @@
                             <div class="pd-20">
                                 <form action="{{route('sendSms.balance')}}" method="get" id="check_balance">
                                     @csrf
-                                    <button type="submit" name="submit" class="btn btn-outline-success">Check Balance
+                                    <button id="check_balance" type="submit" name="submit"
+                                            class="btn btn-outline-success">Check Balance
                                     </button>
                                 </form>
                             </div>
@@ -222,30 +231,26 @@
         <!-- success Popup html End -->
     </div>
 
+@endsection
 
 
 
-
-
-
-    <!-- Form wizard Js  -->
+<!-- Form wizard Js  -->
 @section('scripts')
-
-
-
-
 
     <script type="text/javascript">
 
         $(document).ready(function ($) {
 
             $('#sms_result').hide();
-            $('#theclass').change(function () {
-                $class_id = $(this).val();
 
+            $('#theclass').change(function () {
+
+                $class_id = $(this).val();
                 $.get("/api/subjects/" + $class_id,
 
                     function (data) {
+
                         var subject = $('#subject');
                         subject.empty();
                         subject.append("<option value=''>All</option>");
@@ -257,16 +262,22 @@
 
             $("#check_balance").on("submit", function (e) {
                 e.preventDefault();
+                $button = $(this);
+                $button.html("Wait...").prop('disabled', true).removeClass('btn btn-outline-success').addClass('btn btn-outline-warning');
+
                 $.ajax({
                     type: "GET",
                     url: "{{route('sendSms.balance')}}",
                     success: function (data) {
                         console.log(data);
                         $("#sms_result").text(data).show();
+                        $button.html("Check Balance").prop('disabled', false).removeClass('btn btn-outline-warning').addClass('btn btn-outline-success');
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                     }
                 });
+
+
             });
 
 
@@ -276,5 +287,3 @@
 
 @endsection
 
-
-@endsection

@@ -49,6 +49,7 @@ Route::post('/subjects/optional/edit/list', 'OptionalAssignController@getStudent
 //Route::post('/roll-generator/auto/list', 'RollController@getAutoRollList')->name('autoRollList')
 //    ->middleware(['auth']);
 
+
 // TODO check it
 Route::post('/getSubjects', 'SubjectController@getSubject')
     ->middleware(['auth']);
@@ -87,10 +88,9 @@ Route::resource('students', 'StudentController')
 
 
 Route::resource('subjects', 'SubjectController')
-    ->middleware(['auth', 'subject-crud']);
+    ->middleware(['auth', 'can:subject-crud']);
 // todo: api just need login
-Route::get('api/subjects/{class}', 'SubjectController@apiGetSubject')
-    ->middleware(['auth']);
+Route::get('api/subjects/{class}', 'SubjectController@apiGetSubjectByClass')->middleware(['auth']);
 Route::get('api/subjects/{class}/{group}', 'SubjectController@apiGetSubjectByClassAndGroup')
     ->middleware(['auth']);
 

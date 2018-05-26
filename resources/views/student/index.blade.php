@@ -9,6 +9,7 @@
 @section('content')
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
         <div class="form-group pd-20 bg-white border-radius-4 box-shadow mb-30">
             <form>
                 @csrf

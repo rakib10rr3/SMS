@@ -117,9 +117,9 @@
         {{--</div>--}}
         {{--</div>--}}
         {{--</div>--}}
-
-
     </div>
+
+
     <div class="bg-white pd-20 box-shadow border-radius-5 mb-30">
         <h4 class="mb-30">Area Spline Chart</h4>
         <div class="row">
@@ -127,38 +127,44 @@
                 <div id="areaspline-chart" style="min-width: 210px; height: 400px; margin: 0 auto"></div>
             </div>
             <div class="col-sm-12 col-md-4 col-lg-3">
-                <h5 class="mb-30 weight-500">Top Campaign Performance</h5>
+                <h5 class="mb-30 weight-500">Test Data</h5>
+
                 <div class="mb-30">
-                    <p class="mb-5 font-18">John Campaign</p>
+                    <p class="mb-5 font-18"> Test Data 1</p>
                     <div class="progress border-radius-0" style="height: 10px;">
                         <div class="progress-bar bg-orange" role="progressbar" style="width: 40%;" aria-valuenow="25"
                              aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
                 <div class="mb-30">
-                    <p class="mb-5 font-18">Jane Campaign</p>
+                    <p class="mb-5 font-18">Test Data 2</p>
                     <div class="progress border-radius-0" style="height: 10px;">
                         <div class="progress-bar bg-light-orange" role="progressbar" style="width: 50%;"
                              aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
                 <div class="mb-30">
-                    <p class="mb-5 font-18">Johnny Campaign</p>
+                    <p class="mb-5 font-18">Test Data 3</p>
                     <div class="progress border-radius-0" style="height: 10px;">
                         <div class="progress-bar bg-light-purple" role="progressbar" style="width: 70%;"
                              aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
                 <div class="mb-30 font-18">
-                    <p class="mb-5">Daniel Campaign</p>
+                    <p class="mb-5">Test Data 4</p>
                     <div class="progress border-radius-0" style="height: 10px;">
                         <div class="progress-bar bg-light-green" role="progressbar" style="width: 80%;"
                              aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
+
             </div>
+
         </div>
     </div>
+
+
+
     <div class="row clearfix">
         <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 mb-30">
             <div class="bg-white pd-20 box-shadow border-radius-5 height-100-p">
@@ -287,7 +293,8 @@
 
                             <li>
                                 <a href="#">
-                                    <h3 class="clearfix">{{ $notice->user->name }} <span>{{ $notice->created_at }}</span> </h3>
+                                    <h3 class="clearfix">{{ $notice->user->name }}
+                                        <span>{{ $notice->created_at->diffForHumans() }}</span></h3>
                                     <p>{{$notice->message  }}</p>
                                 </a>
                             </li>

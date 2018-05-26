@@ -24,7 +24,7 @@
                 <form method="post" action="/exam-terms">
                     {{ csrf_field() }}
                     <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Text</label>
+                        <label class="col-sm-12 col-md-2 col-form-label">Term Name </label>
                         <div class="col-sm-12 col-md-10">
                             <input class="form-control" type="text" placeholder="" name="name" required>
                         </div>
@@ -96,9 +96,6 @@
 
 
     <!-- Medium modal -->
-    <div class="col-md-4 col-sm-12">
-        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-
 
             <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
                  aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -127,9 +124,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
 
 
 @endsection

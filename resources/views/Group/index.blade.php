@@ -70,12 +70,14 @@
 
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30" id="mytable">
+
         <div class="clearfix mb-20">
             <div class="pull-left">
                 <h5 class="text-blue">Groups Information</h5>
 
             </div>
         </div>
+
         <div class="row">
             <table class="data-table stripe hover nowrap">
                 <thead>
@@ -120,9 +122,6 @@
 
 
         <!-- Medium modal -->
-        <div class="col-md-4 col-sm-12">
-            <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-
 
                 <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
                      aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -151,8 +150,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+
 
 
 
@@ -178,6 +176,8 @@
 
     <script>
         $('document').ready(function () {
+
+
             $('.data-table').DataTable({
                 scrollCollapse: true,
                 autoWidth: false,
@@ -230,7 +230,7 @@
     <script>
         $(document).on('click', '.ts-delete', function (e) {
             e.preventDefault();
-            var id = $(this).data('id');
+            id = $(this).data('id');
             swal({
                 title: "Are you sure!",
                 type: "error",
@@ -248,6 +248,7 @@
                                 _method: "DELETE"
                             },
                             success: function (data) {
+                                console.log(data);
                                 swal("Poof! Your imaginary file has been deleted!", {
                                     icon: "success",
                                 }).then(() => {
@@ -278,6 +279,7 @@
 
             $("#updategroup").on("submit", function (e) {
                 e.preventDefault();
+
                 $.ajax({
                     type: "POST",
                     url: "/groups/" + id,
