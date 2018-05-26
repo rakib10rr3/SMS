@@ -239,6 +239,7 @@
                         session_year: session,
                     },
                     success: function (data) {
+                        console.log(data);
                         var opening;
                         var activeStatus;
                         var ending;

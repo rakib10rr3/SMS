@@ -78,11 +78,12 @@ Route::resource('roles', 'RoleController')
 Route::resource('teachers', 'TeacherController')
     ->middleware(['auth', 'can:teacher-crud']);
 Route::resource('staff', 'StaffController')
-    ->middleware(['auth', 'can:can:staff-crud']);
+    ->middleware(['auth', 'can:staff-crud']);
 
 
 Route::post('students/getStudentList', 'StudentController@getStudentList')->name('getStudentListFromStudentController')
     ->middleware(['auth', 'can:student-crud']);
+
 Route::resource('students', 'StudentController')
     ->middleware(['auth', 'can:student-crud']);
 
