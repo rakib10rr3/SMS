@@ -178,6 +178,16 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('roll-generator-crud', function ($user) {
+
+            if($user->role_id >= 3)
+            {
+                return true;
+            }
+
+            return false;
+        });
+
         Gate::define('religion-crud', function ($user) {
 
             if($user->role_id >= 5)

@@ -93,7 +93,9 @@ class PromotionController extends Controller
          */
         $students = Student::with(array(
             'meritLists' => function ($query) use ($session) {
-                $query->where('session', $session)->with('grade')->get();
+                $query->where('session', $session)
+                    ->where('exam_term_id', 3)
+                    ->with('grade')->get();
             }
         ))
             ->where('the_class_id', $class_id)
@@ -107,7 +109,8 @@ class PromotionController extends Controller
 
     public function update(Request $request)
     {
-//        return $request;
+//        return $request->all();
+//        dd($request->get('to_inactive'));
 
         $new_class_id = $request->get('the_class_id');
         $new_section_id = $request->get('section_id');
@@ -115,19 +118,29 @@ class PromotionController extends Controller
         $group_id = $request->get('group_id');
         $students = $request->get('student');
         $session = $request->get('session');
+        $to_inactive = $request->get('to_inactive');
 
 
         foreach ($students as $key => $value) {
             if ($value == "yes") {
-                Student::query()
-                    ->where('id', $key)
-                    ->update([
-                        'the_class_id' => $new_class_id,
-                        'section_id' => $new_section_id,
-                        'shift_id' => $new_shift_id,
-                        'group_id' => $group_id,
-                        'session' => $session,
-                    ]);
+                if (empty($to_inactive)) {
+                    Student::query()
+                        ->where('id', $key)
+                        ->update([
+                            'the_class_id' => $new_class_id,
+                            'section_id' => $new_section_id,
+                            'shift_id' => $new_shift_id,
+                            'group_id' => $group_id,
+                            'session' => $session,
+                        ]);
+                } else {
+                    Student::query()
+                        ->where('id', $key)
+                        ->update([
+                            'is_active' => false,
+                        ]);
+                }
+
             } else {
                 Student::query()
                     ->where('id', $key)

@@ -119,11 +119,25 @@
                         </a>
                     </li>
 
+
+                @endcan
+
+                {{-- ===================================================== --}}
+
+                @can('roll-generator-crud')
+
+                    <li class="dropdown">
+                        <a href="{{route('rollGenerator.index')}}" class="dropdown-toggle no-arrow">
+                            <span class="fa fa-clone"></span><span class="mtext">Roll Generator</span>
+                        </a>
+                    </li>
+
                     {{-- ===================================================== --}}
 
                     <li class="ts-sidebar-divider"></li>
 
                 @endcan
+
 
                 {{-- ===================================================== --}}
 
@@ -177,6 +191,14 @@
 
                 {{-- ===================================================== --}}
 
+                <li class="dropdown">
+                    <a href="{{route('recovery.password.index')}}" class="dropdown-toggle no-arrow">
+                        <span class="fa fa-clone"></span><span class="mtext">Reset Users Password</span>
+                    </a>
+                </li>
+
+                {{-- ===================================================== --}}
+
                 @can('preference-crud')
 
                     <li class="dropdown">
@@ -186,6 +208,7 @@
                     </li>
 
                 @endcan
+
 
                 {{-- ===================================================== --}}
 

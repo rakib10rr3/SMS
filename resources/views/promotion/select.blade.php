@@ -3,6 +3,8 @@
     <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
+
+    <link rel="stylesheet" type="text/css" href="/src/plugins/switchery/dist/switchery.css">
 @endsection
 @section('content')
 
@@ -18,13 +20,24 @@
         </div>
     @endif
 
+
+    <div class="alert alert-success" role="alert">
+
+        <h4 class="alert-heading">Help</h4>
+        <ol>
+            <li>Fill <strong>"Promote From"</strong> fields and click <span class="badge badge-success">Select</span>. Then fill <strong>"Promote To"</strong> fields and click <span class="badge badge-success">Promote</span> to promote Students.</li>
+            <li>For SSC Passed student enter the Session and check <strong>"Make Inactive"</strong> from <strong>"Promote To"</strong>.</li>
+        </ol>
+
+    </div>
+
     @if($come==1)
 
         <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
             <div class="clearfix">
                 <div class="pull-left">
-                    <h4 class="text-blue">Promotion From</h4>
+                    <h4 class="text-blue">Promote From</h4>
                 </div>
             </div>
             <form method="post" action="{{ route('promotion.view') }}">
@@ -130,157 +143,178 @@
         <form method="post" action="{{ route('promotion.update') }}">
             @csrf
 
-            <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-                <div class="row">
-                    <div class="col-md">
+            {{--<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">--}}
+            <div class="row  pd-20">
+                <div class="col-md pd-20 bg-white border-radius-4 box-shadow mb-30">
 
-                        <div class="clearfix">
-                            <div class="pull-left">
-                                <h4 class="text-blue">Promotion From</h4>
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue">Promote From</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label class="col-sm-12 col-md-2 col-form-label">Class:</label>
+                                <select id="theclass" class="custom-select2 form-control" name="the_class_id"
+                                        style="width: 100%; height: 38px;" disabled>
+                                    <option value="{{ $class->id }}">
+                                        {{ $class->name }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Class:</label>
-                                    <select id="theclass" class="custom-select2 form-control" name="the_class_id"
-                                            style="width: 100%; height: 38px;" disabled>
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label class="col-sm-12 col-md-2 col-form-label">Shift:</label>
+                                <select class="custom-select2 form-control" id="shift_id" name="shift_id"
+                                        style="width: 100%; height: 38px;" disabled>
+                                    <option value="{{$shift->id}}">{{$shift->name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label class="col-sm-12 col-md-2 col-form-label">Section:</label>
+                                <select class="custom-select2 form-control" id="section_id" name="section_id"
+                                        style="width: 100%; height: 38px;" disabled>
+                                    <option value="{{$section->id}}">{{$section->name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="form-group ">
+                                <label class="col-sm-12 col-md-2 col-form-label">Group:</label>
+                                <select class="custom-select2 form-control" id="group_id" name="group_id"
+                                        style="width: 100%; height: 38px;" disabled>
+                                    <option value="{{$group->id}}">{{$group->name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="col-sm-12 col-form-label">Current Session Year:</label>
+                                <input value="{{$session}}" name="session" class="form-control" type="number"
+                                       min="2000" max="2099"
+                                       step="1" style="width: 100%; height: 38px;" disabled/>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                {{-- ================================================= --}}
+                <div class="col-md ml-4 pd-20 bg-white border-radius-4 box-shadow mb-30" id="promote_to">
+
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue">Promote To</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-12 col-md-2 col-form-label">Class:</label>
+                                <select id="theclass" class="custom-select2 form-control" name="the_class_id"
+                                        style="width: 100%; height: 38px;">
+                                    <option value="">Select Class</option>
+                                    @foreach ($classes as $class)
                                         <option value="{{ $class->id }}">
                                             {{ $class->name }}
                                         </option>
-                                    </select>
-                                </div>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Shift:</label>
-                                    <select class="custom-select2 form-control" id="shift_id" name="shift_id"
-                                            style="width: 100%; height: 38px;" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-12 col-md-2 col-form-label">Shift:</label>
+                                <select class="custom-select2 form-control" id="shift_id" name="shift_id"
+                                        style="width: 100%; height: 38px;">
+                                    <option value="">Select Shift</option>
+                                    @foreach($shifts as $shift)
                                         <option value="{{$shift->id}}">{{$shift->name}}</option>
-                                    </select>
-                                </div>
+                                    @endforeach
+                                </select>
                             </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md">
-                                <div class="form-group">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Section:</label>
-                                    <select class="custom-select2 form-control" id="section_id" name="section_id"
-                                            style="width: 100%; height: 38px;" disabled>
-                                        <option value="{{$section->id}}">{{$section->name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md">
-                                <div class="form-group ">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Group:</label>
-                                    <select class="custom-select2 form-control" id="group_id" name="group_id"
-                                            style="width: 100%; height: 38px;" disabled>
-                                        <option value="{{$group->id}}">{{$group->name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="col-sm-12 col-form-label">Current Session Year:</label>
-                                    <input value="{{$session}}" name="session" class="form-control" type="number"
-                                           min="2000" max="2099"
-                                           step="1" style="width: 100%; height: 38px;" disabled/>
-                                </div>
-                            </div>
-
                         </div>
 
                     </div>
-                    {{-- ================================================= --}}
-                    <div class="col-md">
 
-                        <div class="clearfix">
-                            <div class="pull-left">
-                                <h4 class="text-blue">Promotion To</h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Class:</label>
-                                    <select id="theclass" class="custom-select2 form-control" name="the_class_id"
-                                            style="width: 100%; height: 38px;">
-                                        <option value="">Select Class</option>
-                                        @foreach ($classes as $class)
-                                            <option value="{{ $class->id }}">
-                                                {{ $class->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="row">
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Shift:</label>
-                                    <select class="custom-select2 form-control" id="shift_id" name="shift_id"
-                                            style="width: 100%; height: 38px;">
-                                        <option value="">Select Shift</option>
-                                        @foreach($shifts as $shift)
-                                            <option value="{{$shift->id}}">{{$shift->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Section:</label>
-                                    <select class="custom-select2 form-control" id="section_id" name="section_id"
-                                            style="width: 100%; height: 38px;">
-                                        <option value="">Select Section</option>
-                                        @foreach($sections as $section)
-                                            <option value="{{$section->id}}">{{$section->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label class="col-sm-12 col-md-2 col-form-label">Group:</label>
-                                    <select class="custom-select2 form-control" id="group_id" name="group_id"
-                                            style="width: 100%; height: 38px;">
-                                        @foreach($groups as $group)
-                                            <option value="{{$group->id}}">{{$group->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-12 col-md-2 col-form-label">Section:</label>
+                                <select class="custom-select2 form-control" id="section_id" name="section_id"
+                                        style="width: 100%; height: 38px;">
+                                    <option value="">Select Section</option>
+                                    @foreach($sections as $section)
+                                        <option value="{{$section->id}}">{{$section->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-sm-12 col-form-label">New Session Year:</label>
-                                    <input value="{{Carbon\Carbon::now()->year}}" name="session" class="form-control"
-                                           type="number" min="2000" max="2099"
-                                           step="1" style="width: 100%; height: 38px;" required/>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="form-group ">
+                                <label class="col-sm-12 col-md-2 col-form-label">Group:</label>
+                                <select class="custom-select2 form-control" id="group_id" name="group_id"
+                                        style="width: 100%; height: 38px;">
+                                    @foreach($groups as $group)
+                                        <option value="{{$group->id}}">{{$group->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-12 col-form-label">New Session Year:</label>
+                                <input value="{{Carbon\Carbon::now()->year}}" name="session" class="form-control"
+                                       type="number" min="2000" max="2099"
+                                       step="1" style="width: 100%; height: 38px;" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input id="to_inactive" name="to_inactive" type="checkbox"
+                                       class="form-check-input switch-btn" data-color="#e74c3c" value="yes">
+                                <label for="to_inactive">Make Inactive</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{--</div>--}}
+
+            <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <h4 class="text-blue">Students</h4>
                     </div>
                 </div>
-
 
                 <div class="row">
                     <table class="data-table stripe hover nowrap">
@@ -354,8 +388,37 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <script src="/src/plugins/switchery/dist/switchery.js"></script>
+
     <script>
-        $('document').ready(function () {
+        $(function () {
+            // Switchery
+            // var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-btn'));
+            $('.switch-btn').each(function () {
+                new Switchery($(this)[0], $(this).data());
+            });
+
+            var changeCheckbox = document.querySelector('#to_inactive');
+
+            var $promote_to_select = $('#promote_to select');
+
+            changeCheckbox.onchange = function () {
+                if (changeCheckbox.checked) {
+                    $promote_to_select.each(function () {
+                        $(this).prop('disabled', true);
+                    });
+                } else {
+                    $promote_to_select.each(function () {
+                        $(this).prop('disabled', false);
+                    });
+                }
+            };
+        });
+
+    </script>
+
+    <script>
+        $(function () {
             $('.data-table').DataTable({
                 scrollCollapse: true,
                 autoWidth: false,
@@ -408,7 +471,7 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function ($) {
+        $(function ($) {
             $('#theclass').change(function () {
                 $.get("{{ url('api/dropdown')}}",
                     {option: $(this).val()},

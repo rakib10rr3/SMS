@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-
     <div class="row clearfix progress-box">
 
         <!-- all student -->

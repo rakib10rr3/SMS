@@ -15,15 +15,6 @@ use Illuminate\Http\Request;
 
 class MarkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function index()
-//    {
-//        //
-//    }
 
     /**
      * Query to get the list to add data
@@ -42,16 +33,6 @@ class MarkController extends Controller
 
         return view('mark.query', compact('classes', 'sections', 'shifts', 'groups', 'exam_terms', 'subjects'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function create()
-//    {
-//        //
-//    }
 
     /**
      * Return the list to add data
