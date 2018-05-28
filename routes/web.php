@@ -106,17 +106,20 @@ Route::get('preference', 'PreferenceController@index')->name('preference.index')
 Route::put('preference', 'PreferenceController@update')->name('preference.update')
     ->middleware(['auth', 'can:preference-crud']);
 
+// todo -_-
+Route::resource('classAssigns', 'ClassAssignController')
+    ->middleware(['auth']);
 Route::get('recovery/password', 'PasswordController@index')->name('recovery.password.index')
     ->middleware(['auth']);
 Route::post('recovery/password', 'PasswordController@update')->name('recovery.password.update')
     ->middleware(['auth']);
 
+
+
 //Route::resource('subjectAssigns', 'SubjectAssignController')
 //    ->middleware(['auth']);
 
-// todo -_-
-Route::resource('classAssigns', 'ClassAssignController')
-    ->middleware(['auth']);
+
 
 
 Route::get('send-sms/select', 'SendSmsController@select')->name('sendSms.select')
