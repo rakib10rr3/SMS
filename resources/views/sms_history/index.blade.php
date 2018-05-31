@@ -7,10 +7,13 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 @endsection
+
 @section('content')
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-        <div class="clearfix mb-20">
+        <
+
+        div class="clearfix mb-20">
 
             <div class="pull-left">
 

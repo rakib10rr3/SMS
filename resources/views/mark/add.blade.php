@@ -38,6 +38,7 @@
                 <div class="form-group col-md-6">
                     <label for="theclass">Class</label>
                     <select class="form-control custom-select" name="theclass" id="theclass" disabled>
+
                         <option value="{{ $class->id }}" selected>{{ $class->name }}</option>
 
                     </select>

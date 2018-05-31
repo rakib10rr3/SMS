@@ -73,8 +73,10 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Session :</label>
-                            <input type="number" class="form-control" placeholder="Select Session Year" id="session_year"
-                                   min="2000" max="2099"   name="session_year" value="{{Carbon\Carbon::now()->format('Y')}}" required/>
+                            <input type="number" class="form-control" placeholder="Select Session Year"
+                                   id="session_year"
+                                   min="2000" max="2099" name="session_year"
+                                   value="{{Carbon\Carbon::now()->format('Y')}}" required/>
                         </div>
                     </div>
 
@@ -115,8 +117,9 @@
                             <td>{{$student->is_active}}</td>
                             </td>
                             <td>{{$student->group->name}}</td>
-                            
-                            <td><img src="/images/{{$student->user_id}}/{{$student->photo}}" class="img-responsive" alt="Student Photo"></td>
+
+                            <td><img src="/images/{{$student->user_id}}/{{$student->photo}}" class="img-responsive"
+                                     alt="Student Photo"></td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
@@ -127,7 +130,8 @@
                                         <a class="dropdown-item" href="/students/{{$student->id}}/edit"><i
                                                     class="fa fa-pencil"></i> Edit</a>
 
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}" data-user_id = {{$student->user_id}}><i
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}"
+                                           data-user_id= {{$student->user_id}}><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
                                 </div>
@@ -137,8 +141,11 @@
                 @endif
                 </tbody>
             </table>
+
         </div>
+
     </div>
+
 @endsection
 
 
@@ -156,6 +163,8 @@
     <script src="/src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="/src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
+
+
     <script>
         $('document').ready(function () {
             $('.data-table').DataTable({
@@ -207,106 +216,7 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $("#btn-generate").click(function (e) {
-                e.preventDefault();
-                //disable buttons and states
-                disable();
-                var _token = $("input[name='_token']").val();
-                var the_class_id = {"class": $('#the_class_id option:selected').val()};
-                var section_id = {"section": $('#section_id option:selected').val()};
-                var group_id = {"group": $('#group_id option:selected').val()};
-                var shift_id = {"shift": $('#shift_id option:selected').val()};
-                var session = {"session": $("#session_year").val()};
 
-                console.log(the_class_id);
-                console.log(section_id);
-                console.log(group_id);
-                console.log(shift_id);
-                console.log(session);
-
-
-                $.ajax({
-                    url: "{{route('getStudentListFromStudentController')}}",
-                    type: 'POST',
-                    data: {
-                        _token: _token,
-                        the_class_id: the_class_id,
-                        section_id: section_id,
-                        group_id: group_id,
-                        shift_id: shift_id,
-                        session_year: session,
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        var opening;
-                        var activeStatus;
-                        var ending;
-
-                        var table = $('#students_table').DataTable();
-                        if ($.isEmptyObject(data.error)) {
-                            console.log(data);
-                            //var dropdown = ;
-                            //enable button and states
-                            enable();
-                            $.each(data, function (index, element) {
-
-                                if (element.is_active == 1){
-                                    opening = '<p id=\"active\" class=\"badge badge-success\">';
-                                    activeStatus = "Active";
-                                } else {
-                                    opening = '<p id=\"active\" class=\"badge badge-danger\">';
-                                    activeStatus = "Inactive";
-
-                                }
-
-                                table.row.add([
-                                    element.roll,
-                                    element.name,
-                                    element.father_name,
-                                    element.mother_name,
-                                    element.local_guardian_cell,
-                                    opening + activeStatus +'</p>',
-                                    '<div class="dropdown">\n' +
-                                    '                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"\n' +
-                                    '                                       data-toggle="dropdown">\n' +
-                                    '                                        <i class="fa fa-ellipsis-h"></i>\n' +
-                                    '                                    </a>\n' +
-                                    '                                    <div class="dropdown-menu dropdown-menu-right">\n' +
-                                    '                                        <a href="/students/' + element.id + '/edit" class="dropdown-item"><i\n' +
-                                    '                                                    class="fa fa-pencil"></i> Edit</a>\n' +
-                                    '                                        <a class="dropdown-item ts-delete" data-id="'+element.id+'" href=""><i\n' +
-                                    '                                                    class="fa fa-pencil"></i> Delete</a>\n' +
-                                    '                                    </div>\n' +
-                                    '                                </div>'
-                                ]).draw(false);
-                            });
-                        } else {
-                            printErrorMsg(data.error);
-                        }
-                    }
-                });
-            });
-        });
-
-        function enable() {
-            $('#btn-generate').html("Get Student List").prop('disabled', false).removeClass('btn btn-warning').addClass('btn btn-success');
-            $("#the_class_id").prop("disabled", false);
-            $("#section_id").prop("disabled", false);
-            $("#shift_id").prop("disabled", false);
-            $("#group_id").prop("disabled", false);
-        }
-
-        function disable() {
-            $("#students_table").DataTable().clear().draw();
-            $('#btn-generate').html("Wait...").prop('disabled', true).removeClass('btn btn-success').addClass('btn btn-warning');
-            $("#the_class_id").prop("disabled", true);
-            $("#section_id").prop("disabled", true);
-            $("#shift_id").prop("disabled", true);
-            $("#group_id").prop("disabled", true);
-        }
-    </script>
 
 
     <script>
@@ -329,7 +239,7 @@
                             type: "POST",
                             url: "/students/" + id,
                             data: {
-                                _token: '{{ csrf_token() }}',
+                                _token: 'xBdL9t4pO34YR7hKpgNCItITNYJcUM0gKo0OcCK8',
                                 _method: "DELETE",
                                 user_id: userId,
 
@@ -348,13 +258,6 @@
                 });
         });
     </script>
-
-    <script>
-        function edit(id) {
-            console.log(id);
-        }
-    </script>
-
 
 @endsection
 

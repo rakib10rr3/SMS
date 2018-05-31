@@ -213,8 +213,10 @@ class SubjectController extends Controller
     public function getSubject(Request $request)
     {
         $classes = TheClass::all();
-        $subjects = Subject::where('the_class_id', $request->class_id)->get();
-        return view('subject.index', compact('subjects', 'classes'));
+        $forClass=$request->the_class_id;
+        $subjects = Subject::where('the_class_id',$forClass)->get();
+        //return view('subject.index', compact('subjects', 'classes','forClass'));
+        return $subjects;
     }
 
     public function apiGetSubjectByClass($class)

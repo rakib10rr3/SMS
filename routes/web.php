@@ -25,7 +25,6 @@ Route::get('/setup', function () {
 Auth::routes();
 
 
-
 Route::get('subjects/optional', 'OptionalAssignController@index')->name('subjects.optional.index')
     ->middleware(['auth', 'can:optional-assign-crud']);
 Route::post('subjects/optional/list', 'OptionalAssignController@getData')->name('getStudentDataForSelection')
@@ -56,7 +55,7 @@ Route::get('api/roll-generator/{class}/{session}', 'RollController@apiGenerateRo
 
 
 // TODO check it
-Route::post('getSubjects', 'SubjectController@getSubject')
+Route::post('getSubjects', 'SubjectController@getSubject')->name('getSubjectsOfClass')
     ->middleware(['auth']);
 
 Route::resource('shifts', 'ShiftController')
@@ -115,11 +114,8 @@ Route::post('recovery/password', 'PasswordController@update')->name('recovery.pa
     ->middleware(['auth']);
 
 
-
 //Route::resource('subjectAssigns', 'SubjectAssignController')
 //    ->middleware(['auth']);
-
-
 
 
 Route::get('send-sms/select', 'SendSmsController@select')->name('sendSms.select')
@@ -194,3 +190,10 @@ Route::post('promotion', 'PromotionController@view')->name('promotion.view')
     ->middleware(['auth', 'can:promotion-crud']);
 Route::post('promotion/update', 'PromotionController@update')->name('promotion.update')
     ->middleware(['auth', 'can:promotion-crud']);
+
+
+//todo: shohag : add can: method
+//print Routes
+Route::get('print/select', 'PrintController@select')->name('print.select')->middleware(['auth']);
+Route::post('print/show', 'PrintController@show')->name('print.show')->middleware(['auth']);
+

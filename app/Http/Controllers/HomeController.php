@@ -32,7 +32,7 @@ class HomeController extends Controller
         $all_students = Student::all()->count();
         $all_teachers = Teacher::all()->count();
         $all_staffs = Staff::all()->count();
-        $all_notices = Notice::all();
+        $all_notices = Notice::orderBy('created_at','desc')->get();
 
         //echo  $all_students ." ".$all_teachers." ".$all_staffs;
 

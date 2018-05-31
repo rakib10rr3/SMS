@@ -263,7 +263,24 @@
             $("#check_balance").on("submit", function (e) {
                 e.preventDefault();
                 $button = $(this);
-                $button.html("Wait...").prop('disabled', true).removeClass('btn btn-outline-success').addClass('btn btn-outline-warning');
+                $button.html("Wait").prop('disabled', true).removeClass('btn btn-outline-success').addClass('btn btn-outline-warning');
+
+                var originalText = $button.text(), i  = 0;
+                var myTimer=  setInterval(function() {
+
+                    $button.append(".");
+                    i++;
+
+                    if(i == 4)
+                    {
+                        $button.html(originalText);
+                        i = 0;
+                    }
+
+                }, 500);
+
+
+
 
                 $.ajax({
                     type: "GET",
@@ -271,6 +288,7 @@
                     success: function (data) {
                         console.log(data);
                         $("#sms_result").text(data).show();
+                        clearInterval(myTimer);
                         $button.html("Check Balance").prop('disabled', false).removeClass('btn btn-outline-warning').addClass('btn btn-outline-success');
                     },
                     error: function (xhr, ajaxOptions, thrownError) {

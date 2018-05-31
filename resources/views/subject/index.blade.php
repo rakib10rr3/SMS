@@ -1,12 +1,47 @@
 @extends('layouts.app')
 @section('styles')
+
+    <style>
+
+        #loading-indicator {
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            background: white;
+
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+
+    </style>
+
+
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+
 @endsection
 @section('content')
+
+    <div id="loading-indicator" style="display: none;">
+
+        <img src="/images/ajax-loader.gif" />
+
+    </div>
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -15,13 +50,13 @@
     @endif
 
     <div class="form-group pd-20 bg-white border-radius-4 box-shadow mb-30">
-        <form action="/getSubjects" method="post">
+        <form>
             @csrf
             <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label>Select a Class :</label>
-                        <select id="class_id" class="custom-select2 form-control" name="class_id"
+                        <select id="the_class_id" class="custom-select2 form-control"
                                 style="width: 100%; height: 38px;">
                             @foreach($classes as $class)
                                 <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -40,18 +75,22 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
 
-
         <div class="clearfix mb-20">
             <div class="pull-left">
-                <h5 class="text-blue">Subject Information</h5>
+                @if(! empty($forClass))
+                    <h5 class="text-blue"> Class {{$forClass}}</h5>
+                @endif
+                <h5 class="text-blue">Subject Information </h5>
 
             </div>
         </div>
+
+
         <div class="row">
-            <table class="data-table stripe hover nowrap">
+            <table id="mytable" class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-                    <th>No</th>
+
                     <th>Subject Name</th>
                     <th>Subject Code</th>
                     <th>Class</th>
@@ -67,7 +106,6 @@
                     @foreach($subjects as $subject)
                         <tr>
 
-                            <td class="table-plus">{{$loop->iteration}}</td>
                             <td>{{ $subject->name }}</td>
                             <td>{{ $subject->code }}</td>
                             <td>{{ $subject->theClass->name}}</td>
@@ -143,6 +181,8 @@
     {{--});--}}
     {{--});--}}
     {{--</script>--}}
+
+
 @endsection
 
 @section('scripts')
@@ -230,7 +270,7 @@
                     if (willDelete) {
                         $.ajax({
                             type: "POST",
-                            url: "/teachers/" + id,
+                            url: "/subjects/" + id,
                             data: {
                                 _token: '{{ csrf_token() }}',
                                 _method: "DELETE"
@@ -243,12 +283,106 @@
                                 });
                             }
                         });
+
                     } else {
                         swal("Your imaginary file is safe!");
                     }
                 });
         });
     </script>
+
+    <script>
+
+        $("#btn-generate").click(function (e) {
+            e.preventDefault();
+            console.log(" Submitted ");
+            _token = $("input[name='_token']").val();
+            the_class_id = $('#the_class_id :selected').val();
+            var dataTable = $('#mytable').DataTable();
+            $("#mytable").DataTable().clear().draw();
+
+            console.log(the_class_id);
+
+
+            $.ajax({
+                url: "/getSubjects",
+                type: 'POST',
+                data: {
+                    _token: _token,
+                    the_class_id: the_class_id,
+                },
+
+                success: function (data) {
+
+                    $.each(data, function (index, element) {
+
+                        if (element.is_active == 1) {
+                            opening = '<p id=\"active\" class=\"badge badge-success\">';
+                            activeStatus = "Active";
+                        } else {
+                            opening = '<p id=\"active\" class=\"badge badge-danger\">';
+                            activeStatus = "Inactive";
+
+                        }
+
+                        dataTable.row.add([
+                            element.name,
+                            element.code,
+                            element.the_class_id,
+                            group_name(element.group_id),
+                            '<div class="dropdown">\n' +
+                            '                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"\n' +
+                            '                                       data-toggle="dropdown">\n' +
+                            '                                        <i class="fa fa-ellipsis-h"></i>\n' +
+                            '                                    </a>\n' +
+                            '                                    <div class="dropdown-menu dropdown-menu-right">\n' +
+                            '                                        <a href="/subjects/' + element.id + '/edit" class="dropdown-item"><i\n' +
+                            '                                                    class="fa fa-pencil"></i> Edit</a>\n' +
+                            '                                        <a class="dropdown-item ts-delete" data-id="' + element.id + '" href=""><i\n' +
+                            '                                                    class="fa fa-pencil"></i> Delete</a>\n' +
+                            '                                    </div>\n' +
+                            '                                </div>'
+                        ]).draw(false);
+
+
+                        function group_name(id) {
+                            switch(id) {
+                                case 1:
+                                     return "Science";
+                                    break;
+                                case 2:
+                                    return "Commerce";
+                                    break;
+                                case 3:
+                                    return" Arts";
+                                    break;
+                                case 4:
+                                    return "None";
+                                    break;
+                                default:
+                                    return "None";
+                            }
+                        }
+
+                    });
+                }
+
+            });
+
+            $(document).ajaxSend(function(event, request, settings) {
+                $('#loading-indicator').fadeIn();
+            });
+
+
+            $(document).ajaxComplete(function(event, request, settings) {
+                $('#loading-indicator').fadeOut();
+            });
+
+        });
+
+
+    </script>
+
 
 
 @endsection
