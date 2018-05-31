@@ -15,7 +15,6 @@
         <div class="form-group">
             <label>Class</label>
             <select  id="theclass" class="custom-select2 form-control" name="the_class_id" style="width: 100%; height: 38px;">
-                <option disabled selected value> -- select an option -- </option>
                 @foreach ($classes as $class)
                     <option value="{{ $class->id }}">
                         {{ $class->name }}

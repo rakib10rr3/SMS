@@ -26,3 +26,12 @@ body {
 .pd-lr-20 {
     padding: 0 20px 0;
 }
+
+.notification-list ul li a {
+    padding: 10px 15px 10px 15px;
+}
+
+.notification-list ul li a .author {
+    text-align: right;
+    font-weight: bold;
+}

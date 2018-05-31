@@ -94,7 +94,7 @@ Route::resource('students', 'StudentController')
 
 Route::resource('subjects', 'SubjectController')
     ->middleware(['auth', 'can:subject-crud']);
-// todo: api just need login
+// note: api just need login
 Route::get('api/subjects/{class}', 'SubjectController@apiGetSubjectByClass')
     ->middleware(['auth']);
 Route::get('api/subjects/{class}/{group}', 'SubjectController@apiGetSubjectByClassAndGroup')
@@ -107,23 +107,24 @@ Route::put('preference', 'PreferenceController@update')->name('preference.update
     ->middleware(['auth', 'can:preference-crud']);
 
 Route::get('recovery/password', 'PasswordController@index')->name('recovery.password.index')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'can:recovery-password-crud']);
 Route::post('recovery/password', 'PasswordController@update')->name('recovery.password.update')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'can:recovery-password-crud']);
 
 //Route::resource('subjectAssigns', 'SubjectAssignController')
 //    ->middleware(['auth']);
 
 // todo -_-
 Route::resource('classAssigns', 'ClassAssignController')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'can:class-assign-crud']);
 
 
 Route::get('send-sms/select', 'SendSmsController@select')->name('sendSms.select')
     ->middleware(['auth', 'can:sms-send']);
 Route::post('send-sms/create', 'SendSmsController@create')->name('sendSms.create')
     ->middleware(['auth', 'can:sms-send']);
-Route::post('send-sms/show', 'SendSmsController@store')->name('sendSms.store');
+Route::post('send-sms/show', 'SendSmsController@store')->name('sendSms.store')
+    ->middleware(['auth', 'can:sms-send']);
 Route::get('send-sms/balance', 'SendSmsController@balance')->name('sendSms.balance')
     ->middleware(['auth', 'can:sms-send']);
 
