@@ -164,6 +164,12 @@
                             </div>
                         </div>
                     </section>
+                    <div class="col-md-12">
+                        <label>Photo</label>
+                        <img height="64px" width="64px" src="/images/teachers/{{$teacher->photo}}"
+                             alt="pic">
+                    </div>
+                    <input type="hidden" name="previous_pic" value="{{$teacher->photo}}">
                     <input type="submit" value="Update" class="btn btn-info">
 
                 </form>

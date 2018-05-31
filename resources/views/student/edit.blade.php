@@ -25,7 +25,7 @@
                     </ul>
                 </div>
             @endif
-            <form id="form" method="post" action="/students/{{$student->id}}">
+            <form id="form" method="post" action="/students/{{$student->id}}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 @method('PUT')
                 <h5>Identity</h5>
@@ -137,11 +137,13 @@
                                        value="{{$student->nationality}}" required />
                             </div>
                         </div>
+
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Photo :</label>
                                 <input type="file" class="form-control-file form-control height-auto" id="photo"
-                                       name="photo">
+                                     name="photo">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -232,11 +234,17 @@
                                 <textarea class="form-control" id="extra_activity" required
                                           name="extra_activity">{{$student->extra_activity}}</textarea>
                             </div>
+                        </div>
 
-
+                        <div class="col-md-12">
+                                <label>Photo</label>
+                                <img height="64px" width="64px" src="/images/students/{{$student->photo}}"
+                                     alt="pic">
                         </div>
                     </div>
                 </section>
+                <input type="hidden" name="user_id" value="{{$student->user_id}}">
+                <input type="hidden" name="previous_pic" value="{{$student->photo}}">
                 <input type="submit" value="Update" class="btn btn-info">
             </form>
         </div>

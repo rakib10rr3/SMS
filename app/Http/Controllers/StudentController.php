@@ -17,7 +17,10 @@ use App\Model\TheClass;
 use App\User;
 use Carbon\Carbon;
 use Faker\Provider\File;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -64,8 +67,9 @@ class StudentController extends Controller
     public function store(Request $request)
     {
 
+
         $rules = [
-            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'name' => 'required|regex:/[a-zA-Z\s.]+/',
             'dob' => 'required',
             'father_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'father_cell' => 'required|digits:11',
@@ -77,7 +81,7 @@ class StudentController extends Controller
             'blood_group_id' => 'required',
             'gender_id' => 'required',
             'nationality' => 'required',
-            'photo' => 'required',
+//            'photo' => 'required',
             'current_address' => 'required',
             'permanent_address' => 'required',
             //'roll' => 'required',
@@ -89,12 +93,11 @@ class StudentController extends Controller
             'admission_year' => 'required',
             'session_year' => 'required|integer|between:2000,2099|digits:4'
 
-
         ];
 
         $customMessages = [
             'name.required' => 'Name field is required',
-            'name.regex' => 'Name field must contain only letters',
+            'name.regex' => 'Name field must contain only letters, whitespace and dots',
             'dob.required' => 'Date of Birth field is required',
             'father_name.required' => "Father's Name field is required",
             'father_name.alpha' => "Father's Name must contain only letters",
@@ -113,7 +116,7 @@ class StudentController extends Controller
             'blood_group_id.required' => "Blood Group field is required",
             'gender_id.required' => "Gender field is required",
             'nationality.required' => "Nationality field is required",
-            'photo.required' => "Photo field is required",
+//            'photo.required' => "Photo field is required",
             'current_address.required' => "Present Address field is required",
             'permanent_address.required' => "Permanent Address field is required",
             // 'roll.required' => "Roll field is required",
@@ -128,31 +131,6 @@ class StudentController extends Controller
         ];
 
         $this->validate($request, $rules, $customMessages);
-
-//        $request->validate([
-//            'name' => 'required|',
-//            'gender_id' => 'required',
-//            'nationality' => 'required',
-//            'dob' => 'required',
-//            'extra_activity' => 'required',
-//            'photo' => 'required',
-//            'father_name' => 'required',
-//            'mother_name' => 'required',
-//            'local_guardian_name' => 'required',
-//            'father_cell' => 'required',
-//            'mother_cell' => 'required',
-//            'local_guardian_cell' => 'required',
-//            'current_address' => 'required',
-//            'permanent_address' => 'required',
-//            'roll' => 'required',
-//            //'user_id' => 'required',
-//            'shift_id' => 'required',
-//            'admission_year' => 'required',
-//            'the_class_id' => 'required',
-//            'section_id' => 'required',
-//            'group_id' => 'required',
-//        ]);
-        //Student::query()->create($request->all());
 
         $name = request('name');
 
@@ -181,6 +159,7 @@ class StudentController extends Controller
          * End Object Creation
          */
 
+
         $dobString = request('dob');
         $carbon = new Carbon($dobString);
         $date = $carbon->format('Y-m-d');
@@ -191,10 +170,11 @@ class StudentController extends Controller
 
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $picture_name = $file->getClientOriginalName();
-            $file->move('images/' . $user_obj->id, $picture_name);
+            $picture_name = $user_obj->id . "." . $file->guessClientExtension();
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/students/'.$picture_name);
+            //$file->move('images/students', $picture_name);
         } else {
-            $picture_name = "No Image Found ";
+            $picture_name = null;
         }
 
         $lastRoll = Student::query()
@@ -208,6 +188,8 @@ class StudentController extends Controller
             $newRoll = 1;
         } else
             $newRoll = ++$lastRoll;
+
+
 
         Student::query()->create([
             'name' => $name,
@@ -234,10 +216,11 @@ class StudentController extends Controller
             'section_id' => $request->section_id,
             'group_id' => $request->group_id,
             'cell' => $request->cell,
+            'session' => $request->session_year,
 
         ]);
 
-        return redirect('/students');
+        return redirect('/students')->with('message','Student successfully created');
     }
 
     /**
@@ -281,8 +264,10 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
+
+
         $rules = [
-            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'name' => 'required|regex:/[a-zA-Z\s.]+/',
             'dob' => 'required',
             'father_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'father_cell' => 'required|digits:11',
@@ -294,7 +279,7 @@ class StudentController extends Controller
             'blood_group_id' => 'required',
             'gender_id' => 'required',
             'nationality' => 'required',
-            'photo' => 'required',
+//            'photo' => 'required',
             'current_address' => 'required',
             'permanent_address' => 'required',
             //'roll' => 'required',
@@ -310,7 +295,7 @@ class StudentController extends Controller
 
         $customMessages = [
             'name.required' => 'Name field is required',
-            'name.regex' => 'Name field must contain only letters',
+            'name.regex' => 'Name field must contain only letters, whitespace and dots',
             'dob.required' => 'Date of Birth field is required',
             'father_name.required' => "Father's Name field is required",
             'father_name.alpha' => "Father's Name must contain only letters",
@@ -354,13 +339,20 @@ class StudentController extends Controller
         $carbon = new Carbon($admissionDateString);
         $admissionDate = $carbon->format('Y');
 
-//        if ($request->hasFile('photo')) {
-//            $file = $request->file('photo');
-//            $picture_name = $file->getClientOriginalName();
-//            $file->move('images/' . $user_obj->id, $picture_name);
-//        } else {
-//            $picture_name = "No Image Found ";
-//        }
+
+        $userId = $request->user_id;
+
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $picture_name = $student->user->id . "." . $file->guessClientExtension();
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/students/'.$picture_name);
+            //$file->move('images/students', $picture_name);
+        } else {
+            $picture_name = $request->previous_pic;
+        }
+
+
         Student::query()->where('id', '=', $request->id)->update([
             'name' => $request->name,
             'religion_id' => $request->religion_id,
@@ -369,7 +361,7 @@ class StudentController extends Controller
             'nationality' => $request->nationality,
             'dob' => $date,
             'extra_activity' => $request->extra_activity,
-//            'photo' => $picture_name,
+            'photo' => $picture_name,
             'father_name' => $request->father_name,
             'mother_name' => $request->mother_name,
             'local_guardian_name' => $request->local_guardian_name,
@@ -404,8 +396,13 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        User::query()->where('id',$student->user_id)->delete();
-
+        $file_path = public_path() . '/images/students/' . $student->photo;
+        Log::debug($file_path);
+        //Storage::delete($file_path);
+        if (file_exists($file_path)){
+            unlink($file_path);
+        }
+        User::query()->where('id', $student->user_id)->delete();
         return redirect('/students');
     }
 
@@ -423,7 +420,8 @@ class StudentController extends Controller
         return $students;
     }
 
-    public function changeStatus($id){
+    public function changeStatus($id)
+    {
 
     }
 }

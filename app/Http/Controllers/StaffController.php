@@ -47,7 +47,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'name' => 'required|regex:/[a-zA-Z\s.]+/',
             'current_address' => 'required|max:200',
             'permanent_address' =>  'required|max:200',
             'dob' => 'required',
@@ -61,7 +61,7 @@ class StaffController extends Controller
 
         $customMessages = [
             'name.required' => 'Name is required',
-            'name.regex' => 'Name must contain only letters and whitespace',
+            'name.regex' => 'Name field must contain only letters, whitespace and dots',
             'dob.required' => 'Date of Birth is required',
             'religion_id.required' => "Religion is required",
             'blood_group_id.required' => "Blood Group field is required",
@@ -123,7 +123,8 @@ class StaffController extends Controller
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $picture_name = $user_obj->id . "." . $file->guessClientExtension();
-            $file->move('images/staffs', $picture_name);
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/staffs/'.$picture_name);
+            //$file->move('images/students', $picture_name);
         } else {
             $picture_name = null;
         }
@@ -189,7 +190,7 @@ class StaffController extends Controller
     {
 
         $rules = [
-            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'name' => 'required|regex:/[a-zA-Z\s.]+/',
             'current_address' => 'required|max:200',
             'permanent_address' =>  'required|max:200',
             'dob' => 'required',
@@ -203,7 +204,7 @@ class StaffController extends Controller
 
         $customMessages = [
             'name.required' => 'Name is required',
-            'name.regex' => 'Name must contain only letters and whitespace',
+            'name.regex' => 'Name field must contain only letters, whitespace and dots',
             'dob.required' => 'Date of Birth is required',
             'religion_id.required' => "Religion is required",
             'blood_group_id.required' => "Blood Group field is required",
@@ -241,9 +242,10 @@ class StaffController extends Controller
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $picture_name = $staff->user->id . "." . $file->guessClientExtension();
-            $file->move('images/staffs', $picture_name);
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/staffs/'.$picture_name);
+            //$file->move('images/students', $picture_name);
         } else {
-            $picture_name = "No Image Found ";
+            $picture_name = $request->previous_pic;
         }
 
 

@@ -77,7 +77,7 @@ Route::resource('roles', 'RoleController')
 Route::resource('teachers', 'TeacherController')
     ->middleware(['auth', 'can:teacher-crud']);
 Route::resource('staff', 'StaffController')
-    ->middleware(['auth', 'can:can:staff-crud']);
+    ->middleware(['auth', 'can:staff-crud']);
 
 
 Route::post('students/getStudentList', 'StudentController@getStudentList')->name('getStudentListFromStudentController')
@@ -87,7 +87,7 @@ Route::resource('students', 'StudentController')
 
 
 Route::resource('subjects', 'SubjectController')
-    ->middleware(['auth', 'subject-crud']);
+    ->middleware(['auth', 'can:subject-crud']);
 // todo: api just need login
 Route::get('api/subjects/{class}', 'SubjectController@apiGetSubject')
     ->middleware(['auth']);

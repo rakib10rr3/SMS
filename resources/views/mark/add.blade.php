@@ -228,22 +228,20 @@
 
                             @if($subject->has_written)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="written[{{$student->id}}]" id="written" value="0"
-                                           placeholder="Written Mark"
+                                    <input type="number" pattern="^\d{1,3}$" class="form-control"
+                                           name="written[{{$student->id}}]" id="written" value="0" min="0" max="{{$subject->written_marks}}"
                                            required>
                                 </td>
                             @endif @if($subject->has_mcq)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="mcq[{{$student->id}}]" id="mcq" value="0" placeholder="MCQ Mark"
+                                    <input type="number" pattern="^\d{1,3}$" class="form-control"
+                                           name="mcq[{{$student->id}}]" id="mcq" min="0" value="0" max="{{$subject->mcq_marks}}"
                                            required>
                                 </td>
                             @endif @if($subject->has_practical)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="practical[{{$student->id}}]" id="practical" value="0"
-                                           placeholder="Practical Mark"
+                                    <input type="number" pattern="^\d{1,3}$" class="form-control"
+                                           name="practical[{{$student->id}}]" id="practical" value="0" min="0" max="{{$subject->practical_marks}}"
                                            required>
                                 </td>
                             @endif

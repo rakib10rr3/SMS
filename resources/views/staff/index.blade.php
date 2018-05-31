@@ -44,8 +44,8 @@
                             <td>{{$staff->religion->name}}</td>
                             <td>{{$staff->bloodGroup->name}}</td>
                             <td>{{$staff->gender->name}}</td>
-                            <td><img height="64" width="64" src="{{ ($staff->photo)?"/images/staffs/".$staff->photo:"/images/user.svg" }}"
-                                     class="img-rounded"
+                            <td><img height="50px" width="50px" src="{{ ($staff->photo)?"/images/staffs/".$staff->photo:"/images/user.svg" }}"
+
                                      alt="staff Photo"></td>
                             <td>
                                 <div class="dropdown">
