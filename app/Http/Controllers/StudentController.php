@@ -88,8 +88,6 @@ class StudentController extends Controller
             'group_id' => 'required',
             'admission_year' => 'required',
             'session_year' => 'required|integer|between:2000,2099|digits:4'
-
-
         ];
 
         $customMessages = [
@@ -124,7 +122,6 @@ class StudentController extends Controller
             'admission_year.required' => "Admission Year field is required",
             'session_year.between' => 'Session must be between year 2000 and 2099',
             'session_year.digits' => 'Session year must be of 4 digits'
-
         ];
 
         $this->validate($request, $rules, $customMessages);
@@ -404,7 +401,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        User::query()->where('id',$student->user_id)->delete();
+        User::query()->where('id', $student->user_id)->delete();
 
         return redirect('/students');
     }
@@ -423,7 +420,8 @@ class StudentController extends Controller
         return $students;
     }
 
-    public function changeStatus($id){
+    public function changeStatus($id)
+    {
 
     }
 }

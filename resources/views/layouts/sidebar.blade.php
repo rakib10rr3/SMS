@@ -191,11 +191,15 @@
 
                 {{-- ===================================================== --}}
 
-                <li class="dropdown">
-                    <a href="{{route('recovery.password.index')}}" class="dropdown-toggle no-arrow">
-                        <span class="fa fa-clone"></span><span class="mtext">Reset Users Password</span>
-                    </a>
-                </li>
+                @can('recovery-password-crud')
+
+                    <li class="dropdown">
+                        <a href="{{route('recovery.password.index')}}" class="dropdown-toggle no-arrow">
+                            <span class="fa fa-clone"></span><span class="mtext">Reset Users Password</span>
+                        </a>
+                    </li>
+
+                @endcan
 
                 {{-- ===================================================== --}}
 
