@@ -25,7 +25,6 @@ Route::get('/setup', function () {
 Auth::routes();
 
 
-
 Route::get('subjects/optional', 'OptionalAssignController@index')->name('subjects.optional.index')
     ->middleware(['auth', 'can:optional-assign-crud']);
 Route::post('subjects/optional/list', 'OptionalAssignController@getData')->name('getStudentDataForSelection')
@@ -106,10 +105,12 @@ Route::get('preference', 'PreferenceController@index')->name('preference.index')
 Route::put('preference', 'PreferenceController@update')->name('preference.update')
     ->middleware(['auth', 'can:preference-crud']);
 
+
 Route::get('recovery/password', 'PasswordController@index')->name('recovery.password.index')
     ->middleware(['auth', 'can:recovery-password-crud']);
 Route::post('recovery/password', 'PasswordController@update')->name('recovery.password.update')
     ->middleware(['auth', 'can:recovery-password-crud']);
+
 
 //Route::resource('subjectAssigns', 'SubjectAssignController')
 //    ->middleware(['auth']);
