@@ -119,11 +119,25 @@
                         </a>
                     </li>
 
+
+                @endcan
+
+                {{-- ===================================================== --}}
+
+                @can('roll-generator-crud')
+
+                    <li class="dropdown">
+                        <a href="{{route('rollGenerator.index')}}" class="dropdown-toggle no-arrow">
+                            <span class="fa fa-clone"></span><span class="mtext">Roll Generator</span>
+                        </a>
+                    </li>
+
                     {{-- ===================================================== --}}
 
                     <li class="ts-sidebar-divider"></li>
 
                 @endcan
+
 
                 {{-- ===================================================== --}}
 
@@ -177,6 +191,18 @@
 
                 {{-- ===================================================== --}}
 
+                @can('recovery-password-crud')
+
+                    <li class="dropdown">
+                        <a href="{{route('recovery.password.index')}}" class="dropdown-toggle no-arrow">
+                            <span class="fa fa-clone"></span><span class="mtext">Reset Users Password</span>
+                        </a>
+                    </li>
+
+                @endcan
+
+                {{-- ===================================================== --}}
+
                 @can('preference-crud')
 
                     <li class="dropdown">
@@ -187,7 +213,30 @@
 
                 @endcan
 
+
                 {{-- ===================================================== --}}
+
+                @can('class-assign-crud')
+
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="fa fa-clone"></span><span class="mtext">Print</span>
+                        </a>
+                        <ul class="submenu">
+
+                            <li><a href="{{route('print.select')}}">Merit List</a></li>
+                            <li><a href="{{route('print.select')}}">Student</a></li>
+
+                        </ul>
+                    </li>
+
+                    {{-- ===================================================== --}}
+
+                    <li class="ts-sidebar-divider"></li>
+
+                @endcan
+
+
 
                 @can('access-system-setup')
 

@@ -27,8 +27,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('attendance-crud', function ($user) {
 
-            if($user->role_id >= 2) 
-            {
+            if ($user->role_id >= 2) {
                 return true;
             }
 
@@ -37,8 +36,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('blood-group-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -47,8 +45,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('class-assign-crud', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -60,8 +57,7 @@ class AuthServiceProvider extends ServiceProvider
          */
         Gate::define('class-assign-view-single', function ($user, $classAssign) {
 
-            if($user->role_id >= 2 && $classAssign->teacher->user->id == $user->id)
-            {
+            if ($user->role_id >= 2 && $classAssign->teacher->user->id == $user->id) {
                 return true;
             }
 
@@ -70,8 +66,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('exam-term-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -80,8 +75,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('gender-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -90,8 +84,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('grade-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -100,8 +93,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('group-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -110,8 +102,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('system-log-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -120,8 +111,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('mark-crud', function ($user) {
 
-            if($user->role_id >= 2)
-            {
+            if ($user->role_id >= 2) {
                 return true;
             }
 
@@ -130,8 +120,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('merit-list-crud', function ($user) {
 
-            if($user->role_id >= 2)
-            {
+            if ($user->role_id >= 2) {
                 return true;
             }
 
@@ -140,8 +129,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('notice-crud', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -150,8 +138,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('optional-assign-crud', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -160,8 +147,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('preference-crud', function ($user) {
 
-            if($user->role_id >= 4) 
-            {
+            if ($user->role_id >= 4) {
                 return true;
             }
 
@@ -170,8 +156,16 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('promotion-crud', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
+                return true;
+            }
+
+            return false;
+        });
+
+        Gate::define('roll-generator-crud', function ($user) {
+
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -180,8 +174,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('religion-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -190,8 +183,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('role-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -200,8 +192,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('section-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -210,8 +201,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('sms-send', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -220,8 +210,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('sms-history', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -230,8 +219,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('shift-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -240,8 +228,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('staff-crud', function ($user) {
 
-            if($user->role_id >= 4) 
-            {
+            if ($user->role_id >= 4) {
                 return true;
             }
 
@@ -250,8 +237,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('student-crud', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -260,8 +246,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('subject-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
@@ -270,8 +255,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('teacher-crud', function ($user) {
 
-            if($user->role_id >= 3)
-            {
+            if ($user->role_id >= 3) {
                 return true;
             }
 
@@ -280,8 +264,16 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('the-class-crud', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
+                return true;
+            }
+
+            return false;
+        });
+
+        Gate::define('recovery-password-crud', function ($user) {
+
+            if ($user->role_id >= 4) {
                 return true;
             }
 
@@ -290,13 +282,23 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('access-system-setup', function ($user) {
 
-            if($user->role_id >= 5)
-            {
+            if ($user->role_id >= 5) {
                 return true;
             }
 
             return false;
         });
+
+        Gate::define('access-home-stats', function ($user) {
+
+            if ($user->role_id >= 2) {
+                return true;
+            }
+
+            return false;
+        });
+
+
 
 
     }

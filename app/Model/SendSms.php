@@ -11,11 +11,10 @@ use Illuminate\Support\Facades\Config;
 
 class SendSms extends Model
 {
-    public function send_sms($to,$tag)
+    public function send_sms($to,$tag,$message)
     {
-       // $school_name = Preference::query()->pluck('institute_name')->first();
-        $school_name = Preference::query()->where('key', 'institute_name')->first();;
-        $message = "Absent Alert From ".$school_name->value;
+
+
         $token = Config::get('constants.sms_bundle.token');
         $uri = "http://sms.greenweb.com.bd/api.php";
         //GuzzleHttp\Client

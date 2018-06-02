@@ -15,7 +15,7 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->string('name');
             $table->float('full_marks',5,2)->nullable();
             $table->float('pass_marks',5,2)->nullable();

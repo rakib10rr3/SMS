@@ -12,7 +12,7 @@
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
-            <h5 class="text-blue">Attendance</h5>
+            <h5 class="text-blue">Information</h5>
 
         </div>
 

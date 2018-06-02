@@ -24,24 +24,28 @@ Route::get('/setup', function () {
 
 Auth::routes();
 
-Route::get('/subjects/optional', 'OptionalAssignController@index')->name('subjects.optional.index')
+
+Route::get('subjects/optional', 'OptionalAssignController@index')->name('subjects.optional.index')
     ->middleware(['auth', 'can:optional-assign-crud']);
-Route::post('/subjects/optional/list', 'OptionalAssignController@getData')->name('getStudentDataForSelection')
+Route::post('subjects/optional/list', 'OptionalAssignController@getData')->name('getStudentDataForSelection')
     ->middleware(['auth', 'can:optional-assign-crud']);
-Route::get('/subjects/optional/assign', 'OptionalAssignController@assign')->name('assign')
+Route::get('subjects/optional/assign', 'OptionalAssignController@assign')->name('assign')
     ->middleware(['auth', 'can:optional-assign-crud']);
-Route::post('/subjects/optional/store', 'OptionalAssignController@store')
+Route::post('subjects/optional/store', 'OptionalAssignController@store')
     ->middleware(['auth', 'can:optional-assign-crud']);
 //Route::get('/subjects/optional/edit','OptionalAssignController@edit');
-Route::post('/subjects/optional/edit', 'OptionalAssignController@getStudentDataWithOptionalSubject')->name('edit')
+Route::post('subjects/optional/edit', 'OptionalAssignController@getStudentDataWithOptionalSubject')->name('edit')
     ->middleware(['auth', 'can:optional-assign-crud']);
-Route::post('/subjects/optional/update', 'OptionalAssignController@update')
+Route::post('subjects/optional/update', 'OptionalAssignController@update')
     ->middleware(['auth', 'can:optional-assign-crud']);
-Route::post('/subjects/optional/edit/list', 'OptionalAssignController@getStudentDataWithOptionalSubject')
+Route::post('subjects/optional/edit/list', 'OptionalAssignController@getStudentDataWithOptionalSubject')
     ->middleware(['auth', 'can:optional-assign-crud']);
 
-//Route::get('/roll-generator', 'RollController@index')
-//    ->middleware(['auth']);
+Route::get('roll-generator', 'RollController@index')->name('rollGenerator.index')
+    ->middleware(['auth', 'can:roll-generator-crud']);
+Route::get('api/roll-generator/{class}/{session}', 'RollController@apiGenerateRoll')->name('api.roll.generate')
+    ->middleware(['auth', 'can:roll-generator-crud']);
+
 //Route::get('/roll-generator/auto', 'RollController@autoGenerate')->name('autoRoll')
 //    ->middleware(['auth']);
 //Route::get('/roll-generator/merit')->name('meritRoll')
@@ -49,10 +53,10 @@ Route::post('/subjects/optional/edit/list', 'OptionalAssignController@getStudent
 //Route::post('/roll-generator/auto/list', 'RollController@getAutoRollList')->name('autoRollList')
 //    ->middleware(['auth']);
 
-// TODO check it
-Route::post('/getSubjects', 'SubjectController@getSubject')
-    ->middleware(['auth']);
 
+// TODO check it
+Route::post('getSubjects', 'SubjectController@getSubject')->name('getSubjectsOfClass')
+    ->middleware(['auth']);
 
 Route::resource('shifts', 'ShiftController')
     ->middleware(['auth', 'can:shift-crud']);
@@ -82,14 +86,15 @@ Route::resource('staff', 'StaffController')
 
 Route::post('students/getStudentList', 'StudentController@getStudentList')->name('getStudentListFromStudentController')
     ->middleware(['auth', 'can:student-crud']);
+
 Route::resource('students', 'StudentController')
     ->middleware(['auth', 'can:student-crud']);
 
 
 Route::resource('subjects', 'SubjectController')
     ->middleware(['auth', 'can:subject-crud']);
-// todo: api just need login
-Route::get('api/subjects/{class}', 'SubjectController@apiGetSubject')
+// note: api just need login
+Route::get('api/subjects/{class}', 'SubjectController@apiGetSubjectByClass')
     ->middleware(['auth']);
 Route::get('api/subjects/{class}/{group}', 'SubjectController@apiGetSubjectByClassAndGroup')
     ->middleware(['auth']);
@@ -101,19 +106,26 @@ Route::put('preference', 'PreferenceController@update')->name('preference.update
     ->middleware(['auth', 'can:preference-crud']);
 
 
+Route::get('recovery/password', 'PasswordController@index')->name('recovery.password.index')
+    ->middleware(['auth', 'can:recovery-password-crud']);
+Route::post('recovery/password', 'PasswordController@update')->name('recovery.password.update')
+    ->middleware(['auth', 'can:recovery-password-crud']);
+
+
 //Route::resource('subjectAssigns', 'SubjectAssignController')
 //    ->middleware(['auth']);
 
 // todo -_-
 Route::resource('classAssigns', 'ClassAssignController')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'can:class-assign-crud']);
 
 
 Route::get('send-sms/select', 'SendSmsController@select')->name('sendSms.select')
     ->middleware(['auth', 'can:sms-send']);
 Route::post('send-sms/create', 'SendSmsController@create')->name('sendSms.create')
     ->middleware(['auth', 'can:sms-send']);
-Route::post('send-sms/show', 'SendSmsController@store')->name('sendSms.store');
+Route::post('send-sms/show', 'SendSmsController@store')->name('sendSms.store')
+    ->middleware(['auth', 'can:sms-send']);
 Route::get('send-sms/balance', 'SendSmsController@balance')->name('sendSms.balance')
     ->middleware(['auth', 'can:sms-send']);
 
@@ -181,3 +193,10 @@ Route::post('promotion', 'PromotionController@view')->name('promotion.view')
     ->middleware(['auth', 'can:promotion-crud']);
 Route::post('promotion/update', 'PromotionController@update')->name('promotion.update')
     ->middleware(['auth', 'can:promotion-crud']);
+
+
+//todo: shohag : add can: method
+//print Routes
+Route::get('print/select', 'PrintController@select')->name('print.select')->middleware(['auth']);
+Route::post('print/show', 'PrintController@show')->name('print.show')->middleware(['auth']);
+

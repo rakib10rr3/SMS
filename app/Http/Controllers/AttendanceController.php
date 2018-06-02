@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Attendance;
+use App\Model\Preference;
 use App\Model\Section;
 use App\Model\Shift;
 use App\Model\Student;
@@ -95,6 +96,7 @@ class AttendanceController extends Controller
                         'section_id' => $section_id,
                         'student_id' => $key,
                     ]);
+
                 }
             }
         }
@@ -110,7 +112,12 @@ class AttendanceController extends Controller
         // echo $sms_to;
 
         if ($sms_to_absent == "on") {
-            (new \App\SendSms)->send_sms($sms_to, "Absent Tag");
+
+            $school_name = Preference::query()->where('key', 'institute_name')->first();;
+
+            $message = "Absent Alert From " . $school_name->value;
+
+            (new \App\SendSms)->send_sms($sms_to, "Absent Tag", $message);
         }
 
         /**

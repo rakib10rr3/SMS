@@ -10,7 +10,9 @@ use App\Model\Shift;
 use App\Model\SmsHistory;
 use App\Model\Student;
 use App\Model\Subject;
+use App\Model\Teacher;
 use App\Model\TheClass;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -44,28 +46,37 @@ class SendSmsController extends Controller
 
         } else if ($type == "teacher") {
 
+
             $class_id = $request->get('the_class_id');
-            $class_name = TheClass::where('id', '=', $class_id)->get();
             $subject_id = $request->get('subject_id');
-            $subject_name = Subject::where('id', '=', $subject_id)->get();
             $section_id = $request->get('section_id');
-            $section_name = Section::where('id', '=', $section_id)->get();
+
+
+
+
+            //dd($class_id,$subject_id,$section_id);
 
             $query = ClassAssign::query();
-            if (!empty($class_id)) {
-                $query = $query->where('the_class_id', $class_id);
+            if($class_id==null && $subject_id==null && $section_id==null)
+            {
+                $teachers=ClassAssign::all();
             }
-
-            if (!empty($subject_id)) {
-                $query = $query->where('subject_id', $subject_id);
+            else
+            {
+                if (! $class_id==null) {
+                    $query = $query->where('the_class_id', $class_id);
+                }
+                if (! $subject_id==null) {
+                    $query = $query->where('subject_id', $subject_id);
+                }
+                if (! $section_id==null) {
+                    $query = $query->where('section_id', $section_id);
+                }
+                $teachers = $query->get();
             }
-            if (!empty($section_id)) {
-                $query = $query->where('section_id', $section_id);
-            }
-            $teachers = $query->get();
-            //$teachers = ClassAssign::where('the_class_id', $class_id)->where('subject_id', $subject_id)->where('section_id', $section_id)->get();
-            return view('send_sms.create', compact('teachers', 'type', 'section_name', 'subject_name', 'class_name'));
+            return view('send_sms.create', compact('teachers', 'type'));
         } else {
+
             /*
              * User used Custom Message Tab
              */
@@ -93,7 +104,7 @@ class SendSmsController extends Controller
             $sms_history_obj->save();
 
 
-            return redirect('sendSms/select');
+            return redirect()->route('sendSms.select');
         }
 
     }
@@ -127,13 +138,20 @@ class SendSmsController extends Controller
         $uri = "http://sms.greenweb.com.bd/api.php";
         //GuzzleHttp\Client
         $client = new Client();
-        $result = $client->post($uri, [
-            'form_params' => [
-                'to' => $to,
-                'message' => $message,
-                'token' => $token
-            ]
-        ]);
+
+
+        try {
+            $client->post($uri, [
+                'form_params' => [
+                    'to' => $to,
+                    'message' => $message,
+                    'token' => $token
+                ]
+            ]);
+        } catch (ClientException $e) {
+            Session::flash('message', 'Couldnt Send Sms . Please Check Internet Connection ');
+
+        }
 
         /*
          * Saving the log to the Sms History
@@ -148,7 +166,7 @@ class SendSmsController extends Controller
         $sms_history_obj->tag = Config::get('constants.tag.' . $tag);
         $sms_history_obj->save();
 
-        return redirect('sendSms/select');
+        return redirect()->route('sendSms.select');
     }
 
 

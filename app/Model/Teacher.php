@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     protected $guarded = [];
@@ -33,22 +33,6 @@ class Teacher extends Model
     public function classAssigns()
     {
         return $this->hasMany(ClassAssign::class);
-    }
-
-    public function subjects()
-    {
-        return $this->belongsToMany('App\Model\Subject', 'subject_assigns', 'teacher_id', 'subject_id');
-    }
-
-    //todo : teacher belongs to many class
-    public function classes()
-    {
-        return $this->belongsToMany('App\Model\Subject', 'subject_assigns', 'teacher_id', 'subject_id');
-    }
-    //todo : teacher belongs to many sections
-    public function sections()
-    {
-        return $this->belongsToMany('App\Model\Subject', 'subject_assigns', 'teacher_id', 'subject_id');
     }
 
 

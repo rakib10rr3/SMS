@@ -102,9 +102,6 @@
 
 
     <!-- Medium modal -->
-    <div class="col-md-4 col-sm-12">
-        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-
 
             <div class="modal fade" id="Medium-modal" tabindex="-1" role="dialog"
                  aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -133,8 +130,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 
 

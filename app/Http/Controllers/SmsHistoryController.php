@@ -14,7 +14,7 @@ class SmsHistoryController extends Controller
 
     public function index()
     {
-        $all_sms = SmsHistory::all();
+        $all_sms = SmsHistory::orderBy('created_at','desc')->get();
         return view('sms_history.index', compact('all_sms'));
     }
 

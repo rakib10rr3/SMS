@@ -26,7 +26,8 @@ class GroupController extends Controller
      */
     public function create()
     {
-        return view('group.create');
+        $success = false;
+        return view('group.create', compact('success'));
 
     }
 
@@ -50,9 +51,7 @@ class GroupController extends Controller
 
 
         Group::query()->create($request->all());
-        $success = true;
-        $groups = Group::all();
-        return view('group.index', compact('success', 'groups'));
+        return redirect('/groups');
     }
 
     /**
@@ -74,8 +73,8 @@ class GroupController extends Controller
     public function edit(Group $group)
     {
         $group = Group::query()->find($group);
-        return view('group.edit', compact('group'));
-
+        $success = false;
+        return view('group.edit', compact('group', compact('success')));
     }
 
     /**
@@ -88,7 +87,7 @@ class GroupController extends Controller
     public function update(Request $request, Group $group)
     {
         $group->update($request->all());
-        return redirect('/groups');
+
     }
 
     /**
@@ -99,8 +98,8 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
+        //return $group;
         $group->delete();
-        return redirect('/groups');
 
     }
 

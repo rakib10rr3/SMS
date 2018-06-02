@@ -127,7 +127,6 @@ class StudentController extends Controller
             'admission_year.required' => "Admission Year field is required",
             'session_year.between' => 'Session must be between year 2000 and 2099',
             'session_year.digits' => 'Session year must be of 4 digits'
-
         ];
 
         $this->validate($request, $rules, $customMessages);
@@ -216,7 +215,6 @@ class StudentController extends Controller
             'section_id' => $request->section_id,
             'group_id' => $request->group_id,
             'cell' => $request->cell,
-            'session' => $request->session_year,
 
         ]);
 
@@ -396,13 +394,8 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        $file_path = public_path() . '/images/students/' . $student->photo;
-        Log::debug($file_path);
-        //Storage::delete($file_path);
-        if (file_exists($file_path)){
-            unlink($file_path);
-        }
-        User::query()->where('id', $student->user_id)->delete();
+        User::query()->where('id',$student->user_id)->delete();
+
         return redirect('/students');
     }
 

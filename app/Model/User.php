@@ -56,4 +56,29 @@ class User extends Authenticatable
     {
         return $this->hasOne(Staff::class);
     }
+
+    /**
+     * Return the user display name
+     * @return string
+     */
+    public function getUserDisplayName()
+    {
+        $student = $this->student;
+        $teacher = $this->teacher;
+        $staff = $this->staff;
+
+        if (!is_null($teacher)) {
+            return $teacher->name;
+        }
+
+        if (!is_null($student)) {
+            return $student->name;
+        }
+
+        if (!is_null($staff)) {
+            return $staff->name;
+        }
+
+        return $this->username;
+    }
 }

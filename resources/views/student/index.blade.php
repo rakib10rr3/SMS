@@ -9,6 +9,7 @@
 @section('content')
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
         <div class="form-group pd-20 bg-white border-radius-4 box-shadow mb-30">
             @if (session('message'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -89,8 +90,10 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Session :</label>
-                            <input type="number" class="form-control" placeholder="Select Session Year" id="session_year"
-                                   min="2000" max="2099"   name="session_year" value="{{Carbon\Carbon::now()->format('Y')}}" required/>
+                            <input type="number" class="form-control" placeholder="Select Session Year"
+                                   id="session_year"
+                                   min="2000" max="2099" name="session_year"
+                                   value="{{Carbon\Carbon::now()->format('Y')}}" required/>
                         </div>
                     </div>
 
@@ -107,7 +110,7 @@
             </div>
         </div>
         <div class="row">
-            <table id="students_table" class="data-table stripe hover nowrap">
+            <table id="students_table" class="data-table stripe hover nowrap" style="width: 100%;">
                 <thead>
                 <tr>
                     <th>Roll</th>
@@ -132,8 +135,9 @@
                             <td>{{$student->is_active}}</td>
                             </td>
                             <td>{{$student->group->name}}</td>
-                            
-                            <td><img src="/images/{{$student->user_id}}/{{$student->photo}}" class="img-responsive" alt="Student Photo"></td>
+
+                            <td><img src="/images/{{$student->user_id}}/{{$student->photo}}" class="img-responsive"
+                                     alt="Student Photo"></td>
                             <td>
                                 <div class="dropdown">
                                     <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"
@@ -144,7 +148,8 @@
                                         <a class="dropdown-item" href="/students/{{$student->id}}/edit"><i
                                                     class="fa fa-pencil"></i> Edit</a>
 
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}" data-user_id = {{$student->user_id}}><i
+                                        <a class="dropdown-item ts-delete" href="" data-id="{{$student->id}}"
+                                           data-user_id= {{$student->user_id}}><i
                                                     class="fa fa-pencil"></i> Delete</a>
                                     </div>
                                 </div>
@@ -154,8 +159,11 @@
                 @endif
                 </tbody>
             </table>
+
         </div>
+
     </div>
+
 @endsection
 
 
@@ -173,6 +181,8 @@
     <script src="/src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="/src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
+
+
     <script>
         $('document').ready(function () {
             $('.data-table').DataTable({
@@ -223,7 +233,6 @@
             });
         });
     </script>
-
     <script>
         $(document).ready(function () {
             $("#btn-generate").click(function (e) {
@@ -256,6 +265,7 @@
                         session_year: session,
                     },
                     success: function (data) {
+                        console.log(data);
                         var opening;
                         var activeStatus;
                         var ending;
@@ -268,7 +278,7 @@
                             enable();
                             $.each(data, function (index, element) {
 
-                                if (element.is_active == 1){
+                                if (element.is_active == 1) {
                                     opening = '<p id=\"active\" class=\"badge badge-success\">';
                                     activeStatus = "Active";
                                 } else {
@@ -283,9 +293,9 @@
                                     element.father_name,
                                     element.mother_name,
                                     element.local_guardian_cell,
-                                    '<img height="50px" width="50px" src="/images/students/'+ element.photo +'"\n' +
+                                    '<img height="50px" width="50px" src="/images/students/' + element.photo + '"\n' +
                                     '                                     alt="pic">',
-                                    opening + activeStatus +'</p>',
+                                    opening + activeStatus + '</p>',
                                     '<div class="dropdown">\n' +
                                     '                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"\n' +
                                     '                                       data-toggle="dropdown">\n' +
@@ -294,7 +304,7 @@
                                     '                                    <div class="dropdown-menu dropdown-menu-right">\n' +
                                     '                                        <a href="/students/' + element.id + '/edit" class="dropdown-item"><i\n' +
                                     '                                                    class="fa fa-pencil"></i> Edit</a>\n' +
-                                    '                                        <a class="dropdown-item ts-delete" data-id="'+element.id+'" href=""><i\n' +
+                                    '                                        <a class="dropdown-item ts-delete" data-id="' + element.id + '" href=""><i\n' +
                                     '                                                    class="fa fa-pencil"></i> Delete</a>\n' +
                                     '                                    </div>\n' +
                                     '                                </div>'
@@ -365,12 +375,6 @@
                     }
                 });
         });
-    </script>
-
-    <script>
-        function edit(id) {
-            console.log(id);
-        }
     </script>
 
 
