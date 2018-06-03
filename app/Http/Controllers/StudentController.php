@@ -390,6 +390,7 @@ class StudentController extends Controller
      *
      * @param  \App\Model\Student $student
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Student $student)
     {
@@ -401,7 +402,6 @@ class StudentController extends Controller
 
     public function getStudentList(Request $request)
     {
-
         $students = Student::query()
             ->where('the_class_id', '=', $request->the_class_id)
             ->where('group_id', '=', $request->group_id)
@@ -410,6 +410,7 @@ class StudentController extends Controller
             ->where('session', '=', $request->session_year)
             ->orderBy('roll')
             ->get();
+
         return $students;
     }
 

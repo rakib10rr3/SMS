@@ -113,6 +113,7 @@
             <table id="students_table" class="data-table stripe hover nowrap" style="width: 100%;">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Roll</th>
                     <th>Name</th>
                     <th>Father's Name</th>
@@ -128,12 +129,13 @@
                 @else
                     @foreach($students as $student)
                         <tr>
+                            <td>{{$student->user->username}}</td>
                             <td>{{$student->roll}}</td>
                             <td>{{$student->name}}</td>
                             <td>{{$student->theClass->name}}</td>
                             <td>{{$student->section->name}}</td>
                             <td>{{$student->is_active}}</td>
-                            </td>
+
                             <td>{{$student->group->name}}</td>
 
                             <td><img src="/images/{{$student->user_id}}/{{$student->photo}}" class="img-responsive"
@@ -169,10 +171,10 @@
 
 @section('scripts')
 
-    <script src="{{asset('/src/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('/src/plugins/datatables/media/js/dataTables.bootstrap4.js')}}"></script>
-    <script src="{{asset('/src/plugins/datatables/media/js/dataTables.responsive.js')}}"></script>
-    <script src="{{asset('/src/plugins/datatables/media/js/responsive.bootstrap4.js')}}"></script>
+    <script src="/src/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/src/plugins/datatables/media/js/dataTables.bootstrap4.js"></script>
+    <script src="/src/plugins/datatables/media/js/dataTables.responsive.js"></script>
+    <script src="/src/plugins/datatables/media/js/responsive.bootstrap4.js"></script>
     <!-- buttons for Export datatable -->
     <script src="/src/plugins/datatables/media/js/button/dataTables.buttons.js"></script>
     <script src="/src/plugins/datatables/media/js/button/buttons.bootstrap4.js"></script>
@@ -293,21 +295,19 @@
                                     element.father_name,
                                     element.mother_name,
                                     element.local_guardian_cell,
-                                    '<img height="50px" width="50px" src="/images/students/' + element.photo + '"\n' +
-                                    '                                     alt="pic">',
                                     opening + activeStatus + '</p>',
                                     '<div class="dropdown">\n' +
-                                    '                                    <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"\n' +
-                                    '                                       data-toggle="dropdown">\n' +
-                                    '                                        <i class="fa fa-ellipsis-h"></i>\n' +
-                                    '                                    </a>\n' +
-                                    '                                    <div class="dropdown-menu dropdown-menu-right">\n' +
-                                    '                                        <a href="/students/' + element.id + '/edit" class="dropdown-item"><i\n' +
-                                    '                                                    class="fa fa-pencil"></i> Edit</a>\n' +
-                                    '                                        <a class="dropdown-item ts-delete" data-id="' + element.id + '" href=""><i\n' +
-                                    '                                                    class="fa fa-pencil"></i> Delete</a>\n' +
-                                    '                                    </div>\n' +
-                                    '                                </div>'
+                                    '<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"\n' +
+                                    ' data-toggle="dropdown">\n' +
+                                    '<i class="fa fa-ellipsis-h"></i>\n' +
+                                    '</a>\n' +
+                                    '<div class="dropdown-menu dropdown-menu-right">\n' +
+                                    '<a href="/students/' + element.id + '/edit" class="dropdown-item"><i\n' +
+                                    ' class="fa fa-pencil"></i> Edit</a>\n' +
+                                    '<a class="dropdown-item ts-delete" data-id="' + element.id + '" href=""><i\n' +
+                                    ' class="fa fa-pencil"></i> Delete</a>\n' +
+                                    '</div>\n' +
+                                    '</div>'
                                 ]).draw(false);
                             });
                         } else {

@@ -4,7 +4,8 @@
             <img src="/vendors/images/logo-full-color.png" alt="Logo">
         </a>
     </div>
-    <div class="menu-block customscroll">
+    {{--<div class="menu-block customscroll">--}}
+    <div class="menu-block">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
 
