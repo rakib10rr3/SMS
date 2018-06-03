@@ -215,6 +215,7 @@ class StudentController extends Controller
             'section_id' => $request->section_id,
             'group_id' => $request->group_id,
             'cell' => $request->cell,
+            'session' =>$request->session_year,
 
         ]);
 
