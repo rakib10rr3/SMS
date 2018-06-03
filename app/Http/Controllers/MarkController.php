@@ -148,6 +148,7 @@ class MarkController extends Controller
          * Check if data already exist
          */
 
+
         $check_result = Mark::where('the_class_id', $query['theclass'])
             ->where('subject_id', $query['subject'])
             ->where('section_id', $query['section'])

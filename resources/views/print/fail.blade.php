@@ -11,7 +11,7 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
         <div class="form-group pd-20 bg-white border-radius-4 box-shadow mb-30">
-            <form action="{{route('print.show')}}" method="post">
+            <form action="{{route('print.showFail')}}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col">
@@ -97,7 +97,7 @@
 
                 </div>
 
-                <button id="btn-generate" name="btn-generate" class="btn btn-success">Get Merit List</button>
+                <button id="btn-fail-generate" name="btn-fail-generate" class="btn btn-warning">Get Fail List</button>
             </form>
         </div>
 

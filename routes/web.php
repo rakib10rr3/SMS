@@ -199,4 +199,7 @@ Route::post('promotion/update', 'PromotionController@update')->name('promotion.u
 //print Routes
 Route::get('print/select', 'PrintController@select')->name('print.select')->middleware(['auth']);
 Route::post('print/show', 'PrintController@show')->name('print.show')->middleware(['auth']);
+Route::get('print/fail', 'PrintController@fail')->name('print.fail')->middleware(['auth']);
+Route::post('print/fail/list', 'PrintController@showFail')->name('print.showFail')->middleware(['auth']);
+
 
