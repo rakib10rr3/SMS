@@ -368,16 +368,16 @@
                 $parent.find('#grade').text("F");
             });
 
-            var pass_written = parseInt($('#pass_written').text()) || 0;
-            var pass_mcq = parseInt($('#pass_mcq').text()) || 0;
-            var pass_practical = parseInt($('#pass_practical').text()) || 0;
+            var pass_written = parseFloat($('#pass_written').text()) || 0;
+            var pass_mcq = parseFloat($('#pass_mcq').text()) || 0;
+            var pass_practical = parseFloat($('#pass_practical').text()) || 0;
 
             $('.ts-student-row input').on('keyup', function () {
                 var $parent = $(this).parent().parent();
 
-                var $written = parseInt($parent.find('#written').val()) || 0;
-                var $mcq = parseInt($parent.find('#mcq').val()) || 0;
-                var $practical = parseInt($parent.find('#practical').val()) || 0;
+                var $written = parseFloat($parent.find('#written').val()) || 0;
+                var $mcq = parseFloat($parent.find('#mcq').val()) || 0;
+                var $practical = parseFloat($parent.find('#practical').val()) || 0;
 
                 var is_fail = false;
 
@@ -425,7 +425,7 @@
 
 
         function getPoint(val) {
-            val = parseInt(val);
+            val = parseFloat(val);
 
             var length = grade_value.length;
 
@@ -441,7 +441,7 @@
         }
 
         function getGrade(val) {
-            val = parseInt(val);
+            val = parseFloat(val);
 
             var length = grade_value.length;
 

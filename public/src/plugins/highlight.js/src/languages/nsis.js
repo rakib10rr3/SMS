@@ -97,7 +97,7 @@ function(hljs) {
       ),
       {
         className: 'function',
-        beginKeywords: 'Function PageEx section SectionGroup', end: '$'
+        beginKeywords: 'Function PageEx Section SectionGroup', end: '$'
       },
       STRING,
       COMPILER,

@@ -59,7 +59,8 @@ class MarkController extends Controller
          * Check if data already exist
          */
 
-        $check_result = Mark::where('the_class_id', $query['theclass'])
+        $check_result = Mark::query()
+            ->where('the_class_id', $query['theclass'])
             ->where('subject_id', $query['subject'])
             ->where('section_id', $query['section'])
             ->where('shift_id', $query['shift'])
@@ -140,7 +141,8 @@ class MarkController extends Controller
          * Check if data already exist
          */
 
-        $check_result = Mark::where('the_class_id', $query['theclass'])
+        $check_result = Mark::query()
+            ->where('the_class_id', $query['theclass'])
             ->where('subject_id', $query['subject'])
             ->where('section_id', $query['section'])
             ->where('shift_id', $query['shift'])
@@ -230,7 +232,7 @@ class MarkController extends Controller
                 $mark->mcq = $mark_mcq;
                 $mark->practical = $mark_practical;
 
-                $mark_total = intval($mark_written) + intval($mark_mcq) + intval($mark_practical);
+                $mark_total = floatval($mark_written) + floatval($mark_mcq) + floatval($mark_practical);
 
                 $mark->total_marks = $mark_total;
 
@@ -388,23 +390,15 @@ class MarkController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Mark $mark
-     * @return \Illuminate\Http\Response
+     * ***********************************************************************************************
+     * ***********************************************************************************************
+     * ***********************************************************************************************
      */
-//    public function edit(Request $request)
-//    {
-//        //
-//    }
 
     /**
-     * ***********************************************************************************************
-     * ***********************************************************************************************
-     * ***********************************************************************************************
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-
-
     public function updateAdd(Request $request)
     {
         $query = $request->except(['_token']);
@@ -513,7 +507,7 @@ array:12 [▼
                 $mark->mcq = $mark_mcq;
                 $mark->practical = $mark_practical;
 
-                $mark_total = intval($mark_written) + intval($mark_mcq) + intval($mark_practical);
+                $mark_total = floatval($mark_written) + floatval($mark_mcq) + floatval($mark_practical);
 
                 $mark->total_marks = $mark_total;
 
