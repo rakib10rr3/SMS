@@ -87,13 +87,12 @@
             <table id="mytable" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-
-                    <th>Rank</th>
                     <th>Student ID</th>
                     <th>Student Name</th>
                     <th>Roll</th>
+                    <th>Fail Subjects</th>
                     <th>Total</th>
-                    <th>Point</th>
+                    <th>Position</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -102,6 +101,7 @@
                 @if(empty($students))
 
                     <p>Data does not exist</p>
+
                 @elseif( $groupFlag=="on")
 
                     @foreach($students as $student)
@@ -122,17 +122,42 @@
                     @endforeach
                 @else
                     @foreach($students as $student)
+
+                        @php
+
+                            /*
+                            $subjects = \App\Model\Mark::with('subject')
+                            ->where('student_id', $student->student_id)
+                            ->where('session', $student->session)
+                            ->where('exam_term_id', $student->exam_term_id)
+                            ->where('point', 0)
+                            ->get();
+                            */
+                            $subjects = \App\Model\Mark::query()->select('subjects.name','marks.total_marks')
+                            ->leftJoin('subjects', 'subjects.id', '=', 'marks.subject_id')
+                            ->where('student_id', $student->student_id)
+                            ->where('session', $student->session)
+                            ->where('exam_term_id', $student->exam_term_id)
+                            ->where('point', 0)
+
+                            ->get();
+
+
+
+                        @endphp
+
                         <tr>
-                            <td class="table-plus">{{$loop->iteration}}</td>
                             <td>{{ $student->id }}</td>
                             <td>{{ $student->student->name }}</td>
-                            @if($student->roll==null)
-                                <td>No previous record</td>
-                            @else
-                                <td>{{ $student->roll }}</td>
-                            @endif
+                            {{--@if($student->roll==null)--}}
+                            {{--<td>No previous record</td>--}}
+                            {{--@else--}}
+                            <td>{{ $student->student->roll }}</td>
+                            {{--@endif--}}
+                            <td>@foreach($subjects as $subject)@if($loop->iteration != 1){{", "}}@endif{{ $subject->name }} ({{ $subject->total_marks  }})@endforeach</td>
+
                             <td>{{ $student->total_marks }}</td>
-                            <td>{{ $student->point }}</td>
+                            <td>{{$loop->iteration}}</td>
 
                         </tr>
                     @endforeach
