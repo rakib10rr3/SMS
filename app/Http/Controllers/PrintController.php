@@ -108,19 +108,19 @@ class PrintController extends Controller
 
         //dd($class_id,$subject_id,$section_id);
 
-        $students = Student::query()
-            ->where('group_id',$group_id)
-            ->get();
-        return $students;
-
-        $students = MeritList::query()
-            ->where('the_class_id',$class_id)
-            ->where('section_id',$section_id)
-            ->where('shift_id',$shift_id)
-            ->where('exam_term_id',$exam_term_id)
-            ->where('session',$session)
-            ->get();
-        return $students;
+//        $students = Student::query()
+//            ->where('group_id',$group_id)
+//            ->get();
+//        return $students;
+//
+//        $students = MeritList::query()
+//            ->where('the_class_id',$class_id)
+//            ->where('section_id',$section_id)
+//            ->where('shift_id',$shift_id)
+//            ->where('exam_term_id',$exam_term_id)
+//            ->where('session',$session)
+//            ->get();
+//        return $students;
 
         /*
                 Group
@@ -135,6 +135,8 @@ class PrintController extends Controller
         } else {
             $groupFlag = "off";
         }
+
+        $query = MeritList::query();
 
         if (!$class_id == null) {
             $query = $query->where('the_class_id', $class_id);
@@ -151,9 +153,11 @@ class PrintController extends Controller
         if (!$session == null) {
             $query = $query->where('session', $session);
         }
-        $query = $query->orderBy('total_marks');
-        $students = $query->get();
+        $query = $query->orderBy('total_marks','DESC')->where('point','=',0);
 
+
+
+        $students = $query->get();
 
 
         $class_name = TheClass::find($class_id)->name;
