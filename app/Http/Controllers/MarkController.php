@@ -99,11 +99,19 @@ class MarkController extends Controller
 
         $grades = Grade::orderBy('min_value', 'DESC')->get();
 
-        $students = Student::where('the_class_id', $query['theclass'])
-            ->where('section_id', $query['section'])
-            ->where('shift_id', $query['shift'])
-            ->where('group_id', $query['group'])
-            ->get();
+        if($query['group'] == 1)
+        {
+            $students = Student::where('the_class_id', $query['theclass'])
+                ->where('section_id', $query['section'])
+                ->where('shift_id', $query['shift'])
+                ->get();
+        } else {
+            $students = Student::where('the_class_id', $query['theclass'])
+                ->where('section_id', $query['section'])
+                ->where('shift_id', $query['shift'])
+                ->where('group_id', $query['group'])
+                ->get();
+        }
 
         $disable_form = true;
 
@@ -179,11 +187,19 @@ class MarkController extends Controller
         // Getting dynamic Fail id
         $grade_fail_id = Grade::where('name', 'F')->pluck('id')->first();
 
-        $students = Student::where('the_class_id', $query['theclass'])
-            ->where('section_id', $query['section'])
-            ->where('shift_id', $query['shift'])
-            ->where('group_id', $query['group'])
-            ->get();
+        if($query['group'] == 1)
+        {
+            $students = Student::where('the_class_id', $query['theclass'])
+                ->where('section_id', $query['section'])
+                ->where('shift_id', $query['shift'])
+                ->get();
+        } else {
+            $students = Student::where('the_class_id', $query['theclass'])
+                ->where('section_id', $query['section'])
+                ->where('shift_id', $query['shift'])
+                ->where('group_id', $query['group'])
+                ->get();
+        }
 
         foreach ($students as $student) {
             /**

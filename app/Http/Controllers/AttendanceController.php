@@ -114,6 +114,7 @@ class AttendanceController extends Controller
         if ($sms_to_absent == "on") {
 
             $school_name = Preference::query()->where('key', 'institute_name')->first();;
+
             $message = "Absent Alert From " . $school_name->value;
 
             (new \App\SendSms)->send_sms($sms_to, "Absent Tag", $message);

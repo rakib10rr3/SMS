@@ -41,7 +41,7 @@
                             <td>{{$teacher->religion->name}}</td>
                             <td>{{$teacher->bloodGroup->name}}</td>
                             <td>{{$teacher->gender->name}}</td>
-                            <td><img src="images/teachers/{{$teacher->photo}}" class="img-rounded"
+                            <td><img height="50px" width="50px" src="images/teachers/{{$teacher->photo}}" class="img-rounded"
                                      alt="Teacher Photo"></td>
                             <td>
                                 <div class="dropdown">

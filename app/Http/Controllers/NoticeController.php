@@ -14,8 +14,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $notices = Notice::all();
-        return view('notice.index', compact('notices'))->with('i',(request()->input('page',1)-1)*5);
+        $notices = Notice::orderBy('created_at', 'desc')->get();
+        return view('notice.index', compact('notices'));
     }
 
     /**
@@ -31,7 +31,7 @@ class NoticeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +43,7 @@ class NoticeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Notice  $notice
+     * @param  \App\Model\Notice $notice
      * @return \Illuminate\Http\Response
      */
     public function show(Notice $notice)
@@ -54,7 +54,7 @@ class NoticeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Notice  $notice
+     * @param  \App\Model\Notice $notice
      * @return \Illuminate\Http\Response
      */
     public function edit(Notice $notice)
@@ -65,8 +65,8 @@ class NoticeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Notice  $notice
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Model\Notice $notice
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Notice $notice)
@@ -78,7 +78,7 @@ class NoticeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Notice  $notice
+     * @param  \App\Model\Notice $notice
      * @return \Illuminate\Http\Response
      */
     public function destroy(Notice $notice)

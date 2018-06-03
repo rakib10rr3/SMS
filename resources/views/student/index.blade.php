@@ -11,6 +11,23 @@
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
         <div class="form-group pd-20 bg-white border-radius-4 box-shadow mb-30">
+            @if (session('message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{session('message')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form>
                 @csrf
                 <div class="row">
@@ -93,7 +110,7 @@
             </div>
         </div>
         <div class="row">
-            <table id="students_table" class="data-table stripe hover nowrap">
+            <table id="students_table" class="data-table stripe hover nowrap" style="width: 100%;">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -102,6 +119,7 @@
                     <th>Father's Name</th>
                     <th>Mother's Name</th>
                     <th>Local Guardian's Cell</th>
+                    <th>Photo</th>
                     <th>Status</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
@@ -143,8 +161,11 @@
                 @endif
                 </tbody>
             </table>
+
         </div>
+
     </div>
+
 @endsection
 
 
@@ -162,6 +183,8 @@
     <script src="/src/plugins/datatables/media/js/button/buttons.flash.js"></script>
     <script src="/src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
+
+
     <script>
         $('document').ready(function () {
             $('.data-table').DataTable({
@@ -212,7 +235,6 @@
             });
         });
     </script>
-
     <script>
         $(document).ready(function () {
             $("#btn-generate").click(function (e) {
@@ -353,12 +375,6 @@
                     }
                 });
         });
-    </script>
-
-    <script>
-        function edit(id) {
-            console.log(id);
-        }
     </script>
 
 

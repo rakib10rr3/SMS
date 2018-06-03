@@ -55,7 +55,7 @@ Route::get('api/roll-generator/{class}/{session}', 'RollController@apiGenerateRo
 
 
 // TODO check it
-Route::post('getSubjects', 'SubjectController@getSubject')
+Route::post('getSubjects', 'SubjectController@getSubject')->name('getSubjectsOfClass')
     ->middleware(['auth']);
 
 Route::resource('shifts', 'ShiftController')
@@ -193,3 +193,13 @@ Route::post('promotion', 'PromotionController@view')->name('promotion.view')
     ->middleware(['auth', 'can:promotion-crud']);
 Route::post('promotion/update', 'PromotionController@update')->name('promotion.update')
     ->middleware(['auth', 'can:promotion-crud']);
+
+
+//todo: shohag : add can: method
+//print Routes
+Route::get('print/select', 'PrintController@select')->name('print.select')->middleware(['auth']);
+Route::post('print/show', 'PrintController@show')->name('print.show')->middleware(['auth']);
+Route::get('print/fail', 'PrintController@fail')->name('print.fail')->middleware(['auth']);
+Route::post('print/fail/list', 'PrintController@showFail')->name('print.showFail')->middleware(['auth']);
+
+

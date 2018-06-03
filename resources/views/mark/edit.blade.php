@@ -228,21 +228,21 @@
 
                             @if($subject->has_written)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
+                                    <input type="number" pattern="^\d{1,3}$" class="form-control" max="{{$subject->written_marks}}" min="0" step="any"
                                            name="written[{{$mark->student->id}}]" id="written"
                                            value="{{empty($mark->written) ? "0" : $mark->written }}"
                                            placeholder="Written Mark" required>
                                 </td>
                             @endif @if($subject->has_mcq)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
+                                    <input type="number" pattern="^\d{1,3}$" class="form-control" max="{{$subject->mcq_marks}}" min="0" step="any"
                                            name="mcq[{{$mark->student->id}}]" id="mcq"
                                            value="{{empty($mark->mcq) ? "0" : $mark->mcq }}"
                                            placeholder="MCQ Mark" required>
                                 </td>
                             @endif @if($subject->has_practical)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
+                                    <input type="number" pattern="^\d{1,3}$" class="form-control" max="{{$subject->practical_marks}}" min="0" step="any"
                                            name="practical[{{$mark->student->id}}]" id="practical"
                                            value="{{empty($mark->practical) ? "0" : $mark->practical }}"
                                            placeholder="Practical Mark" required>

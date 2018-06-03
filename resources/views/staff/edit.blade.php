@@ -154,13 +154,18 @@
                     <section>
                         <div class="row">
                             <div class="col">
-                                <input type="file" name="photo" id="photo"
-                                       value="images/staffs/{{$staff->photo}}">
+                                <input type="file" name="photo" id="photo">
                             </div>
                         </div>
                     </section>
+                    <div class="col-md-12">
+                        <label>Photo</label>
+                        <img height="64px" width="64px" src="/images/staffs/{{$staff->photo}}"
+                             alt="pic">
+                    </div>
                     <div class="row">
                         <div class="col">
+                            <input type="hidden" name="previous_pic" value="{{$staff->photo}}">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
