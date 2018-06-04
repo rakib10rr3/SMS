@@ -38,7 +38,7 @@ mix.js([
 
     .styles([
         // 'public/src/plugins/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.css',
-        'public/src/fonts/font-awesome/css/fontawesome-all.css',
+        'public/src/fonts/font-awesome/css/font-awesome.min.css',
         'public/src/plugins/air-datepicker/dist/css/datepicker.css',
         'public/src/plugins/timedropper/timedropper.css',
         'public/src/plugins/highlight.js/src/styles/solarized-dark.css',

@@ -59,9 +59,9 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item"
-                                           href="{{route('staff.edit', ['staff'=>$staff->id])}}"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                           href="{{route('staff.edit', ['staff'=>$staff->id])}}"><i class="fa fa-pencil"></i> Edit</a>
                                         <a class="dropdown-item ts-delete" href="" data-id="{{$staff->id}}"
-                                           data-user_id= {{$staff->user_id}}><i class="fas fa-trash-alt"></i> Delete</a>
+                                           data-user_id= {{$staff->user_id}}><i class="fa fa-trash"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>

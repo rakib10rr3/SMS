@@ -58,9 +58,9 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
-                                                    class="fa fa-pencil-alt"></i> Edit</a>
+                                                    class="fa fa-pencil"></i> Edit</a>
                                         <a class="dropdown-item ts-delete-alt" href="" data-id="{{$teacher->id}}"
-                                           data-user_id= {{$teacher->user_id}}><i class="fas fa-trash-alt"></i>
+                                           data-user_id= {{$teacher->user_id}}><i class="fa fa-trash"></i>
                                             Delete</a>
                                     </div>
                                 </div>
