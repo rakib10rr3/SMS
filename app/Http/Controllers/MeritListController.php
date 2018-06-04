@@ -12,7 +12,10 @@ use App\Model\Shift;
 use App\Model\Student;
 use App\Model\Subject;
 use App\Model\TheClass;
+use function foo\func;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MeritListController extends Controller
 {
@@ -42,6 +45,8 @@ class MeritListController extends Controller
     public function show(Request $request)
     {
         $query = $request->except(['_token']);
+
+//        dd($query);
 
         /*
         theclass	"2"
@@ -75,12 +80,22 @@ class MeritListController extends Controller
          */
 
         /**
-         * Get All The subjects
+         * Get All The subjects by Group
          */
         $subjects = Subject::query()
             ->where('the_class_id', $query['theclass'])
             ->where('group_id', $query['group'])
             ->get();
+
+        /**
+         * Class 9 and 10 has some common subject
+         */
+        if ($query['theclass'] == 9 || $query['theclass'] == 10) {
+            $subjects_common = Subject::query()
+                ->where('the_class_id', $query['theclass'])
+                ->where('group_id', 1)# 1 = None
+                ->get();
+        }
 
         $is_error = false;
         $subject_list = array();
@@ -101,6 +116,27 @@ class MeritListController extends Controller
             if (empty($mark_count)) {
                 $is_error = true;
                 $subject_list[] = $subject->name;
+            }
+        }
+
+        /**
+         * Check other common subjects for 9 and 10
+         */
+        if ($query['theclass'] == 9 || $query['theclass'] == 10) {
+            foreach ($subjects_common as $subject) {
+                $mark_count = Mark::query()
+                    ->where('the_class_id', $query['theclass'])
+                    ->where('subject_id', $subject->id)
+                    ->where('section_id', $query['section'])
+                    ->where('shift_id', $query['shift'])
+                    ->where('session', $query['session'])
+                    ->where('exam_term_id', $query['exam_term'])
+                    ->count();
+
+                if (empty($mark_count)) {
+                    $is_error = true;
+                    $subject_list[] = $subject->name;
+                }
             }
         }
 
@@ -134,6 +170,7 @@ class MeritListController extends Controller
             ->where('shift_id', $query['shift'])
             ->where('group_id', $query['group'])
             ->get();
+//        return $students;
 
         $total_subject = count($subjects);
 
@@ -142,11 +179,9 @@ class MeritListController extends Controller
         // Getting dynamic Fail id
         $grade_fail_id = Grade::query()->where('name', 'F')->pluck('id')->first();
 
-        foreach ($students as $student) {
+        $optional_subject_id = 0;
 
-//            $total_marks = Mark::query()->where('student_id', $student->id)
-//                ->where('session', $query['session'])
-//                ->sum('total_marks');
+        foreach ($students as $student) {
 
             /**
              * One student can be in one class in one session
@@ -162,21 +197,36 @@ class MeritListController extends Controller
             $total_point = 0;
             if ($student->theClass->name == 'Nine' || $student->theClass->name == 'Ten') {
 
+                /**
+                 * Get all subject marks
+                 */
                 $marks = $student->marks
                     ->where('session', $query['session'])
                     ->where('exam_term_id', $query['exam_term']);
 
-                $optional_subjects = Subject::query()
+                /**
+                 * Get the optional subject ID
+                 */
+                $optional_subject = Subject::query()
                     ->where('is_optional', true)
-                    ->pluck('id')
-                    ->toArray();
+                    ->where('the_class_id', $query['theclass'])
+                    ->where('group_id', $query['group'])
+                    ->first(['id']);
+//                    ->pluck('id');
+
+
+                if ($optional_subject != null) {
+                    $optional_subject_id = $optional_subject->id;
+                }
 
 
                 foreach ($marks as $mark) {
                     /**
                      * If the mark is for a optional subject, then it will be subtracted by 2
                      */
-                    if (array_search($mark->subject_id, $optional_subjects)) {
+//                    if (array_search($mark->subject_id, $optional_subjects)) { # with pluck()
+
+                    if ($mark->subject_id == $optional_subject_id) {
                         $temp_point = $mark->point - 2;
                         if ($temp_point > 0) {
                             $total_point += $temp_point;
@@ -196,7 +246,10 @@ class MeritListController extends Controller
                 ->where('session', $query['session'])
                 ->where('exam_term_id', $query['exam_term'])
                 ->where('point', 0)
+                ->where('subject_id', '<>', $optional_subject_id)
                 ->count();
+
+            Log::debug($fail_count);
 
             $final_grade_point = 0;
             $final_grade_id = $grade_fail_id;
@@ -212,8 +265,7 @@ class MeritListController extends Controller
                     $final_grade_point = $total_point / $total_subject;
                 }
 
-                if($final_grade_point > 5)
-                {
+                if ($final_grade_point > 5) {
                     $final_grade_point = 5;
                 }
 
@@ -221,7 +273,7 @@ class MeritListController extends Controller
                  * Grade Point Generator
                  */
                 foreach ($grades as $grade) {
-                    if ($total_mark >= $grade->min_value) {
+                    if ($final_grade_point >= $grade->min_point) {
                         $final_grade_id = $grade->id;
                         break;
                     }
@@ -273,13 +325,37 @@ class MeritListController extends Controller
 //            $grades = Grade::query()->orderBy('min_value', 'DESC')->get();
 //        }
 
-        $merit_lists = MeritList::query()
-            ->where('the_class_id', $query['theclass'])
-            ->where('section_id', $query['section'])
-            ->where('shift_id', $query['shift'])
-            ->where('session', $query['session'])
-            ->where('exam_term_id', $query['exam_term'])
+//        $merit_lists = MeritList::query()
+//            ->where('the_class_id', $query['theclass'])
+//            ->where('section_id', $query['section'])
+//            ->where('shift_id', $query['shift'])
+//            ->where('session', $query['session'])
+//            ->where('exam_term_id', $query['exam_term'])
+//            ->get();
+
+        $merit_lists = Student::query()
+            ->select('merit_lists.*', 'students.id as student_id', 'students.name as student_name', 'students.roll as student_roll', 'grades.name as grade_name')
+            ->leftJoin('merit_lists', 'merit_lists.student_id', '=', 'students.id')
+            ->leftJoin('grades', 'merit_lists.grade_id', '=', 'grades.id')
+            ->where('students.the_class_id', $query['theclass'])
+            ->where('students.section_id', $query['section'])
+            ->where('students.shift_id', $query['shift'])
+            ->where('students.group_id', $query['group'])
+            ->where('merit_lists.exam_term_id', $query['exam_term'])
             ->get();
+
+//        $merit_lists = MeritList::with(['student' => function ($q) use ($query) {
+//            $q->select('id')
+//                ->where('the_class_id', $query['theclass'])
+//                ->where('section_id', $query['section'])
+//                ->where('shift_id', $query['shift'])
+//                ->where('group_id', $query['group']);
+//        }])
+//        ->get();
+
+//        return $merit_lists;
+//       dd($merit_lists);
+
 
         return view('merit_list.view', compact('class', 'section', 'shift', 'group', 'exam_term', 'query', 'merit_lists', 'grades'));
 

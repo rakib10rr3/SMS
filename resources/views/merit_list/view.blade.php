@@ -18,171 +18,171 @@
     {{--@method('PUT')--}}
     <!-- -->
 
-        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
-            <div class="clearfix">
-                <div class="pull-left">
-                    <h4 class="text-blue">Marks</h4>
-                </div>
+        <div class="clearfix">
+            <div class="pull-left">
+                <h4 class="text-blue">Marks</h4>
             </div>
-
-            <!-- -->
-            @foreach($query as $key => $value)
-
-                <input type="hidden" name="{{$key}}" value="{{ $value }}">
-                <!-- -->
-            @endforeach
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="theclass">Class</label>
-                    <select class="form-control custom-select" name="theclass" id="theclass" disabled>
-                        <option value="{{ $class->id }}" selected>{{ $class->name }}</option>
-
-                    </select>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="section">Section</label>
-                    <select class="form-control custom-select" name="section" id="section" disabled>
-
-                        <option value="{{ $section->id }}" selected>{{ $section->name }}</option>
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="shift">Shift</label>
-                    <select class="form-control custom-select" name="shift" id="shift" disabled>
-
-                        <option value="{{ $shift->id }}" selected>{{ $shift->name }}</option>
-
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="shift">Group</label>
-                    <select class="form-control custom-select" name="group" id="group" disabled>
-
-                        <option value="{{ $group->id }}" selected>{{ $group->name }}</option>
-
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="session">Session Year</label>
-                    <input type="year" value="{{ $query['session'] }}" class="form-control" name="session" id="session"
-                           placeholder="1971" disabled>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="exam_term">Exam Term</label>
-                    <select class="form-control custom-select" name="exam_term" id="exam_term" disabled>
-
-                        <option value="{{ $exam_term->id }}" selected>{{ $exam_term->name }}</option>
-
-                    </select>
-                </div>
-            </div>
-
-
         </div>
 
-        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+        <!-- -->
+        @foreach($query as $key => $value)
 
-            <div class="clearfix mb-20">
-                <div class="pull-left">
-                    <h4 class="text-blue">Grade Distribution</h4>
-                </div>
+            <input type="hidden" name="{{$key}}" value="{{ $value }}">
+            <!-- -->
+        @endforeach
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="theclass">Class</label>
+                <select class="form-control custom-select" name="theclass" id="theclass" disabled>
+                    <option value="{{ $class->id }}" selected>{{ $class->name }}</option>
+
+                </select>
             </div>
 
-            <table class="table">
+            <div class="form-group col-md-6">
+                <label for="section">Section</label>
+                <select class="form-control custom-select" name="section" id="section" disabled>
+
+                    <option value="{{ $section->id }}" selected>{{ $section->name }}</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="shift">Shift</label>
+                <select class="form-control custom-select" name="shift" id="shift" disabled>
+
+                    <option value="{{ $shift->id }}" selected>{{ $shift->name }}</option>
+
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="shift">Group</label>
+                <select class="form-control custom-select" name="group" id="group" disabled>
+
+                    <option value="{{ $group->id }}" selected>{{ $group->name }}</option>
+
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="session">Session Year</label>
+                <input type="year" value="{{ $query['session'] }}" class="form-control" name="session" id="session"
+                       placeholder="1971" disabled>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="exam_term">Exam Term</label>
+                <select class="form-control custom-select" name="exam_term" id="exam_term" disabled>
+
+                    <option value="{{ $exam_term->id }}" selected>{{ $exam_term->name }}</option>
+
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h4 class="text-blue">Grade Distribution</h4>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Min Point</th>
+                <th scope="col">Max Point</th>
+                <th scope="col">Grade</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach($grades as $grade)
+
+                <tr>
+                    <td>{{number_format($grade->min_point, 2)}}</td>
+                    <td>{{number_format($grade->max_point, 2)}}</td>
+                    <td>{{$grade->name}}</td>
+                </tr>
+
+            @endforeach
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <!-- Simple Datatable start -->
+    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h4 class="text-blue mb-10">Student marks</h4>
+            </div>
+            {{--<div class="pull-right">--}}
+            {{--<button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>--}}
+            {{--</div>--}}
+        </div>
+        <div class="row">
+            <table class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-                    <th scope="col">Min Point</th>
-                    <th scope="col">Max Point</th>
-                    <th scope="col">Grade</th>
+                    <th class="table-plus">Roll</th>
+                    <th>Name</th>
+
+                    <th>Total</th>
+                    <th>Grade Point</th>
+                    <th>Grade</th>
+                    {{--
+                    <th class="datatable-nosort">Action</th> --}}
                 </tr>
                 </thead>
                 <tbody>
 
-                @foreach($grades as $grade)
+                @foreach($merit_lists as $merit_list)
 
-                    <tr>
-                        <td>{{number_format($grade->min_point, 2)}}</td>
-                        <td>{{number_format($grade->max_point, 2)}}</td>
-                        <td>{{$grade->name}}</td>
+                    <tr id="{{$merit_list->student_id}}" class="ts-student-row">
+                        <td class="table-plus">{{$merit_list->student_roll}}</td>
+                        <td>{{$merit_list->student_name}}</td>
+
+                        <td id="total">
+                            {{ $merit_list->total_marks }}
+                        </td>
+                        <td id="point">
+                            {{ number_format($merit_list->point, 2) }}
+                        </td>
+                        <td id="grade">
+                            {{ $merit_list->grade_name }}
+                        </td>
                     </tr>
 
                 @endforeach
 
                 </tbody>
             </table>
-
         </div>
 
 
-        <!-- Simple Datatable start -->
-        <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-            <div class="clearfix mb-20">
-                <div class="pull-left">
-                    <h4 class="text-blue mb-10">Student marks</h4>
-                </div>
-                {{--<div class="pull-right">--}}
-                    {{--<button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>--}}
-                {{--</div>--}}
-            </div>
-            <div class="row">
-                <table class="data-table stripe hover nowrap">
-                    <thead>
-                    <tr>
-                        <th class="table-plus">Roll</th>
-                        <th>Name</th>
-
-                        <th>Total</th>
-                        <th>Grade Point</th>
-                        <th>Grade</th>
-                        {{--
-                        <th class="datatable-nosort">Action</th> --}}
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    @foreach($merit_lists as $merit_list)
-
-                        <tr id="{{$merit_list->student->id}}" class="ts-student-row">
-                            <td class="table-plus">{{$merit_list->student->roll}}</td>
-                            <td>{{$merit_list->student->name}}</td>
-
-                            <td id="total">
-                                {{ $merit_list->total_marks }}
-                            </td>
-                            <td id="point">
-                                {{ number_format($merit_list->point, 2) }}
-                            </td>
-                            <td id="grade">
-                                {{ $merit_list->grade->name }}
-                            </td>
-                        </tr>
-
-                    @endforeach
-
-                    </tbody>
-                </table>
-            </div>
-
-
-            {{--<div class="row">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--<button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        </div>
-        <!-- Simple Datatable End -->
+        {{--<div class="row">--}}
+        {{--<div class="col-md-12">--}}
+        {{--<button type="submit" class="btn btn-primary pull-right">Re-calculate Marks</button>--}}
+        {{--</div>--}}
+        {{--</div>--}}
+    </div>
+    <!-- Simple Datatable End -->
 
 
     {{--</form>--}}

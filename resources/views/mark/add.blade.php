@@ -229,22 +229,20 @@
 
                             @if($subject->has_written)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="written[{{$student->id}}]" id="written" value="0"
-                                           placeholder="Written Mark"
+                                    <input step="any" type="number" pattern="^\d{1,3}$" class="form-control"
+                                           name="written[{{$student->id}}]" id="written" value="0" min="0" max="{{$subject->written_marks}}"
                                            required>
                                 </td>
                             @endif @if($subject->has_mcq)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="mcq[{{$student->id}}]" id="mcq" value="0" placeholder="MCQ Mark"
+                                    <input step="any" type="number" pattern="^\d{1,3}$" class="form-control"
+                                           name="mcq[{{$student->id}}]" id="mcq" min="0" value="0" max="{{$subject->mcq_marks}}"
                                            required>
                                 </td>
                             @endif @if($subject->has_practical)
                                 <td>
-                                    <input type="text" pattern="^\d{1,3}$" class="form-control"
-                                           name="practical[{{$student->id}}]" id="practical" value="0"
-                                           placeholder="Practical Mark"
+                                    <input step="any" type="number" pattern="^\d{1,3}$" class="form-control"
+                                           name="practical[{{$student->id}}]" id="practical" value="0" min="0" max="{{$subject->practical_marks}}"
                                            required>
                                 </td>
                             @endif
@@ -369,16 +367,16 @@
                 $parent.find('#grade').text("F");
             });
 
-            var pass_written = parseInt($('#pass_written').text()) || 0;
-            var pass_mcq = parseInt($('#pass_mcq').text()) || 0;
-            var pass_practical = parseInt($('#pass_practical').text()) || 0;
+            var pass_written = parseFloat($('#pass_written').text()) || 0;
+            var pass_mcq = parseFloat($('#pass_mcq').text()) || 0;
+            var pass_practical = parseFloat($('#pass_practical').text()) || 0;
 
             $('.ts-student-row input').on('keyup', function () {
                 var $parent = $(this).parent().parent();
 
-                var $written = parseInt($parent.find('#written').val()) || 0;
-                var $mcq = parseInt($parent.find('#mcq').val()) || 0;
-                var $practical = parseInt($parent.find('#practical').val()) || 0;
+                var $written = parseFloat($parent.find('#written').val()) || 0;
+                var $mcq = parseFloat($parent.find('#mcq').val()) || 0;
+                var $practical = parseFloat($parent.find('#practical').val()) || 0;
 
                 var is_fail = false;
 
@@ -426,7 +424,7 @@
 
 
         function getPoint(val) {
-            val = parseInt(val);
+            val = parseFloat(val);
 
             var length = grade_value.length;
 
@@ -442,7 +440,7 @@
         }
 
         function getGrade(val) {
-            val = parseInt(val);
+            val = parseFloat(val);
 
             var length = grade_value.length;
 

@@ -4,7 +4,8 @@
             <img src="/vendors/images/logo-full-color.png" alt="Logo">
         </a>
     </div>
-    <div class="menu-block customscroll">
+    {{--<div class="menu-block customscroll">--}}
+    <div class="menu-block">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
 
@@ -225,6 +226,8 @@
                         <ul class="submenu">
 
                             <li><a href="{{route('print.select')}}">Merit List</a></li>
+                            <li><a href="{{route('print.fail')}}">Fail List</a></li>
+                            <li><a href="{{route('print.select')}}">Student</a></li>
                             <li><a href="{{route('print.student_select')}}">Student</a></li>
 
                         </ul>

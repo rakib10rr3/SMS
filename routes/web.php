@@ -203,5 +203,7 @@ Route::post('print/show', 'PrintController@show')->name('print.show')->middlewar
 Route::get('print/student-select', 'PrintController@student_select')->name('print.student_select')->middleware(['auth']);
 Route::post('print/student-show', 'PrintController@student_show')->name('print.student_show')->middleware(['auth']);
 Route::post('print/student-print', 'PrintController@student_print')->name('print.student_print')->middleware(['auth']);
+Route::get('print/fail', 'PrintController@fail')->name('print.fail')->middleware(['auth']);
+Route::post('print/fail/list', 'PrintController@showFail')->name('print.showFail')->middleware(['auth']);
 
 

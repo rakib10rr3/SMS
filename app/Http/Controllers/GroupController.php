@@ -39,9 +39,17 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-        ]);
+        $rules = [
+            'name' => 'required',
+        ];
+
+        $customMessages = [
+            'name.required' => 'Group Name is required',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
+
         Group::query()->create($request->all());
         return redirect('/groups');
     }

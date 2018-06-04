@@ -49,7 +49,7 @@ class TeacherController extends Controller
 
 
         $rules = [
-            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'name.regex' => 'Name field must contain only letters, whitespace and dots',
             'current_address' => 'required|max:200',
             'permanent_address' =>  'required|max:200',
             'dob' => 'required',
@@ -63,7 +63,7 @@ class TeacherController extends Controller
 
         $customMessages = [
             'name.required' => 'Name is required',
-            'name.regex' => 'Name must contain only letters and whitespace',
+            'name.regex' => 'Name field must contain only letters, whitespace and dots',
             'dob.required' => 'Date of Birth is required',
             'religion_id.required' => "Religion is required",
             'blood_group_id.required' => "Blood Group field is required",
@@ -124,12 +124,14 @@ class TeacherController extends Controller
         $gender_id = request('gender_id');
         $nationality = request('nationality');
         $cell = request('cell');
+
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $picture_name = $user_obj->id."-".$user_obj->name."-".$file->getClientOriginalName();
-            $file->move('images/teachers', $picture_name);
+            $picture_name = $user_obj->id . "." . $file->guessClientExtension();
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/teachers/'.$picture_name);
+            //$file->move('images/students', $picture_name);
         } else {
-            $picture_name = "No Image Found ";
+            $picture_name = null;
         }
 
         $teacher = Teacher::create([
@@ -193,7 +195,7 @@ class TeacherController extends Controller
     {
         //Teacher::query()->create($request->all());
         $rules = [
-            'name' => 'required|regex:/[a-zA-Z\s]+/',
+            'name' => 'required|regex:/[a-zA-Z\s.]+/',
             'current_address' => 'required|max:200',
             'permanent_address' =>  'required|max:200',
             'dob' => 'required',
@@ -207,7 +209,7 @@ class TeacherController extends Controller
 
         $customMessages = [
             'name.required' => 'Name is required',
-            'name.regex' => 'Name must contain only letters and whitespace',
+            'name.regex' => 'Name field must contain only letters, whitespace and dots',
             'dob.required' => 'Date of Birth is required',
             'religion_id.required' => "Religion is required",
             'blood_group_id.required' => "Blood Group field is required",
@@ -242,12 +244,14 @@ class TeacherController extends Controller
         $gender_id = request('gender_id');
         $nationality = request('nationality');
         $cell = request('cell');
+
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
-            $picture_name = $teacher->user->id."-".$teacher->user->name."-".$file->getClientOriginalName();
-            $file->move('images/teachers', $picture_name);
+            $picture_name = $teacher->user->id . "." . $file->guessClientExtension();
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/teachers/'.$picture_name);
+            //$file->move('images/students', $picture_name);
         } else {
-            $picture_name = "No Image Found ";
+            $picture_name = $request->previous_pic;
         }
 
 
@@ -266,7 +270,7 @@ class TeacherController extends Controller
             'cell' => $cell,
             'photo' => $picture_name,
         ));
-        return redirect('/teachers');
+        return redirect()->route('teachers.index')->with('message', 'Teacher\'s information successfully updated.');
 
 //        return "came to update the data";
     }
