@@ -1,11 +1,11 @@
 @extends('layouts.app')
+
 @section('styles')
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 @endsection
+
 @section('content')
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
@@ -184,6 +184,7 @@
     <script src="/src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="/src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
         $('document').ready(function () {

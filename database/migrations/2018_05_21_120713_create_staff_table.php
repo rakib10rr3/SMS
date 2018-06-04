@@ -27,7 +27,7 @@ class CreateStaffTable extends Migration
             $table->integer('gender_id')->unsigned()->index();
             $table->string('nationality',20);
             $table->string('cell',20);
-            $table->string('photo',200)->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

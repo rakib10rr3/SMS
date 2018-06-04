@@ -15,14 +15,16 @@
         <div class="user-info-dropdown">
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    <span class="user-icon"><i class="fa fa-user-o"></i></span>
+                    {{--<span class="user-icon"><i class="fa fa-user-o"></i></span>--}}
                     <span class="user-name"> {{ Auth::User()->getUserDisplayName() }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#"><i class="fa fa-user-md" aria-hidden="true"></i> Profile</a>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa fa-user-md" aria-hidden="true"></i> Profile
+                    </a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
+                        <i class="fa fa-sign-out-alt"></i> Logout
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

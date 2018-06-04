@@ -49,10 +49,10 @@ class StaffController extends Controller
         $rules = [
             'name' => 'required|regex:/[a-zA-Z\s.]+/',
             'current_address' => 'required|max:200',
-            'permanent_address' =>  'required|max:200',
+            'permanent_address' => 'required|max:200',
             'dob' => 'required',
             'national_id' => 'required|max:20',
-            'nationality' =>  'required',
+            'nationality' => 'required',
             'cell' => 'required|digits:11',
             'religion_id' => 'required',
             'blood_group_id' => 'required',
@@ -123,7 +123,7 @@ class StaffController extends Controller
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $picture_name = $user_obj->id . "." . $file->guessClientExtension();
-            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/staffs/'.$picture_name);
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/staffs/' . $picture_name);
             //$file->move('images/students', $picture_name);
         } else {
             $picture_name = null;
@@ -148,8 +148,7 @@ class StaffController extends Controller
 //        $staff->user->role_id = 3;
 //        $staff->user->save();
 
-
-        return redirect()->route('staff.index');
+        return redirect()->route('staff.index')->with('message', 'Staff successfully created with ID: ' . $user_name);
 
         // return "ok";
     }
@@ -192,10 +191,10 @@ class StaffController extends Controller
         $rules = [
             'name' => 'required|regex:/[a-zA-Z\s.]+/',
             'current_address' => 'required|max:200',
-            'permanent_address' =>  'required|max:200',
+            'permanent_address' => 'required|max:200',
             'dob' => 'required',
             'national_id' => 'required|max:20',
-            'nationality' =>  'required',
+            'nationality' => 'required',
             'cell' => 'required|digits:11',
             'religion_id' => 'required',
             'blood_group_id' => 'required',
@@ -242,7 +241,7 @@ class StaffController extends Controller
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $picture_name = $staff->user->id . "." . $file->guessClientExtension();
-            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/staffs/'.$picture_name);
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/staffs/' . $picture_name);
             //$file->move('images/students', $picture_name);
         } else {
             $picture_name = $request->previous_pic;
@@ -267,7 +266,7 @@ class StaffController extends Controller
                 'photo' => $picture_name,
             ));
 
-        return redirect()->route('staff.index');
+        return redirect()->route('staff.index')->with('message', 'Staff\'s information successfully updated.');
 
 //        return "came to update the data";
     }
@@ -282,7 +281,7 @@ class StaffController extends Controller
     public function destroy(Staff $staff)
     {
         $staff->delete();
-        User::query()->where('id',$staff->user_id)->delete();
+        User::query()->where('id', $staff->user_id)->delete();
 
         return redirect()->route('staff.index');
     }

@@ -270,7 +270,7 @@ class TeacherController extends Controller
             'cell' => $cell,
             'photo' => $picture_name,
         ));
-        return redirect('/teachers');
+        return redirect()->route('teachers.index')->with('message', 'Teacher\'s information successfully updated.');
 
 //        return "came to update the data";
     }

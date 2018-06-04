@@ -27,7 +27,7 @@ class CreateTeachersTable extends Migration
             $table->integer('gender_id')->unsigned()->index();
             $table->string('nationality',20);
             $table->string('cell',20);
-            $table->string('photo',200);
+            $table->string('photo')->nullable(true);
             $table->timestamps();
         });
     }

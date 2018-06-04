@@ -1,14 +1,20 @@
 @extends('layouts.app')
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
 
 @endsection
 @section('content')
 
-
+    @if (session('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{session('message')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
     <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
         <div class="clearfix mb-20">
@@ -21,12 +27,12 @@
             <table class="data-table stripe hover nowrap">
                 <thead>
                 <tr>
-
-                    <th>Teacher</th>
+                    <th>ID</th>
+                    <th>Name</th>
                     <th>Religion</th>
                     <th>Blood Group</th>
                     <th>Gender</th>
-                    <th>photo</th>
+                    <th class="datatable-nosort">photo</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
                 </thead>
@@ -36,12 +42,13 @@
                 @else
                     @foreach($teachers as $teacher)
                         <tr>
-
+                            <td>{{$teacher->user->username}}</td>
                             <td>{{$teacher->name}}</td>
                             <td>{{$teacher->religion->name}}</td>
                             <td>{{$teacher->bloodGroup->name}}</td>
                             <td>{{$teacher->gender->name}}</td>
-                            <td><img height="50px" width="50px" src="images/teachers/{{$teacher->photo}}" class="img-rounded"
+                            <td><img height="50px" width="50px" src="images/teachers/{{$teacher->photo}}"
+                                     class="img-rounded"
                                      alt="Teacher Photo"></td>
                             <td>
                                 <div class="dropdown">
@@ -51,14 +58,10 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="/teachers/{{$teacher->id}}/edit"><i
-                                                    class="fa fa-pencil"></i> Edit</a>
-                                        {{--<form action="{{route('exam-terms.destroy',$examTerm->id)}}" method="post">--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--@method('DELETE')--}}
-                                        {{--<button style="cursor: pointer;" type="submit" class="dropdown-item" ><i class="fa fa-trash"></i> Delete</button>--}}
-                                        {{--</form>--}}
-                                        <a class="dropdown-item ts-delete" href="" data-id="{{$teacher->id}}" data-user_id = {{$teacher->user_id}}><i
-                                                    class="fa fa-pencil"></i> Delete</a>
+                                                    class="fa fa-pencil-alt"></i> Edit</a>
+                                        <a class="dropdown-item ts-delete-alt" href="" data-id="{{$teacher->id}}"
+                                           data-user_id= {{$teacher->user_id}}><i class="fas fa-trash-alt"></i>
+                                            Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -87,8 +90,7 @@
     <script src="src/plugins/datatables/media/js/button/pdfmake.min.js"></script>
     <script src="src/plugins/datatables/media/js/button/vfs_fonts.js"></script>
 
-
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
         $('document').ready(function () {
@@ -102,9 +104,10 @@
                 }],
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 "language": {
-                    "info": "_START_-_END_ of _TOTAL_ entries",
+                    "info": "_START_-_END_ of _TOTAL_ teachers",
                     searchPlaceholder: "Search"
                 },
+                "paging": false,
             });
             $('.data-table-export').DataTable({
                 scrollCollapse: true,
@@ -149,10 +152,10 @@
             var userId = $(this).data('user_id');
             console.log(userId);
             swal({
-                title: "Are you sure!",
+                title: "Are you sure want to delete?",
                 type: "error",
                 icon: "warning",
-                buttons: true,
+                buttons: [true, "Delete"],
                 dangerMode: true,
             })
                 .then((willDelete) => {
@@ -167,15 +170,13 @@
                             },
                             success: function (data) {
 
-                                swal("Poof! Your imaginary file has been deleted!", {
+                                swal("Success! The teacher has been deleted!", {
                                     icon: "success",
                                 }).then(() => {
                                     location.reload();
                                 });
                             }
                         });
-                    } else {
-                        swal("Your imaginary file is safe!");
                     }
                 });
         });

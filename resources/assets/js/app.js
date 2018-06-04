@@ -15,6 +15,8 @@ require('moment');
 
 require('select2');
 
+require('./custom');
+
 
 // window.Vue = require('vue');
 

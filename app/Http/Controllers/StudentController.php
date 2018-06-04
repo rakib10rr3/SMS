@@ -170,7 +170,7 @@ class StudentController extends Controller
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $picture_name = $user_obj->id . "." . $file->guessClientExtension();
-            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/students/'.$picture_name);
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/students/' . $picture_name);
             //$file->move('images/students', $picture_name);
         } else {
             $picture_name = null;
@@ -187,7 +187,6 @@ class StudentController extends Controller
             $newRoll = 1;
         } else
             $newRoll = ++$lastRoll;
-
 
 
         Student::query()->create([
@@ -215,10 +214,11 @@ class StudentController extends Controller
             'section_id' => $request->section_id,
             'group_id' => $request->group_id,
             'cell' => $request->cell,
+            'session' => $request->session_year,
 
         ]);
 
-        return redirect('/students')->with('message','Student successfully created');
+        return redirect('/students')->with('message', 'Student successfully created');
     }
 
     /**
@@ -344,7 +344,7 @@ class StudentController extends Controller
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
             $picture_name = $student->user->id . "." . $file->guessClientExtension();
-            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/students/'.$picture_name);
+            \Intervention\Image\Facades\Image::make($request->photo)->resize(300, 300)->save('images/students/' . $picture_name);
             //$file->move('images/students', $picture_name);
         } else {
             $picture_name = $request->previous_pic;
@@ -395,7 +395,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        User::query()->where('id',$student->user_id)->delete();
+        User::query()->where('id', $student->user_id)->delete();
 
         return redirect('/students');
     }
