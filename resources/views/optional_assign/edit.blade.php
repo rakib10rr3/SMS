@@ -91,9 +91,9 @@
                 </table>
 
             </div>
-            @if(count($optionalSubjects) != 0)
+            {{--@if(count($optionalSubjects) != 0)--}}
                 <input type="submit" value="Update" class="btn btn-outline-success"/>
-            @endif
+            {{--@endif--}}
         </form>
     </div>
 @endsection

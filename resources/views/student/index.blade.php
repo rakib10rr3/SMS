@@ -291,11 +291,13 @@
                                 }
 
                                 table.row.add([
+                                    element.username,
                                     element.roll,
                                     element.name,
                                     element.father_name,
                                     element.mother_name,
                                     element.local_guardian_cell,
+                                   '<img height="50px" width="50px" src="images/students/' + element.photo + ' " class="img-rounded"alt="Student Photo">',
                                     opening + activeStatus + '</p>',
                                     '<div class="dropdown">\n' +
                                     '<a class="btn btn-outline-primary dropdown-toggle" href="#" role="button"\n' +

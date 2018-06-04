@@ -170,6 +170,7 @@ class MeritListController extends Controller
             ->where('shift_id', $query['shift'])
             ->where('group_id', $query['group'])
             ->get();
+//        return $students;
 
         $total_subject = count($subjects);
 
@@ -272,7 +273,7 @@ class MeritListController extends Controller
                  * Grade Point Generator
                  */
                 foreach ($grades as $grade) {
-                    if ($total_mark >= $grade->min_value) {
+                    if ($final_grade_point >= $grade->min_point) {
                         $final_grade_id = $grade->id;
                         break;
                     }
@@ -340,6 +341,7 @@ class MeritListController extends Controller
             ->where('students.section_id', $query['section'])
             ->where('students.shift_id', $query['shift'])
             ->where('students.group_id', $query['group'])
+            ->where('merit_lists.exam_term_id', $query['exam_term'])
             ->get();
 
 //        $merit_lists = MeritList::with(['student' => function ($q) use ($query) {
@@ -351,7 +353,8 @@ class MeritListController extends Controller
 //        }])
 //        ->get();
 
-//        dd($merit_lists);
+//        return $merit_lists;
+//       dd($merit_lists);
 
 
         return view('merit_list.view', compact('class', 'section', 'shift', 'group', 'exam_term', 'query', 'merit_lists', 'grades'));

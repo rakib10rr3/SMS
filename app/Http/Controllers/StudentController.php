@@ -402,13 +402,15 @@ class StudentController extends Controller
 
     public function getStudentList(Request $request)
     {
-        $students = Student::query()
-            ->where('the_class_id', '=', $request->the_class_id)
-            ->where('group_id', '=', $request->group_id)
-            ->where('section_id', '=', $request->section_id)
-            ->where('shift_id', '=', $request->shift_id)
-            ->where('session', '=', $request->session_year)
-            ->orderBy('roll')
+        $students = Student::query()->select('users.username','students.*')
+            ->leftJoin('users','users.id','=','students.user_id')
+            ->where('students.the_class_id', '=', $request->the_class_id)
+            ->where('students.group_id', '=', $request->group_id)
+            ->where('students.section_id', '=', $request->section_id)
+            ->where('students.shift_id', '=', $request->shift_id)
+            ->where('students.session', '=', $request->session_year)
+            ->orderBy('students.roll','DESC')
+
             ->get();
 
         return $students;
