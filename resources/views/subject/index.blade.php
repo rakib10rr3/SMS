@@ -348,16 +348,16 @@
                         function group_name(id) {
                             switch(id) {
                                 case 1:
-                                     return "Science";
+                                     return "None";
                                     break;
                                 case 2:
-                                    return "Commerce";
+                                    return "Science";
                                     break;
                                 case 3:
-                                    return" Arts";
+                                    return"Commerce";
                                     break;
                                 case 4:
-                                    return "None";
+                                    return "Arts";
                                     break;
                                 default:
                                     return "None";

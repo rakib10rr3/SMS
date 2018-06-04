@@ -228,6 +228,7 @@
                             <li><a href="{{route('print.select')}}">Merit List</a></li>
                             <li><a href="{{route('print.fail')}}">Fail List</a></li>
                             <li><a href="{{route('print.select')}}">Student</a></li>
+                            <li><a href="{{route('print.student_select')}}">Student</a></li>
 
                         </ul>
                     </li>
