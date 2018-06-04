@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mark extends Model
 {
-    public function theClasses()
+    public function theClass()
     {
         return $this->belongsTo(TheClass::class);
     }
 
-    public function sections()
+    public function section()
     {
         return $this->belongsTo(Section::class);
     }
 
-    public function shifts()
+    public function shift()
     {
         return $this->belongsTo(Shift::class);
     }
@@ -27,12 +27,12 @@ class Mark extends Model
         return $this->belongsTo(Student::class);
     }
 
-    public function examTerms()
+    public function examTerm()
     {
         return $this->belongsTo(ExamTerm::class);
     }
 
-    public function subjects()
+    public function subject()
     {
         return $this->belongsTo(Subject::class);
     }

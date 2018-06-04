@@ -52,24 +52,19 @@ class SendSmsController extends Controller
             $section_id = $request->get('section_id');
 
 
-
-
             //dd($class_id,$subject_id,$section_id);
 
             $query = ClassAssign::query();
-            if($class_id==null && $subject_id==null && $section_id==null)
-            {
-                $teachers=ClassAssign::all();
-            }
-            else
-            {
-                if (! $class_id==null) {
+            if ($class_id == null && $subject_id == null && $section_id == null) {
+                $teachers = ClassAssign::all();
+            } else {
+                if (!$class_id == null) {
                     $query = $query->where('the_class_id', $class_id);
                 }
-                if (! $subject_id==null) {
+                if (!$subject_id == null) {
                     $query = $query->where('subject_id', $subject_id);
                 }
-                if (! $section_id==null) {
+                if (!$section_id == null) {
                     $query = $query->where('section_id', $section_id);
                 }
                 $teachers = $query->get();
@@ -127,8 +122,9 @@ class SendSmsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'checkbox' => implode(',', (array)$request->get('checkbox'))
+        $request->merge(
+            [
+                'checkbox' => implode(',', (array)$request->get('checkbox'))
         ]);
 
         $to = $request->get('checkbox');

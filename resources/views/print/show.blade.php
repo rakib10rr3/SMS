@@ -19,15 +19,25 @@
 
     <style type="text/css">
         @media print {
-            @page {
-                margin: 0;
-            }
 
             body {
+                visibility: hidden;
                 margin: 0;
             }
+            .printthis {
+                visibility: visible;
+            }
+
 
         }
+        @page { margin: 0; }
+
+        @media all {
+            .page-break	{ display: none; }
+        }
+
+        .page-break	{ page-break-before: always; }
+
 
     </style>
 
@@ -41,7 +51,9 @@
 
     <button id="print" class="btn float-right" onclick="myPrint()">Print</button>
 
-    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
+
+
+    <div class="printthis pd-20 bg-white border-radius-4 box-shadow mb-30">
 
         <div class="img-preview">
             <a href="/">
@@ -141,16 +153,30 @@
             </table>
         </div>
 
+
+        <div class="page-break"></div>
+
+
+
+        <div class="row">
+            <div class="col">
+
+                Printed by {{ Auth::user()->username }}
+
+            </div>
+            <div class="col">
+                    Prottoy - Education Management Software
+            </div>
+            <div class="col">
+                Developed & Managed By- KDA IT
+            </div>
+
+
+        </div>
+
     </div>
 
 
-    <div class="float-left">
-        Printed By Kda-It
-    </div>
-
-    <div class="float-right">
-        Software Developed and Managed By - KDA IT
-    </div>
 
 
 

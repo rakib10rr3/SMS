@@ -195,8 +195,13 @@ Route::post('promotion/update', 'PromotionController@update')->name('promotion.u
     ->middleware(['auth', 'can:promotion-crud']);
 
 
+
 //todo: shohag : add can: method
 //print Routes
 Route::get('print/select', 'PrintController@select')->name('print.select')->middleware(['auth']);
 Route::post('print/show', 'PrintController@show')->name('print.show')->middleware(['auth']);
+Route::get('print/student-select', 'PrintController@student_select')->name('print.student_select')->middleware(['auth']);
+Route::post('print/student-show', 'PrintController@student_show')->name('print.student_show')->middleware(['auth']);
+Route::post('print/student-print', 'PrintController@student_print')->name('print.student_print')->middleware(['auth']);
+
 

@@ -510,7 +510,7 @@ array:12 [▼
                 $mark->point = 0;
             } else {
                 $mark_written = 0;
-                $mark_mcq = 0;
+                $mark_mcq = 0;http://demo1.bangladeshindependentbusinessdirectory.com
                 $mark_practical = 0;
 
                 if (isset($query['written'])) {
