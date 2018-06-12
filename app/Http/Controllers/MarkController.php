@@ -67,6 +67,8 @@ class MarkController extends Controller
             ->where('session', $query['session'])
             ->where('exam_term_id', $query['exam_term'])
             ->count();
+//----------------------------
+        //dd($query);
 
         if ($check_result > 0) {
             $classes = TheClass::all();
@@ -360,13 +362,16 @@ class MarkController extends Controller
          * Check if data already exist
          */
 
-        $check_result = Mark::query()->where('the_class_id', $query['theclass'])
+        $check_result = Mark::query()
+            ->where('the_class_id', $query['theclass'])
             ->where('subject_id', $query['subject'])
             ->where('section_id', $query['section'])
             ->where('shift_id', $query['shift'])
             ->where('session', $query['session'])
             ->where('exam_term_id', $query['exam_term'])
             ->count();
+//----------------------------
+//        dd($query);
 
         if ($check_result == 0) {
             $classes = TheClass::all();

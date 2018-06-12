@@ -139,6 +139,27 @@
 
                 @endcan
 
+                @can('print-all')
+
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="fa fa-clone"></span><span class="mtext">Print</span>
+                        </a>
+                        <ul class="submenu">
+
+                            <li><a href="{{route('print.select')}}">Merit List</a></li>
+                            <li><a href="{{route('print.fail')}}">Fail List</a></li>
+                            <li><a href="{{route('print.student_select')}}">Student</a></li>
+
+                        </ul>
+                    </li>
+
+                    {{-- ===================================================== --}}
+
+                    <li class="ts-sidebar-divider"></li>
+
+                @endcan
+
 
                 {{-- ===================================================== --}}
 
@@ -216,29 +237,6 @@
 
 
                 {{-- ===================================================== --}}
-
-                @can('class-assign-crud')
-
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="fa fa-clone"></span><span class="mtext">Print</span>
-                        </a>
-                        <ul class="submenu">
-
-                            <li><a href="{{route('print.select')}}">Merit List</a></li>
-                            <li><a href="{{route('print.fail')}}">Fail List</a></li>
-                            <li><a href="{{route('print.select')}}">Student</a></li>
-                            <li><a href="{{route('print.student_select')}}">Student</a></li>
-
-                        </ul>
-                    </li>
-
-                    {{-- ===================================================== --}}
-
-                    <li class="ts-sidebar-divider"></li>
-
-                @endcan
-
 
 
                 @can('access-system-setup')

@@ -22,7 +22,7 @@ class OptionalAssignController extends Controller
         $sections = Section::query()->get();
         $shifts = Shift::query()->get();
         $optionalSubjects = Subject::query()->where('is_optional', '=', '1')->get();
-        $optionalSubjects = OptionalAssign::query()->get();
+        //$optionalSubjects = OptionalAssign::query()->get();
 
         $optionals = Array();
         foreach ($optionalSubjects as $value) {
@@ -98,16 +98,23 @@ class OptionalAssignController extends Controller
 
     public function getStudentDataWithOptionalSubject(Request $request)
     {
-        $students = Student::query()->where('the_class_id', '=', $request->the_class_id)->where('group_id', '=', $request->group_id)->where('section_id', '=', $request->section_id)->where('shift_id', '=', $request->shift_id)->get();
+        $students = Student::query()
+            ->where('the_class_id', '=', $request->the_class_id)
+            ->where('group_id', '=', $request->group_id)
+            ->where('section_id', '=', $request->section_id)
+            ->where('shift_id', '=', $request->shift_id)
+            ->get();
         //return $students;
 //        $classes = TheClass::query()->where('id','=',$request->the_class_id)->get();
 //        $groups = Group::query()->get();
 //        $sections = Section::query()->get();
-        $subjects = Subject::query()->where('is_optional', '=', '1')->get();
+        $subjects = Subject::query()
+            ->where('the_class_id', '=', $request->the_class_id)
+            ->where('group_id', '=', $request->group_id)
+            ->where('is_optional', '=', '1')->get();
         $optionalSubjects = OptionalAssign::query()->get();
 
         $optionals = Array();
-
 
         foreach ($optionalSubjects as $optionalSubject) {
             $optionals[$optionalSubject['student_id']] = $optionalSubject['subject_id'];

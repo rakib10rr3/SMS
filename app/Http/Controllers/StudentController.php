@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use \App\Model\Division;
-use App\Model\District;
+//use \App\Model\Division;
+//use App\Model\District;
 use App\Model\Group;
 use App\Model\Preference;
 use App\Model\Section;
@@ -46,8 +46,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $divisions = Division::query()->get();
-        $districts = District::query()->get()->sortBy('name');
+//        $divisions = Division::query()->get();
+//        $districts = District::query()->get()->sortBy('name');
         $religions = Religion::query()->get();
         $genders = Gender::query()->get();
         $bloodGroups = BloodGroup::query()->get();
@@ -55,7 +55,7 @@ class StudentController extends Controller
         $sections = Section::query()->get();
         $groups = Group::query()->get();
         $classes = TheClass::query()->get();
-        return view('student.create', compact('divisions', 'districts', 'religions', 'bloodGroups', 'genders', 'shifts', 'sections', 'groups', 'classes'));
+        return view('student.create', compact( 'religions', 'bloodGroups', 'genders', 'shifts', 'sections', 'groups', 'classes'));
     }
 
     /**
@@ -241,8 +241,8 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
 
-        $divisions = Division::query()->get();
-        $districts = District::query()->get()->sortBy('name');
+//        $divisions = Division::query()->get();
+//        $districts = District::query()->get()->sortBy('name');
         $religions = Religion::query()->get();
         $genders = Gender::query()->get();
         $bloodGroups = BloodGroup::query()->get();
@@ -250,7 +250,7 @@ class StudentController extends Controller
         $sections = Section::query()->get();
         $groups = Group::query()->get();
         $classes = TheClass::query()->get();
-        return view('student.edit', compact('student', 'districts', 'religions', 'divisions', 'genders', 'bloodGroups', 'shifts', 'sections', 'groups', 'classes'));
+        return view('student.edit', compact('student',  'religions',  'genders', 'bloodGroups', 'shifts', 'sections', 'groups', 'classes'));
     }
 
     /**

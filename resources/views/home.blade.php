@@ -39,7 +39,7 @@
                     <div class="project-info clearfix">
                         <div class="project-info-left">
                             <div class="icon box-shadow bg-light-green text-white">
-                                <i class="fa fa-chalkboard-teacher"></i>
+                                <i class="fa fa-book"></i>
                             </div>
                         </div>
                         <div class="project-info-right">

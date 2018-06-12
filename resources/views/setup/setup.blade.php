@@ -11,7 +11,6 @@ use App\Model\Role;
 use App\Model\Section;
 use App\Model\ExamTerm;
 use App\Model\TheClass;
-use \App\Model\Division;
 use App\Model\BloodGroup;
 use App\Model\Preference;
 use App\User;
@@ -88,37 +87,6 @@ if (count($genders) == 0) {
     echo "Gender data already exist<br>";
 }
 
-$divisions = Division::query()->get();
-if (count($divisions) == 0) {
-    Division::insert([
-        [
-            'name' => 'Dhaka',
-        ],
-        [
-            'name' => 'Chattogram',
-        ],
-        [
-            'name' => 'Rajshahi',
-        ],
-        [
-            'name' => 'Khulna',
-        ],
-        [
-            'name' => 'Barishal',
-        ],
-        [
-            'name' => 'Sylhet',
-        ],
-        [
-            'name' => 'Mymensingh',
-        ],
-        [
-            'name' => 'Rangpur',
-        ],
-    ]);
-} else {
-    echo "Division data already exist<br>";
-}
 
 $shifts = \App\Model\Shift::query()->get();
 if (count($shifts) == 0) {

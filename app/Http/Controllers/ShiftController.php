@@ -16,7 +16,7 @@ class ShiftController extends Controller
     {
         //
         $shifts = Shift::all();
-        return view('Shift.index', compact('shifts'))->with('i',(request()->input('page',1)-1)*5);
+        return view('shift.index', compact('shifts'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     /**
@@ -26,7 +26,7 @@ class ShiftController extends Controller
      */
     public function create()
     {
-        return view('Shift.create');
+        return view('shift.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class ShiftController extends Controller
     public function store(Request $request)
     {
         Shift::query()->create($request->all());
-        return redirect('/shifts');
+        return redirect()->route('shifts.index');
     }
 
     /**
@@ -47,10 +47,10 @@ class ShiftController extends Controller
      * @param  \App\Model\Shift  $shift
      * @return \Illuminate\Http\Response
      */
-    public function show(Shift $shift)
-    {
-        //
-    }
+//    public function show(Shift $shift)
+//    {
+//        //
+//    }
 
     /**
      * Show the form for editing the specified resource.
@@ -60,7 +60,7 @@ class ShiftController extends Controller
      */
     public function edit(Shift $shift)
     {
-        return view('Shift.edit', compact('shift'));
+        return view('shift.edit', compact('shift'));
     }
 
     /**
@@ -73,18 +73,19 @@ class ShiftController extends Controller
     public function update(Request $request, Shift $shift)
     {
         $shift->update($request->all());
-        return redirect('/shifts');
+        return redirect()->route('shifts.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Shift  $shift
+     * @param  \App\Model\Shift $shift
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Shift $shift)
     {
         $shift->delete();
-        return redirect('/shifts');
+        return redirect()->route('shifts.index');
     }
 }

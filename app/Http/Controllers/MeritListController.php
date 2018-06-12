@@ -88,6 +88,11 @@ class MeritListController extends Controller
             ->get();
 
         /**
+         * Total Subject Count
+         */
+        $total_subject = count($subjects);
+
+        /**
          * Class 9 and 10 has some common subject
          */
         if ($query['theclass'] == 9 || $query['theclass'] == 10) {
@@ -95,7 +100,10 @@ class MeritListController extends Controller
                 ->where('the_class_id', $query['theclass'])
                 ->where('group_id', 1)# 1 = None
                 ->get();
+
+            $total_subject += count($subjects_common);
         }
+
 
         $is_error = false;
         $subject_list = array();
@@ -172,7 +180,7 @@ class MeritListController extends Controller
             ->get();
 //        return $students;
 
-        $total_subject = count($subjects);
+//        $total_subject = count($subjects); //=================================================
 
         $grades = Grade::query()->orderBy('min_value', 'DESC')->get();
 
@@ -182,6 +190,8 @@ class MeritListController extends Controller
         $optional_subject_id = 0;
 
         foreach ($students as $student) {
+
+//            Log::debug("=========================");
 
             /**
              * One student can be in one class in one session
@@ -203,6 +213,8 @@ class MeritListController extends Controller
                 $marks = $student->marks
                     ->where('session', $query['session'])
                     ->where('exam_term_id', $query['exam_term']);
+
+//                Log::debug(count($marks));
 
                 /**
                  * Get the optional subject ID
@@ -232,10 +244,12 @@ class MeritListController extends Controller
                             $total_point += $temp_point;
                         }
                     } else {
+//                        Log::debug("haha");
                         $total_point += $mark->point;
                     }
                 }
             } else {
+//                Log::debug("haha");
                 $total_point = $student->marks
                     ->where('session', $query['session'])
                     ->where('exam_term_id', $query['exam_term'])
@@ -249,12 +263,15 @@ class MeritListController extends Controller
                 ->where('subject_id', '<>', $optional_subject_id)
                 ->count();
 
-            Log::debug($fail_count);
+//            Log::debug($optional_subject_id);
 
             $final_grade_point = 0;
             $final_grade_id = $grade_fail_id;
 
             if ($fail_count == 0) {
+
+//                Log::debug($total_point);
+//                Log::debug($total_subject);
 
                 if ($student->theClass->name == 'Nine' || $student->theClass->name == 'Ten') {
                     /**

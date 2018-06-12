@@ -22,24 +22,21 @@
             justify-content: center;
         }
 
-
-
     </style>
 
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="/src/plugins/datatables/media/css/responsive.dataTables.css">
 
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="src/plugins/datatables/media/css/responsive.dataTables.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
-
 @endsection
+
 @section('content')
 
     <div id="loading-indicator" style="display: none;">
 
-        <img src="/images/ajax-loader.gif" />
+        <img src="/images/ajax-loader.gif"/>
 
     </div>
 
@@ -322,7 +319,6 @@
                         } else {
                             opening = '<p id=\"active\" class=\"badge badge-danger\">';
                             activeStatus = "Inactive";
-
                         }
 
                         dataTable.row.add([
@@ -346,15 +342,15 @@
 
 
                         function group_name(id) {
-                            switch(id) {
+                            switch (id) {
                                 case 1:
-                                     return "None";
+                                    return "None";
                                     break;
                                 case 2:
                                     return "Science";
                                     break;
                                 case 3:
-                                    return"Commerce";
+                                    return "Commerce";
                                     break;
                                 case 4:
                                     return "Arts";
@@ -369,12 +365,12 @@
 
             });
 
-            $(document).ajaxSend(function(event, request, settings) {
+            $(document).ajaxSend(function (event, request, settings) {
                 $('#loading-indicator').fadeIn();
             });
 
 
-            $(document).ajaxComplete(function(event, request, settings) {
+            $(document).ajaxComplete(function (event, request, settings) {
                 $('#loading-indicator').fadeOut();
             });
 

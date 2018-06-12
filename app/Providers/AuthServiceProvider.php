@@ -138,7 +138,16 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('optional-assign-crud', function ($user) {
 
-            if ($user->role_id >= 3) {
+            if ($user->role_id >= 5) { // kdait
+                return true;
+            }
+
+            return false;
+        });
+
+        Gate::define('print-all', function ($user) {
+
+            if ($user->role_id >= 3) { // staff
                 return true;
             }
 

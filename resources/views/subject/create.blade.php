@@ -207,7 +207,6 @@
         });
     </script>
 
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script>
         //$("#written_hidden").hide();
         $(document).ready(function () {
